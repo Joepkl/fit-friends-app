@@ -9,7 +9,13 @@
     <div class="relative">
       <div class="flex flex-col mb-4">
         <label for="email">Email</label>
-        <input v-model="email" id="email" type="text" />
+        <input
+          v-model="email"
+          :class="{ 'error test': isEmailValid === false }"
+          @change="validateEmail"
+          id="email"
+          type="text"
+        />
       </div>
       <div class="flex flex-col mb-4">
         <label for="username">Username</label>
@@ -17,28 +23,27 @@
       </div>
       <div class="flex flex-col mb-4">
         <label for="password">Password</label>
-        <input v-model="password" id="password" type="password" ref="passwordEl" />
+        <input @change="valdatePassword" v-model="password" id="password" type="password" ref="passwordEl" />
       </div>
       <div class="flex flex-col mb-4">
         <label for="confirm-password">Confirm password</label>
         <input
-          @change="checkPassword"
+          @change="valdatePassword"
           v-model="confirmPassword"
+          :class="{ error: isPasswordValid === false }"
           ref="confirmPasswordEl"
           type="password"
           id="confirm-password"
         />
       </div>
-      <!-- Hide/show password -->
-      <!-- <label for="show-password">Show password</label> -->
-      <!-- <input type="checkbox" @click="togglePasswordVisibility" class="ml-2" id="show-password" /> -->
+      <!-- Password visibility toggle -->
       <label class="container"
         >Show password
         <input type="checkbox" @click="togglePasswordVisibility" id="show-password" />
         <span class="checkmark"></span>
       </label>
       <!-- Error message -->
-      <p v-if="error" class="error absolute bottom-[-35px]">{{ error }}</p>
+      <p v-if="errors.length" class="error absolute bottom-[-35px]">{{ errors[0] }}</p>
     </div>
     <!-- CTA -->
     <button @click="createAccount" :class="{ disabled: !isDataValid }" class="button-primary mt-12">
@@ -69,16 +74,32 @@ const router = useRouter();
 const passwordEl = ref(null);
 const confirmPasswordEl = ref(null);
 
-const email = ref(null);
+const email = ref<string | null>(null);
 const username = ref(null);
 const password = ref(null);
 const confirmPassword = ref(null);
-const isPasswordValid = ref(false);
-const error = ref<string | null>(null);
+const isEmailValid = ref<boolean | null>(null);
+const isPasswordValid = ref<boolean | null>(null);
+const errors = ref<string[]>([]);
 
 const isDataValid = computed(() => {
-  return email.value && username.value && password.value && isPasswordValid.value;
+  return isEmailValid.value && username.value && password.value && isPasswordValid.value;
 });
+
+function validateEmail() {
+  const errorMessage = "Please enter a valid email address.";
+  const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  if (email.value && email.value.match(validRegex)) {
+    isEmailValid.value = true;
+    const emailErrorIndex = errors.value.indexOf(errorMessage);
+    if (emailErrorIndex !== -1) {
+      errors.value.splice(emailErrorIndex, 1);
+    }
+  } else {
+    isEmailValid.value = false;
+    errors.value.push(errorMessage);
+  }
+}
 
 function togglePasswordVisibility() {
   if (passwordEl.value) {
@@ -94,12 +115,18 @@ function togglePasswordVisibility() {
   }
 }
 
-function checkPassword() {
+function valdatePassword() {
+  const errorMessage = "Passwords do not match";
   if (password.value !== confirmPassword.value) {
     isPasswordValid.value = false;
-    error.value = "Passwords do not match";
+    errors.value?.push(errorMessage);
   } else {
     isPasswordValid.value = true;
+    // Remove error message
+    const passwordErrorIndex = errors.value.indexOf(errorMessage);
+    if (passwordErrorIndex !== -1) {
+      errors.value.splice(passwordErrorIndex, 1);
+    }
   }
 }
 

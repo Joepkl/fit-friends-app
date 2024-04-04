@@ -91,18 +91,32 @@ input {
   -webkit-border-radius: var(--border-radius-input);
   padding: 4px 8px;
   color: var(--dark-grey);
+  border: 2px solid var(--dark-grey);
+}
+
+input.error {
+  border: 2px solid var(--red);
 }
 
 input:focus {
   outline: var(--green) auto 1px;
 }
 
-/* input[type="checkbox"] {
-  appearance: auto;
-  -webkit-appearance: auto;
-  border-radius: 0;
-  border: 1px solid var(--green);
-} */
+/* Change autocomplete styles in WebKit */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  outline: none;
+  -webkit-text-fill-color: var(--dark-grey);
+  -webkit-box-shadow: 0 0 0px 1000px var(--white-2) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
 
 /* Custom checkbox */
 .container {

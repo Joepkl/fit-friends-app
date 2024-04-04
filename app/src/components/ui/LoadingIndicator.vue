@@ -20,9 +20,9 @@ defineProps<{
 }
 
 .loader {
-  width: px(48);
-  height: px(48);
-  border: px(5) solid var(--green);
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--green);
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;
