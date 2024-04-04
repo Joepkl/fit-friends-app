@@ -10,7 +10,7 @@ defineProps<{
 }>();
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .loader-wrapper {
   position: fixed;
   top: 50%;
@@ -22,7 +22,7 @@ defineProps<{
 .loader {
   width: px(48);
   height: px(48);
-  border: px(5) solid var(--red-main);
+  border: px(5) solid var(--green);
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;

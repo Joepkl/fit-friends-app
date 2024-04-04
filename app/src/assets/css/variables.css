@@ -2,7 +2,10 @@
   --dark-grey: #212529;
   --green: #b7e4c7;
   --white: #f1faee;
+  --red: #ea6b69;
+
+
   --padding-default: 32px;
-  --border-radius: 0px;
+  --border-radius-input: 6px;
   --underline-offset: 4px;
 }

@@ -2,6 +2,8 @@
 
 This is the front-end repository for the Fit Friends platform.
 
-Vue.js
-Typescript
-Tailwind
+Tech stack:
+
+- Vue.js
+- Typescript
+- Tailwind

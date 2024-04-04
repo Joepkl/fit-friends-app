@@ -10,7 +10,7 @@ interface ApiResponse {
   error?: string,
 }
 
-/** Base fetch data function */
+/** Base POST data function */
 export async function fetchData(url:string):Promise<ApiResponse> {
   store.setIsLoading(true);
   store.increaseActiveApiCalls();
