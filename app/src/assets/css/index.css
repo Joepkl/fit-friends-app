@@ -1,0 +1,83 @@
+/** Font */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+/** Include Tailwind base styles, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/** Set default utility classes for HTML elements */
+@layer components {
+  body {
+    @apply bg-dark-grey;
+    @apply font-base;
+    @apply font-normal;
+    @apply text-white;
+  }
+
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-xl;
+  }
+}
+
+/** Custom classes */
+@layer utilities {
+  .page-wrapper {
+    padding: var(--padding-default);
+  }
+
+  .button-primary {
+    @apply bg-green;
+    @apply text-dark-grey;
+    @apply py-[6px];
+    @apply px-4;
+    @apply rounded-xl;
+    @apply font-semibold;
+  }
+
+  .button-link {
+    @apply text-green;
+    @apply font-semibold;
+    @apply underline;
+    text-underline-offset: var(--underline-offset);
+  }
+}
+
+/** General styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+img {
+  width: 100%;
+}
+
+button:hover,
+a:hover {
+  cursor: pointer;
+}
+
+input {
+  appearance: none;
+  border-radius: var(--border-radius);
+  -webkit-appearance: none;
+  -webkit-border-radius: var(--border-radius);
+}
+
+ul {
+  list-style: none;
+}
