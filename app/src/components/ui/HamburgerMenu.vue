@@ -16,7 +16,10 @@
       :key="index"
       class="font-semibold pl-8 pr-default py-2 whitespace-nowrap hover:text-green"
     >
-      <a :href="item.link">{{ item.name }}</a>
+      <a :href="item.link" class="flex items-center gap-4">
+        <img :src="item.icon" class="h-4 w-4" alt="Icon" />
+        {{ item.name }}
+      </a>
     </li>
   </ul>
   <!-- Overlay -->
@@ -29,15 +32,18 @@
 
 <script setup lang="ts">
 /** Vue */
-import { computed, onMounted, ref } from "vue";
+import { ref } from "vue";
+
+/** Images */
+import ExampleIcon from "@/assets/icons/ic_add_white.svg";
 
 const isMenuOpen = ref(false);
 const menuItems = ref([
-  { name: "Menu item 1", link: "#" },
-  { name: "Menu item 2", link: "#" },
-  { name: "Menu item 3", link: "#" },
-  { name: "Menu item 4", link: "#" },
-  { name: "Menu item 5", link: "#" },
+  { name: "Menu item 1", link: "#", icon: ExampleIcon },
+  { name: "Menu item 2", link: "#", icon: ExampleIcon },
+  { name: "Menu item 3", link: "#", icon: ExampleIcon },
+  { name: "Menu item 4", link: "#", icon: ExampleIcon },
+  { name: "Menu item 5", link: "#", icon: ExampleIcon },
 ]);
 
 function toggleMenu() {
