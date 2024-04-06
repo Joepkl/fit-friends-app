@@ -78,6 +78,10 @@ a:hover {
   cursor: pointer;
 }
 
+p {
+  line-height: 1.2;
+}
+
 .disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -120,6 +124,11 @@ select:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--dark-grey);
   -webkit-box-shadow: 0 0 0px 1000px var(--white-2) inset;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+input.error,
+select.error {
+  -webkit-text-fill-color: var(--red) !important;
 }
 
 /* Custom checkbox */

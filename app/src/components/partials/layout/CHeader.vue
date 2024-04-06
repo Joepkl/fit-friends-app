@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 /** Vue */
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 
 /** Store */
 // @ts-ignore

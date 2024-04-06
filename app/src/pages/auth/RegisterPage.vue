@@ -8,24 +8,34 @@
     </p>
     <!-- Inputs -->
     <div class="relative">
+      <!-- Email -->
       <div class="flex flex-col mb-4">
         <label for="email">Email</label>
         <input
           v-model="email"
-          :class="{ 'error test': isEmailValid === false }"
-          @change="validateEmail"
+          :class="{ error: isEmailValid === false }"
+          @change="handleEmailChange"
           id="email"
           type="text"
         />
       </div>
       <div class="flex flex-col mb-4">
+        <!-- Username -->
         <label for="username">Username</label>
-        <input v-model="username" id="username" type="text" />
+        <input
+          v-model="username"
+          @change="removeError"
+          :class="{ error: isUsernameValid === false }"
+          id="username"
+          type="text"
+        />
       </div>
+      <!-- Password -->
       <div class="flex flex-col mb-4">
         <label for="password">Password</label>
         <input @change="valdatePassword" v-model="password" id="password" type="password" ref="passwordEl" />
       </div>
+      <!-- Password confirmation -->
       <div class="flex flex-col mb-4">
         <label for="confirm-password">Confirm password</label>
         <input
@@ -44,10 +54,10 @@
         <span class="checkmark"></span>
       </label>
       <!-- Error message -->
-      <p v-if="errors.length" class="error absolute bottom-[-35px]">{{ errors[0] }}</p>
+      <p v-if="errors.length" class="error mt-4">{{ errors[0] }}</p>
     </div>
     <!-- CTA -->
-    <button @click="createAccount" :class="{ disabled: !isDataValid }" class="button-primary mt-12">
+    <button @click="createAccount" :class="{ disabled: !isDataValid }" class="button-primary mt-6">
       Create account
     </button>
     <p class="mt-4">Already have an account? <a class="button-link" @click="goToLogin">Login</a></p>
@@ -81,12 +91,18 @@ const username = ref(null);
 const password = ref(null);
 const confirmPassword = ref(null);
 const isEmailValid = ref<boolean | null>(null);
+const isUsernameValid = ref<boolean | null>(null);
 const isPasswordValid = ref<boolean | null>(null);
 const errors = ref<string[]>([]);
 
 const isDataValid = computed(() => {
   return isEmailValid.value && username.value && password.value && isPasswordValid.value;
 });
+
+function handleEmailChange() {
+  validateEmail();
+  removeError();
+}
 
 function validateEmail() {
   const errorMessage = "Please enter a valid email address.";
@@ -132,6 +148,15 @@ function valdatePassword() {
   }
 }
 
+function removeError() {
+  const errorMessage = "The username or email you provided is already registered. Please use a different one.";
+  const usernameErrorIndex = errors.value.indexOf(errorMessage);
+  if (usernameErrorIndex !== -1) {
+    errors.value.splice(usernameErrorIndex, 1);
+    isUsernameValid.value = true;
+  }
+}
+
 async function login() {
   if (email.value && password.value) {
     try {
@@ -153,7 +178,10 @@ async function createAccount() {
       await postCreateAccount(email.value, username.value, password.value);
       await login();
     } catch (error) {
+      // Account or username already exists
       errors.value.push((error as Error)?.message);
+      isUsernameValid.value = false;
+      isEmailValid.value = false;
     }
   }
 }

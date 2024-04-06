@@ -7,10 +7,12 @@
       <span>Sign in to your account to continue.</span>
     </p>
     <div class="relative">
+      <!-- Email -->
       <div class="flex flex-col mb-4">
         <label for="email">Email</label>
         <input v-model="email" id="email" type="text" />
       </div>
+      <!-- Password -->
       <div class="flex flex-col mb-4">
         <label for="password">Password</label>
         <input v-model="password" ref="passwordEl" id="password" type="password" />
@@ -22,10 +24,10 @@
         <span class="checkmark"></span>
       </label>
       <!-- Error message -->
-      <p v-if="errorMessage" class="error absolute bottom-[-35px]">{{ errorMessage }}</p>
+      <p v-if="errorMessage" class="error mt-4">{{ errorMessage }}</p>
     </div>
     <!-- CTA -->
-    <button @click="login" class="button-primary mt-12" :class="{ disabled: !isDataValid }">Login</button>
+    <button @click="login" class="button-primary mt-6" :class="{ disabled: !isDataValid }">Login</button>
     <p class="mt-4">Don't have an account? <a class="button-link" @click="goToRegister">Register</a></p>
   </div>
 </template>
