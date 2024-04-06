@@ -33,13 +33,13 @@
       <!-- Password -->
       <div class="flex flex-col mb-4">
         <label for="password">Password</label>
-        <input @change="valdatePassword" v-model="password" id="password" type="password" ref="passwordEl" />
+        <input @input="valdatePassword" v-model="password" id="password" type="password" ref="passwordEl" />
       </div>
       <!-- Password confirmation -->
       <div class="flex flex-col mb-4">
         <label for="confirm-password">Confirm password</label>
         <input
-          @change="valdatePassword"
+          @input="valdatePassword"
           v-model="confirmPassword"
           :class="{ error: isPasswordValid === false }"
           ref="confirmPasswordEl"
@@ -137,7 +137,10 @@ function valdatePassword() {
   const errorMessage = "Passwords do not match";
   if (password.value !== confirmPassword.value) {
     isPasswordValid.value = false;
-    errors.value?.push(errorMessage);
+    // Add error message if not already present
+    if (!errors.value.includes(errorMessage)) {
+      errors.value.push(errorMessage);
+    }
   } else {
     isPasswordValid.value = true;
     // Remove error message
