@@ -1,11 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import authRoutes from '@/router/authRoutes';
-import { LOGIN_ROUTE } from '@/router/authRoutes';
-import appRoutes from '@/router/appRoutes';
+import { createRouter, createWebHistory } from "vue-router";
+import authRoutes from "@/router/authRoutes";
+import { LOGIN_ROUTE } from "@/router/authRoutes";
+import appRoutes from "@/router/appRoutes"; // @ts-ignore
 
-/** Store */ // @ts-ignore
-import { useStore } from "@/stores/store.ts";
-
+/** Store */ import { useStore } from "@/stores/store.ts";
+import { computed } from "vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,8 +21,8 @@ router.beforeEach((to, from, next) => {
   /** Add route guard for authentication */
   if (to?.meta?.requiresAuth) {
     const store = useStore();
-    const isAuthenticated = store.getIsAuthenticated;
-    if (!isAuthenticated) {
+    const isAuthenticated = computed(() => store.getIsAuthenticated);
+    if (!isAuthenticated.value) {
       next(LOGIN_ROUTE);
       return;
     }

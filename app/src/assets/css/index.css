@@ -37,6 +37,10 @@
     padding: var(--padding-default);
   }
 
+  .page-wrapper-header {
+    padding: 0 var(--padding-default) var(--padding-default) var(--padding-default);
+  }
+
   .button-primary {
     @apply bg-green;
     @apply text-dark-grey;

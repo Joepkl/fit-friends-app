@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <CHeader />
+  <CHeader />
+  <div class="page-wrapper-header">
+    <h1 class="pb-[1600px]">Timeline</h1>
   </div>
 </template>
 

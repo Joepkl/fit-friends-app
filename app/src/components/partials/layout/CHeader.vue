@@ -1,7 +1,13 @@
 <template>
-  <div v-if="userProfile" class="header-wrapper" ref="header" :class="{ sticky: isHeaderSticky }">
-    <h1>For {{ userProfile?.userName }}</h1>
-    <div class="actions-wrapper">
+  <div
+    class="flex justify-between transition-all duration-500 z-10 px-default"
+    ref="header"
+    :class="{
+      'sticky top-0 bg-dark-grey-transparent backdrop-blur-[30px] py-4': isHeaderSticky,
+      'bg-none py-8': !isHeaderSticky,
+    }"
+  >
+    <div class="flex gap-[10px]">
       <CButton :name="'Cast'" :image="CastIcon" />
       <SearchButton />
     </div>
@@ -10,9 +16,11 @@
 
 <script setup lang="ts">
 /** Vue */
-import { computed, onMounted, ref } from "vue"; // @ts-ignore
+import { computed, onMounted, ref } from "vue";
 
-/** Store */ import { useStore } from "@/stores/store.ts";
+/** Store */
+// @ts-ignore
+import { useStore } from "@/stores/store.ts";
 
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
@@ -24,8 +32,6 @@ import CastIcon from "@/assets/icons/ic_cast.svg";
 const store = useStore();
 const header = ref(null);
 const isHeaderSticky = ref(false);
-
-const userProfile = computed(() => store.getActiveUser);
 
 function initObserver(): void {
   let observer = new IntersectionObserver(setStickyHeader, { threshold: 0.3 });
@@ -54,26 +60,25 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<!-- <style scoped>
 .header-wrapper {
   display: flex;
   justify-content: space-between;
-  padding: px(30) px(20);
+  padding: 30px 20px;
   transition: padding 0.5s;
-  // transition: .5s;
   z-index: 10;
-
-  &.sticky {
-    position: sticky;
-    top: 0;
-    background-color: var(--black-transparent);
-    backdrop-filter: blur(px(30));
-    padding: px(15) px(20);
-  }
-
-  .actions-wrapper {
-    display: flex;
-    gap: px(10);
-  }
 }
-</style>
+
+.header-wrapper .sticky {
+  position: sticky;
+  top: 0;
+  background-color: red;
+  backdrop-filter: blur(30px);
+  padding: 15px 20px;
+}
+
+.actions-wrapper {
+  display: flex;
+  gap: 10px;
+}
+</style> -->

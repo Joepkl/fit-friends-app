@@ -26,7 +26,7 @@ export async function postData(url: string, bodyData: any): Promise<ApiResponse>
     // 4xx or 5xx status code error -> not caught by try catch
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`HTTP error status: ${response.status}. Message: ${errorData.errors[0]}`);
+      throw new Error(errorData.message);
     }
 
     const responseData = await response.json();

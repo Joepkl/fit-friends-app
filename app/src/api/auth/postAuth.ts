@@ -16,6 +16,8 @@ export async function postCreateAccount(email: string, username: string, passwor
 
   if (response.isSuccess) {
     return true;
+  } else {
+    throw new Error(response.error);
   }
 }
 
@@ -30,5 +32,7 @@ export async function postLoginAccount(email: string, password: string) {
 
   if (response.isSuccess) {
     return { accessToken: response.token };
+  } else {
+    throw new Error(response.error);
   }
 }

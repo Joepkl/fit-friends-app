@@ -60,6 +60,7 @@ import { ref, computed } from "vue";
 
 /** Routes */
 import { LOGIN_ROUTE } from "@/router/authRoutes";
+import { TIMELINE_ROUTE } from "@/router/appRoutes";
 
 /** Store */
 // @ts-ignore
@@ -102,7 +103,7 @@ function validateEmail() {
 }
 
 function togglePasswordVisibility() {
-  if (passwordEl.value) {
+  if (passwordEl.value && confirmPasswordEl.value) {
     const pwEl = passwordEl.value as HTMLInputElement;
     const pwConfirmEl = confirmPasswordEl.value as HTMLInputElement;
     if (pwEl.type === "password") {
@@ -132,24 +133,35 @@ function valdatePassword() {
 
 async function login() {
   if (email.value && password.value) {
-    const response = await postLoginAccount(email.value, password.value);
-    if (response) {
-      console.log(response.accessToken);
+    try {
+      const response = await postLoginAccount(email.value, password.value);
+      if (response.accessToken) {
+        store.setIsAuthenticated(true);
+        store.setAccessToken(response.accessToken);
+        goToTimeline();
+      }
+    } catch (error) {
+      errors.value.push((error as Error)?.message);
     }
   }
 }
 
 async function createAccount() {
   if (email.value && username.value && password.value) {
-    if (await postCreateAccount(email.value, username.value, password.value)) {
+    try {
+      await postCreateAccount(email.value, username.value, password.value);
       await login();
-    } else {
-      console.log("Something went wrong");
+    } catch (error) {
+      errors.value.push((error as Error)?.message);
     }
   }
 }
 
 function goToLogin() {
   router.push(LOGIN_ROUTE);
+}
+
+function goToTimeline() {
+  router.push(TIMELINE_ROUTE);
 }
 </script>

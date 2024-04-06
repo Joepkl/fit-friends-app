@@ -1,6 +1,6 @@
 <template>
-  <button class="button">
-    <img class="icon" :src="image" :alt="`${name} icon`" />
+  <button class="bg-none border-none">
+    <img class="w-[30px] h-[25px]" :src="image" :alt="`${name} icon`" />
     <p v-if="text">{{ text }}</p>
   </button>
 </template>
@@ -12,15 +12,3 @@ const props = defineProps<{
   text?: string;
 }>();
 </script>
-
-<style lang="scss" scoped>
-.button {
-  background: none;
-  border: none;
-
-  .icon {
-    width: px(30);
-    height: px(25);
-  }
-}
-</style>

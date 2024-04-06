@@ -8,10 +8,8 @@ export const useStore = defineStore('store', {
       activeApiCalls: 0 as number,
       isLoading: null as null | boolean,
       isAuthenticated: null as null | boolean,
-      isSearchExpanded: false as false | boolean,
-      activeUser: null as null | UserProfile,
-      trendingMovies: null as null | Array<Movie>,
-      upcomingMovies: null as null | Array<Movie>,
+      accessToken: null as null | string,
+      isSearchExpanded: false as false | boolean
     };
   },
   persist: true,
@@ -25,17 +23,11 @@ export const useStore = defineStore('store', {
     getIsAuthenticated(): null | boolean {
       return this.isAuthenticated;
     },
+    getAccessToken(): null | string {
+      return this.accessToken;
+    },
     getIsSearchExpanded():boolean {
       return this.isSearchExpanded;
-    },
-    getActiveUser():null | UserProfile {
-      return this.activeUser;
-    },
-    getTrendingMovies(): null | Array<Movie> {
-      return this.trendingMovies;
-    },
-    getUpcomingMovies(): null | Array<Movie> {
-      return this.trendingMovies;
     },
   },
   actions: {
@@ -51,18 +43,12 @@ export const useStore = defineStore('store', {
     setIsAuthenticated(value: boolean) {
       this.isAuthenticated = value;
     },
-    setIsSearchExpanded(value:boolean) {
+    setAccessToken(value: string) {
+      this.accessToken = value;
+    },
+    setIsSearchExpanded(value: boolean) {
       this.isSearchExpanded = value;
-    },
-    setActiveUser(userProfile: UserProfile) {
-      this.activeUser = userProfile;
-    },
-    setTrendingMovies(movieData: Array<Movie>) {
-      this.trendingMovies = movieData;
-    },
-    setUpcomingMovies(movieData: Array<Movie>) {
-      this.upcomingMovies = movieData;
-    },
+    }
   },
 });
 
