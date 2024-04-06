@@ -1,5 +1,6 @@
 <template>
   <div class="page-wrapper">
+    <img class="w-14 mb-10" src="@/assets/icons/ic_logo.svg" alt="Logo" />
     <h1>Register</h1>
     <p class="flex flex-col mt-4 mb-8">
       <span>Welcome to the platform!</span>

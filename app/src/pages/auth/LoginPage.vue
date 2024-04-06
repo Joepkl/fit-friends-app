@@ -1,5 +1,6 @@
 <template>
   <div class="page-wrapper">
+    <img class="w-14 mb-10" src="@/assets/icons/ic_logo.svg" alt="Logo" />
     <h1>Login</h1>
     <p class="flex flex-col mt-4 mb-8">
       <span>Welcome back!</span>
@@ -21,10 +22,10 @@
         <span class="checkmark"></span>
       </label>
       <!-- Error message -->
-      <p v-if="errors" class="error absolute bottom-[-35px]">{{ errors }}</p>
+      <p v-if="errorMessage" class="error absolute bottom-[-35px]">{{ errorMessage }}</p>
     </div>
     <!-- CTA -->
-    <button @click="login" class="button-primary mt-12">Login</button>
+    <button @click="login" class="button-primary mt-12" :class="{ disabled: !isDataValid }">Login</button>
     <p class="mt-4">Don't have an account? <a class="button-link" @click="goToRegister">Register</a></p>
   </div>
 </template>
@@ -32,7 +33,7 @@
 <script setup lang="ts">
 /** Vue */
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 /** Routes */
 import { REGISTER_ROUTE } from "@/router/authRoutes";
@@ -51,7 +52,11 @@ const router = useRouter();
 const email = ref<string | null>(null);
 const password = ref<string | null>(null);
 const passwordEl = ref<HTMLInputElement | null>(null);
-const errors = ref<string | null>(null);
+const errorMessage = ref<string | null>(null);
+
+const isDataValid = computed(() => {
+  return email.value && password.value;
+});
 
 function togglePasswordVisibility() {
   if (passwordEl.value) {
@@ -74,7 +79,7 @@ async function login() {
         goToTimeline();
       }
     } catch (error) {
-      errors.value = (error as Error).message;
+      errorMessage.value = (error as Error).message;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div
+  <header
     class="flex justify-between transition-all duration-500 z-10 px-default"
     ref="header"
     :class="{
@@ -7,11 +7,11 @@
       'bg-none py-8': !isHeaderSticky,
     }"
   >
-    <div class="flex gap-[10px]">
+    <nav class="flex justify-between w-full">
       <CButton :name="'Cast'" :image="CastIcon" />
-      <SearchButton />
-    </div>
-  </div>
+      <HamburgerMenu />
+    </nav>
+  </header>
 </template>
 
 <script setup lang="ts">
@@ -23,8 +23,8 @@ import { computed, onMounted, ref } from "vue";
 import { useStore } from "@/stores/store.ts";
 
 /** Components */
+import HamburgerMenu from "@/components/ui/HamburgerMenu.vue";
 import CButton from "@/components/ui/CButton.vue";
-import SearchButton from "@/components/ui/SearchButton.vue";
 
 /** Images */
 import CastIcon from "@/assets/icons/ic_cast.svg";
@@ -59,26 +59,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<!-- <style scoped>
-.header-wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding: 30px 20px;
-  transition: padding 0.5s;
-  z-index: 10;
-}
-
-.header-wrapper .sticky {
-  position: sticky;
-  top: 0;
-  background-color: red;
-  backdrop-filter: blur(30px);
-  padding: 15px 20px;
-}
-
-.actions-wrapper {
-  display: flex;
-  gap: 10px;
-}
-</style> -->
