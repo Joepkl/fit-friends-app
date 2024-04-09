@@ -71,7 +71,7 @@ import { ref, computed } from "vue";
 
 /** Routes */
 import { LOGIN_ROUTE } from "@/router/authRoutes";
-import { TIMELINE_ROUTE } from "@/router/appRoutes";
+import { HOME_ROUTE } from "@/router/appRoutes";
 
 /** Store */
 // @ts-ignore
@@ -167,7 +167,7 @@ async function login() {
       if (response.accessToken) {
         store.setIsAuthenticated(true);
         store.setAccessToken(response.accessToken);
-        goToTimeline();
+        goToHome();
       }
     } catch (error) {
       errors.value.push((error as Error)?.message);
@@ -193,7 +193,7 @@ function goToLogin() {
   router.push(LOGIN_ROUTE);
 }
 
-function goToTimeline() {
-  router.push(TIMELINE_ROUTE);
+function goToHome() {
+  router.push(HOME_ROUTE);
 }
 </script>

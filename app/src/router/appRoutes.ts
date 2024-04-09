@@ -1,16 +1,16 @@
-const TimelinePage = () => import("@/pages/app/TimelinePage.vue");
+const HomePage = () => import("@/pages/app/HomePage.vue");
 
-const TIMELINE_ROUTE = {
-  path: "/timeline",
+const HOME_ROUTE = {
+  path: "/home",
   name: "Home",
-  component: TimelinePage,
+  component: HomePage,
   meta: {
     requiresAuth: true,
-    pageTitle: "Timeline",
+    pageTitle: "Home",
   },
 };
 
-const appRoutes = [TIMELINE_ROUTE];
+const appRoutes = [HOME_ROUTE];
 
 export default appRoutes;
-export { TIMELINE_ROUTE };
+export { HOME_ROUTE };

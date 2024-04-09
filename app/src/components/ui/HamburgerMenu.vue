@@ -8,16 +8,17 @@
   </button>
   <!-- Menu items -->
   <ul
-    class="menu-items fixed right-0 w-0 bg-light-grey top-0 pt-20 z-20 h-[100dvh] flex flex-col gap-8 overflow-hidden"
+    class="menu-items fixed right-0 w-0 bg-light-grey top-0 pt-[85px] z-20 h-[100dvh] flex flex-col gap-8 overflow-hidden"
     :class="{ 'open w-60': isMenuOpen }"
   >
     <li
       v-for="(item, index) in menuItems"
       :key="index"
-      class="font-semibold pl-8 pr-default py-2 whitespace-nowrap hover:text-green"
+      class="font-semibold whitespace-nowrap hover:text-green"
+      :class="{ 'bg-green text-light-grey hover:text-light-grey': currentRoute === item.name }"
     >
-      <a :href="item.link" class="flex items-center gap-4">
-        <img :src="item.icon" class="h-4 w-4" alt="Icon" />
+      <a :href="item.link" class="flex items-center gap-4 pl-8 pr-default py-2">
+        <img :src="currentRoute === item.name ? item.activeIcon : item.icon" class="h-5 w-5" alt="Icon" />
         {{ item.name }}
       </a>
     </li>
@@ -32,19 +33,32 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 
 /** Images */
-import ExampleIcon from "@/assets/icons/ic_add_white.svg";
+import AchievementsIcon from "@/assets/icons/ic_achievements.svg";
+import AchievementsGreyIcon from "@/assets/icons/ic_achievements_grey.svg";
+import HomeIcon from "@/assets/icons/ic_home.svg";
+import HomeGreyIcon from "@/assets/icons/ic_home_grey.svg";
+import FriendsIcon from "@/assets/icons/ic_friends.svg";
+import FriendsGreyIcon from "@/assets/icons/ic_friends_grey.svg";
+import LeaderboardIcon from "@/assets/icons/ic_leaderboard.svg";
+import LeaderboardGreyIcon from "@/assets/icons/ic_leaderboard_grey.svg";
+import AddIcon from "@/assets/icons/ic_add.svg";
+import AddGreyIcon from "@/assets/icons/ic_add_grey.svg";
 
 const isMenuOpen = ref(false);
 const menuItems = ref([
-  { name: "Menu item 1", link: "#", icon: ExampleIcon },
-  { name: "Menu item 2", link: "#", icon: ExampleIcon },
-  { name: "Menu item 3", link: "#", icon: ExampleIcon },
-  { name: "Menu item 4", link: "#", icon: ExampleIcon },
-  { name: "Menu item 5", link: "#", icon: ExampleIcon },
+  { name: "Home", link: "#", icon: HomeIcon, activeIcon: HomeGreyIcon },
+  { name: "Friends", link: "#", icon: FriendsIcon, activeIcon: FriendsGreyIcon },
+  { name: "Leaderboard", link: "#", icon: LeaderboardIcon, activeIcon: LeaderboardGreyIcon },
+  { name: "Achievements", link: "#", icon: AchievementsIcon, activeIcon: AchievementsGreyIcon },
+  { name: "Create post", link: "#", icon: AddIcon, activeIcon: AddGreyIcon },
 ]);
+
+const router = useRouter();
+const currentRoute = computed(() => router.currentRoute.value.matched[0].name);
 
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value;

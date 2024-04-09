@@ -8,7 +8,7 @@
     }"
   >
     <nav class="flex justify-between w-full">
-      <CButton :name="'Cast'" :image="CastIcon" />
+      <CButton name="Account" :image="AccountIcon" :is-link="true" @click="goToAccount" />
       <HamburgerMenu />
     </nav>
   </header>
@@ -27,7 +27,7 @@ import HamburgerMenu from "@/components/ui/HamburgerMenu.vue";
 import CButton from "@/components/ui/CButton.vue";
 
 /** Images */
-import CastIcon from "@/assets/icons/ic_cast.svg";
+import AccountIcon from "@/assets/icons/ic_account_green.svg";
 
 const store = useStore();
 const header = ref(null);
@@ -47,6 +47,10 @@ function setStickyHeader(entries: IntersectionObserverEntry[]): void {
       isHeaderSticky.value = true;
     }
   });
+}
+
+function goToAccount() {
+  console.log("Go to account route");
 }
 
 onMounted(() => {
