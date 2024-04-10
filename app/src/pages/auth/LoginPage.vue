@@ -6,7 +6,7 @@
       <span>Welcome back!</span>
       <span>Sign in to your account to continue.</span>
     </p>
-    <div class="relative">
+    <form class="relative">
       <!-- Email -->
       <div class="flex flex-col mb-4">
         <label for="email">Email</label>
@@ -24,8 +24,11 @@
         <span class="checkmark"></span>
       </label>
       <!-- Error message -->
-      <p v-if="errorMessage" class="error mt-4">{{ errorMessage }}</p>
-    </div>
+      <div class="mt-4">
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+        <p v-if="isCapslockActive" class="error mt-2">Caps lock is active.</p>
+      </div>
+    </form>
     <!-- CTA -->
     <button @click="login" class="button-primary mt-6" :class="{ disabled: !isDataValid }">Login</button>
     <p class="mt-4">Don't have an account? <a class="button-link" @click="goToRegister">Register</a></p>
@@ -35,7 +38,7 @@
 <script setup lang="ts">
 /** Vue */
 import { useRouter } from "vue-router";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 
 /** Routes */
 import { REGISTER_ROUTE } from "@/router/authRoutes";
@@ -55,6 +58,7 @@ const email = ref<string | null>(null);
 const password = ref<string | null>(null);
 const passwordEl = ref<HTMLInputElement | null>(null);
 const errorMessage = ref<string | null>(null);
+const isCapslockActive = ref(false);
 
 const isDataValid = computed(() => {
   return email.value && password.value;
@@ -67,6 +71,16 @@ function togglePasswordVisibility() {
       pwEl.type = "text";
     } else {
       pwEl.type = "password";
+    }
+  }
+}
+
+function checkCapslock(e: KeyboardEvent) {
+  if (e.code === "CapsLock") {
+    if (e.getModifierState("CapsLock")) {
+      isCapslockActive.value = true;
+    } else {
+      isCapslockActive.value = false;
     }
   }
 }
@@ -93,4 +107,14 @@ function goToRegister() {
 function goToHome() {
   router.push(HOME_ROUTE);
 }
+
+onMounted(() => {
+  document.addEventListener("keydown", checkCapslock);
+  document.addEventListener("keyup", checkCapslock);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("keydown", checkCapslock);
+  document.removeEventListener("keyup", checkCapslock);
+});
 </script>

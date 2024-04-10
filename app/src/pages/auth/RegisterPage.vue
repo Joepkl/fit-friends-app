@@ -1,13 +1,13 @@
 <template>
   <div class="page-wrapper">
     <img class="w-14 mb-10" src="@/assets/icons/ic_logo.svg" alt="Logo" />
-    <h1>Register</h1>
+    <h1>Register {{ isUsernameValid }}</h1>
     <p class="flex flex-col mt-4 mb-8">
       <span>Welcome to the platform!</span>
       <span>Create an account to continue.</span>
     </p>
     <!-- Inputs -->
-    <div class="relative">
+    <form class="relative">
       <!-- Email -->
       <div class="flex flex-col mb-4">
         <label for="email">Email</label>
@@ -24,7 +24,8 @@
         <label for="username">Username</label>
         <input
           v-model="username"
-          @change="removeError"
+          @change="removeCredentialsError"
+          @input="validateUsername"
           :class="{ error: isUsernameValid === false }"
           id="username"
           type="text"
@@ -33,13 +34,13 @@
       <!-- Password -->
       <div class="flex flex-col mb-4">
         <label for="password">Password</label>
-        <input @input="valdatePassword" v-model="password" id="password" type="password" ref="passwordEl" />
+        <input @input="validatePassword" v-model="password" id="password" type="password" ref="passwordEl" />
       </div>
       <!-- Password confirmation -->
       <div class="flex flex-col mb-4">
         <label for="confirm-password">Confirm password</label>
         <input
-          @input="valdatePassword"
+          @input="validatePassword"
           v-model="confirmPassword"
           :class="{ error: isPasswordValid === false }"
           ref="confirmPasswordEl"
@@ -53,9 +54,12 @@
         <input type="checkbox" @click="togglePasswordVisibility" id="show-password" />
         <span class="checkmark"></span>
       </label>
-      <!-- Error message -->
-      <p v-if="errors.length" class="error mt-4">{{ errors[0] }}</p>
-    </div>
+      <!-- Error messages -->
+      <div class="mt-4">
+        <p v-if="errors.length" class="error">{{ errors[0] }}</p>
+        <p v-if="isCapslockActive" class="error mt-2">Caps lock is active.</p>
+      </div>
+    </form>
     <!-- CTA -->
     <button @click="createAccount" :class="{ disabled: !isDataValid }" class="button-primary mt-6">
       Create account
@@ -67,11 +71,11 @@
 <script setup lang="ts">
 /** Vue */
 import { useRouter } from "vue-router";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 
 /** Routes */
 import { LOGIN_ROUTE } from "@/router/authRoutes";
-import { HOME_ROUTE } from "@/router/appRoutes";
+import { ONBOARDING_ROUTE } from "@/router/appRoutes";
 
 /** Store */
 // @ts-ignore
@@ -94,14 +98,28 @@ const isEmailValid = ref<boolean | null>(null);
 const isUsernameValid = ref<boolean | null>(null);
 const isPasswordValid = ref<boolean | null>(null);
 const errors = ref<string[]>([]);
+const isCapslockActive = ref(false);
 
 const isDataValid = computed(() => {
-  return isEmailValid.value && username.value && password.value && isPasswordValid.value;
+  return isEmailValid.value && username.value && isUsernameValid.value && password.value && isPasswordValid.value;
 });
 
 function handleEmailChange() {
   validateEmail();
-  removeError();
+  removeCredentialsError();
+}
+
+function setError(isActive: boolean, errorMessage: string) {
+  if (isActive) {
+    if (!errors.value.includes(errorMessage)) {
+      errors.value.push(errorMessage);
+    }
+  } else {
+    const errorIndex = errors.value.indexOf(errorMessage);
+    if (errorIndex !== -1) {
+      errors.value.splice(errorIndex, 1);
+    }
+  }
 }
 
 function validateEmail() {
@@ -109,13 +127,20 @@ function validateEmail() {
   const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   if (email.value && email.value.match(validRegex)) {
     isEmailValid.value = true;
-    const emailErrorIndex = errors.value.indexOf(errorMessage);
-    if (emailErrorIndex !== -1) {
-      errors.value.splice(emailErrorIndex, 1);
-    }
+    setError(false, errorMessage);
   } else {
     isEmailValid.value = false;
-    errors.value.push(errorMessage);
+    setError(true, errorMessage);
+  }
+}
+
+function checkCapslock(e: KeyboardEvent) {
+  if (e.code === "CapsLock") {
+    if (e.getModifierState("CapsLock")) {
+      isCapslockActive.value = true;
+    } else {
+      isCapslockActive.value = false;
+    }
   }
 }
 
@@ -133,31 +158,32 @@ function togglePasswordVisibility() {
   }
 }
 
-function valdatePassword() {
+function validatePassword() {
   const errorMessage = "Passwords do not match";
   if (password.value !== confirmPassword.value) {
     isPasswordValid.value = false;
-    // Add error message if not already present
-    if (!errors.value.includes(errorMessage)) {
-      errors.value.push(errorMessage);
-    }
+    setError(true, errorMessage);
   } else {
     isPasswordValid.value = true;
-    // Remove error message
-    const passwordErrorIndex = errors.value.indexOf(errorMessage);
-    if (passwordErrorIndex !== -1) {
-      errors.value.splice(passwordErrorIndex, 1);
-    }
+    setError(false, errorMessage);
   }
 }
 
-function removeError() {
-  const errorMessage = "The username or email you provided is already registered. Please use a different one.";
-  const usernameErrorIndex = errors.value.indexOf(errorMessage);
-  if (usernameErrorIndex !== -1) {
-    errors.value.splice(usernameErrorIndex, 1);
+function validateUsername() {
+  const errorMessage = "Username cannot contain spaces.";
+  if (username.value && (username.value as string).includes(" ")) {
+    setError(true, errorMessage);
+    isUsernameValid.value = false;
+  } else {
+    setError(false, errorMessage);
     isUsernameValid.value = true;
   }
+}
+
+function removeCredentialsError() {
+  const errorMessage = "The username or email you provided is already registered. Please use a different one.";
+  setError(false, errorMessage);
+  validateUsername();
 }
 
 async function login() {
@@ -167,7 +193,7 @@ async function login() {
       if (response.accessToken) {
         store.setIsAuthenticated(true);
         store.setAccessToken(response.accessToken);
-        goToHome();
+        goToOnboarding();
       }
     } catch (error) {
       errors.value.push((error as Error)?.message);
@@ -193,7 +219,17 @@ function goToLogin() {
   router.push(LOGIN_ROUTE);
 }
 
-function goToHome() {
-  router.push(HOME_ROUTE);
+function goToOnboarding() {
+  router.push(ONBOARDING_ROUTE);
 }
+
+onMounted(() => {
+  document.addEventListener("keydown", checkCapslock);
+  document.addEventListener("keyup", checkCapslock);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("keydown", checkCapslock);
+  document.removeEventListener("keyup", checkCapslock);
+});
 </script>
