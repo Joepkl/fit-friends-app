@@ -45,13 +45,13 @@
     <!-- CTA -->
     <button @click="login" class="button-primary mt-6" :class="{ disabled: !isDataValid }">Login</button>
     <p class="mt-4">Don't have an account? <a class="button-link" @click="goToRegister">Register</a></p>
-    <div class="mt-2 flex gap-1">
+    <div class="mt-2 flex gap-1 items-center">
       <p>Forgot password?</p>
-      <CButton @click="openPasswordModal" button-class="link" text="Set new password" />
+      <CButton @click="openPasswordModal" button-class="link" text="Reset password" />
     </div>
   </div>
   <!-- Modal -->
-  <CModal @close-modal="closePasswordModal" :isActive="isPasswordModalActive" :content="ForgotPasswordContent">
+  <CModal @close-modal="closePasswordModal" :isActive="isPasswordModalActive" :content="ResetPasswordContent">
     <div class="flex flex-col mt-6">
       <label for="emailResend">Email</label>
       <input
@@ -94,7 +94,7 @@ import CModal from "@/components/ui/CModal.vue";
 import CButton from "@/components/ui/CButton.vue";
 
 /** Constants */
-import { ForgotPasswordContent } from "@/constants/ModalContent";
+import { ResetPasswordContent } from "@/constants/ModalContent";
 
 const store = useStore();
 const router = useRouter();
