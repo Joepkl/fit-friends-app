@@ -1,7 +1,8 @@
 :root {
   --light-grey: #2F363D;
   --dark-grey: #212529;
-  --dark-grey-transparent: #2125294D;
+  --dark-grey-30: #2125294D;
+  --dark-grey-80: #212529CC;
   --green: #b7e4c7;
   --white: #f1faee;
   --white-2: #fff;
@@ -9,6 +10,6 @@
 
 
   --padding-default: 32px;
-  --border-radius-input: 6px;
+  --border-radius-default: 6px;
   --underline-offset: 4px;
 }

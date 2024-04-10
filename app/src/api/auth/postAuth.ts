@@ -22,10 +22,10 @@ export async function postCreateAccount(email: string, username: string, passwor
 }
 
 /** Login to account */
-export async function postLoginAccount(email: string, password: string) {
+export async function postLoginAccount(username: string, password: string) {
   const endpoint = "login";
   const bodyData = {
-    email: email,
+    username: username,
     password: password,
   };
   const response = await postData(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`, bodyData);

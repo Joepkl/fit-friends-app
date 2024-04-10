@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper">
     <img class="w-14 mb-10" src="@/assets/icons/ic_logo.svg" alt="Logo" />
-    <h1>Register {{ isUsernameValid }}</h1>
+    <h1>Register</h1>
     <p class="flex flex-col mt-4 mb-8">
       <span>Welcome to the platform!</span>
       <span>Create an account to continue.</span>
@@ -187,9 +187,9 @@ function removeCredentialsError() {
 }
 
 async function login() {
-  if (email.value && password.value) {
+  if (username.value && password.value) {
     try {
-      const response = await postLoginAccount(email.value, password.value);
+      const response = await postLoginAccount(username.value, password.value);
       if (response.accessToken) {
         store.setIsAuthenticated(true);
         store.setAccessToken(response.accessToken);

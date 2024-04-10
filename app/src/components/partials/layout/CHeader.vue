@@ -3,12 +3,12 @@
     class="flex justify-between transition-all duration-500 z-10 px-default"
     ref="header"
     :class="{
-      'sticky top-0 bg-dark-grey-transparent backdrop-blur-[30px] py-4': isHeaderSticky,
+      'sticky top-0 bg-dark-grey-30 backdrop-blur-[30px] py-4': isHeaderSticky,
       'bg-none py-8': !isHeaderSticky,
     }"
   >
     <nav class="flex justify-between w-full">
-      <CButton name="Account" :image="AccountIcon" :is-link="true" @click="goToAccount" />
+      <CButton name="Account" :image="AccountIcon" :is-link="true" @click="goToAccount" class="w-[30px] h-[25px]" />
       <HamburgerMenu />
     </nav>
   </header>

@@ -35,10 +35,19 @@
 @layer utilities {
   .page-wrapper {
     padding: var(--padding-default);
+    max-width: 768px;
+    margin: 0 auto;
   }
 
   .page-wrapper-header {
     padding: 0 var(--padding-default) var(--padding-default) var(--padding-default);
+    max-width: 768px;
+    margin: 0 auto;
+  }
+
+  .button {
+    @apply w-5;
+    @apply h-5;
   }
 
   .button-primary {
@@ -95,9 +104,9 @@ p {
 
 input {
   appearance: none;
-  border-radius: var(--border-radius-input);
+  border-radius: var(--border-radius-default);
   -webkit-appearance: none;
-  -webkit-border-radius: var(--border-radius-input);
+  -webkit-border-radius: var(--border-radius-default);
   padding: 4px 8px;
   color: var(--dark-grey);
   border: 2px solid var(--dark-grey);

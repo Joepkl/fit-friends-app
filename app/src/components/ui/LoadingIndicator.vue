@@ -1,6 +1,8 @@
 <template>
-  <div v-if="isLoading" class="loader-wrapper">
-    <span class="loader"></span>
+  <div v-if="isLoading" class="z-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <span
+      class="loader w-12 h-12 inline-block border-[5px] border-solid border-green border-b-transparent rounded-full"
+    ></span>
   </div>
 </template>
 
@@ -11,21 +13,7 @@ defineProps<{
 </script>
 
 <style scoped>
-.loader-wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-}
-
 .loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid var(--green);
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
   animation: rotation 1s linear infinite;
 }
 
