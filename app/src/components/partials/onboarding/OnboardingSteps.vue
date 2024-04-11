@@ -23,7 +23,7 @@
 /** Vue */
 import { computed } from "vue";
 
-//** Components */
+/** Components */
 import CButton from "@/components/ui/CButton.vue";
 
 const emits = defineEmits(["next-step", "previous-step", "go-to-step"]);

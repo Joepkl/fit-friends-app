@@ -1,13 +1,13 @@
 <template>
   <div
     v-if="isActive"
-    class="z-50 bg-light-grey border-[2px] border-solid border-green w-10/12 max-w-96 fixed top-1/4 left-1/2 transform -translate-x-1/2 px-9 py-5 rounded-default"
+    class="z-50 bg-light-grey border-[2px] border-solid border-green w-10/12 max-w-96 fixed top-1/4 left-1/2 transform -translate-x-1/2 px-9 pt-5 pb-7 rounded-default"
   >
     <!-- Cose button -->
     <CButton @click="closeModal" :image="CloseIcon" class="button absolute right-5 top-5" />
     <!-- Modal content -->
     <h2 class="text-green mt-5 mb-2">{{ content.title }}</h2>
-    <p>{{ content.text }}</p>
+    <p v-html="content.text" />
     <!-- Additional content -->
     <slot />
   </div>

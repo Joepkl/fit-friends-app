@@ -8,57 +8,71 @@
     </p>
     <!-- Inputs -->
     <form class="relative">
-      <!-- Email -->
-      <div class="flex flex-col mb-4">
-        <label for="email">Email</label>
-        <input
-          v-model="email"
-          :class="{ error: isEmailValid === false }"
-          @change="handleEmailChange"
-          id="email"
-          type="text"
-        />
-      </div>
-      <div class="flex flex-col mb-4">
+      <ul class="flex flex-col gap-4">
+        <!-- Email -->
+        <li class="flex flex-col">
+          <label for="email">Email</label>
+          <input
+            v-model="email"
+            :class="{ error: isEmailValid === false }"
+            @change="handleEmailChange"
+            id="email"
+            type="text"
+            placeholder="johndoe@gmail.com"
+          />
+        </li>
         <!-- Username -->
-        <label for="username">Username</label>
-        <input
-          v-model="username"
-          @change="removeCredentialsError"
-          @input="validateUsername"
-          :class="{ error: isUsernameValid === false }"
-          id="username"
-          type="text"
-        />
-      </div>
-      <!-- Password -->
-      <div class="flex flex-col mb-4">
-        <label for="password">Password</label>
-        <input @input="validatePassword" v-model="password" id="password" type="password" ref="passwordEl" />
-      </div>
-      <!-- Password confirmation -->
-      <div class="flex flex-col mb-4">
-        <label for="confirm-password">Confirm password</label>
-        <input
-          @input="validatePassword"
-          v-model="confirmPassword"
-          :class="{ error: isPasswordValid === false }"
-          ref="confirmPasswordEl"
-          type="password"
-          id="confirm-password"
-        />
-      </div>
-      <!-- Password visibility toggle -->
-      <label class="container"
-        >Show password
-        <input type="checkbox" @click="togglePasswordVisibility" id="show-password" />
-        <span class="checkmark"></span>
-      </label>
-      <!-- Error messages -->
-      <div class="mt-4">
-        <p v-if="errors.length" class="error">{{ errors[0] }}</p>
-        <p v-if="isCapslockActive" class="error mt-2">Caps lock is active.</p>
-      </div>
+        <li class="flex flex-col">
+          <label for="username">Username</label>
+          <input
+            v-model="username"
+            @change="removeCredentialsError"
+            @input="validateUsername"
+            :class="{ error: isUsernameValid === false }"
+            id="username"
+            type="text"
+            placeholder="john_doe123"
+          />
+        </li>
+        <!-- Password -->
+        <li class="flex flex-col">
+          <label for="password">Password</label>
+          <input
+            @input="validatePassword"
+            v-model="password"
+            id="password"
+            type="password"
+            ref="passwordEl"
+            placeholder="**********"
+          />
+        </li>
+        <!-- Password confirmation -->
+        <li class="flex flex-col">
+          <label for="confirm-password">Confirm password</label>
+          <input
+            @input="validatePassword"
+            v-model="confirmPassword"
+            :class="{ error: isPasswordValid === false }"
+            ref="confirmPasswordEl"
+            type="password"
+            id="confirm-password"
+            placeholder="**********"
+          />
+        </li>
+        <!-- Password visibility toggle -->
+        <li class="flex flex-col">
+          <label class="container"
+            >Show password
+            <input type="checkbox" @click="togglePasswordVisibility" id="show-password" />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+        <!-- Error messages -->
+        <li class="flex flex-col">
+          <p v-if="errors.length" class="error">{{ errors[0] }}</p>
+          <p v-if="isCapslockActive" class="error mt-2">Caps lock is active.</p>
+        </li>
+      </ul>
     </form>
     <!-- CTA -->
     <button @click="createAccount" :class="{ disabled: !isDataValid }" class="button-primary mt-6">
@@ -87,11 +101,11 @@ import { postCreateAccount, postLoginAccount } from "@/api/auth/postAuth";
 const store = useStore();
 const router = useRouter();
 
-const passwordEl = ref(null);
-const confirmPasswordEl = ref(null);
+const passwordEl = ref<HTMLInputElement | null>(null);
+const confirmPasswordEl = ref<HTMLInputElement | null>(null);
 
 const email = ref<string | null>(null);
-const username = ref(null);
+const username = ref<string | null>(null);
 const password = ref(null);
 const confirmPassword = ref(null);
 const isEmailValid = ref<boolean | null>(null);
@@ -160,9 +174,10 @@ function togglePasswordVisibility() {
 
 function validatePassword() {
   const errorMessage = "Passwords do not match";
-  if (password.value !== confirmPassword.value) {
+  if (password.value !== confirmPassword.value && confirmPasswordEl.value) {
     isPasswordValid.value = false;
     setError(true, errorMessage);
+    confirmPasswordEl.value.placeholder = "";
   } else {
     isPasswordValid.value = true;
     setError(false, errorMessage);
@@ -170,13 +185,19 @@ function validatePassword() {
 }
 
 function validateUsername() {
+  // Check for spaces
   const errorMessage = "Username cannot contain spaces.";
-  if (username.value && (username.value as string).includes(" ")) {
+  const usernameString = username.value !== null ? (username.value as string) : null;
+  if (username.value && usernameString && usernameString.includes(" ")) {
     setError(true, errorMessage);
     isUsernameValid.value = false;
   } else {
     setError(false, errorMessage);
     isUsernameValid.value = true;
+  }
+  // Set max length
+  if (username.value && usernameString && usernameString.length > 12) {
+    username.value = usernameString.slice(0, 12);
   }
 }
 

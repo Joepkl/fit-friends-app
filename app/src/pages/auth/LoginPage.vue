@@ -7,40 +7,46 @@
       <span>Sign in to your account to continue.</span>
     </p>
     <form class="relative">
-      <!-- Username -->
-      <div class="flex flex-col mb-4">
-        <label for="username">Username</label>
-        <input
-          @change="handleUsernameChange"
-          v-model="username"
-          :class="{ error: isUsernameValid === false }"
-          id="username"
-          type="text"
-        />
-      </div>
-      <!-- Password -->
-      <div class="flex flex-col mb-4">
-        <label for="password">Password</label>
-        <input
-          v-model="password"
-          @input="isPasswordValid = true"
-          :class="{ error: isPasswordValid === false }"
-          ref="passwordEl"
-          id="password"
-          type="password"
-        />
-      </div>
-      <!-- Password visibility toggle -->
-      <label class="container"
-        >Show password
-        <input type="checkbox" @click="togglePasswordVisibility" id="show-password" />
-        <span class="checkmark"></span>
-      </label>
-      <!-- Error message -->
-      <div class="mt-4">
-        <p v-if="errors.length" class="error">{{ errors[0] }}</p>
-        <p v-if="isCapslockActive" class="error mt-2">Caps lock is active.</p>
-      </div>
+      <ul class="flex flex-col gap-4">
+        <!-- Username -->
+        <li class="flex flex-col">
+          <label for="username">Username</label>
+          <input
+            @change="handleUsernameChange"
+            v-model="username"
+            :class="{ error: isUsernameValid === false }"
+            id="username"
+            type="text"
+            placeholder="johndoe@gmail.com"
+          />
+        </li>
+        <!-- Password -->
+        <li class="flex flex-col">
+          <label for="password">Password</label>
+          <input
+            v-model="password"
+            @input="isPasswordValid = true"
+            :class="{ error: isPasswordValid === false }"
+            ref="passwordEl"
+            id="password"
+            type="password"
+            placeholder="**********"
+          />
+        </li>
+        <!-- Password visibility toggle -->
+        <li>
+          <label class="container"
+            >Show password
+            <input type="checkbox" @click="togglePasswordVisibility" id="show-password" />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+        <!-- Error messages -->
+        <li>
+          <p v-if="errors.length" class="error">{{ errors[0] }}</p>
+          <p v-if="isCapslockActive" class="error mt-2">Caps lock is active.</p>
+        </li>
+      </ul>
     </form>
     <!-- CTA -->
     <button @click="login" class="button-primary mt-6" :class="{ disabled: !isDataValid }">Login</button>
@@ -57,6 +63,7 @@
       <input
         v-model="email"
         @change="validateEmail"
+        class="border-light-grey"
         :class="{ error: isEmailValid === false }"
         type="text"
         id="emailResend"
