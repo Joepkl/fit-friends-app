@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-fit">
     <!-- Link -->
     <a v-if="isLink" @click="handleClick">
       <img :src="image" :alt="`${name} icon`" />
@@ -9,7 +9,7 @@
     <button
       v-else
       @click="handleClick"
-      class="bg-none border-none h-full w-full"
+      class="h-full w-full"
       :class="{ [`button-${buttonClass}`]: buttonClass, disabled: isDisabled }"
     >
       <img v-if="image" :src="image" :alt="`${name} icon`" />

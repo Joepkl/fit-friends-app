@@ -1,13 +1,10 @@
 /** Store */ // @ts-ignore
 import { useStore } from "@/stores/store.ts";
 
-const store = useStore();
+/** Constants */
+import type ApiResponse from '@/constants/ApiResponse';
 
-interface ApiResponse {
-  isSuccess?: boolean;
-  error?: string;
-  token?: string | null;
-}
+const store = useStore();
 
 /** Base POST data function */
 export async function postData(url: string, bodyData: any): Promise<ApiResponse> {
@@ -30,8 +27,7 @@ export async function postData(url: string, bodyData: any): Promise<ApiResponse>
     }
 
     const responseData = await response.json();
-    const token = responseData.token;
-    return { isSuccess: true, token: token || null };
+    return { isSuccess: true, responseData };
   } catch (err) {
     console.log(err);
     return { isSuccess: false, error: (err as Error).message || "Unknown error" };

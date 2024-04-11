@@ -181,9 +181,11 @@ async function login() {
   if (username.value && password.value) {
     try {
       const response = await postLoginAccount(username.value, password.value);
-      if (response.accessToken) {
+      const data = response.responseData;
+      if (data.token && data.user) {
         store.setIsAuthenticated(true);
-        store.setAccessToken(response.accessToken);
+        store.setAccessToken(data.token);
+        store.setUserProfile(data.user);
         goToHome();
       }
     } catch (error) {
@@ -233,4 +235,3 @@ onUnmounted(() => {
   document.removeEventListener("keyup", checkCapslock);
 });
 </script>
-@/constants/ModalContent

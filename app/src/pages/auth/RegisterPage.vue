@@ -75,7 +75,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 
 /** Routes */
 import { LOGIN_ROUTE } from "@/router/authRoutes";
-import { ONBOARDING_ROUTE } from "@/router/appRoutes";
+import { ONBOARDING_ROUTE } from "@/router/onboardingRoutes";
 
 /** Store */
 // @ts-ignore
@@ -190,9 +190,11 @@ async function login() {
   if (username.value && password.value) {
     try {
       const response = await postLoginAccount(username.value, password.value);
-      if (response.accessToken) {
+      const data = response.responseData;
+      if (data.token) {
         store.setIsAuthenticated(true);
-        store.setAccessToken(response.accessToken);
+        store.setAccessToken(data.token);
+        store.setUserProfile(data.user);
         goToOnboarding();
       }
     } catch (error) {

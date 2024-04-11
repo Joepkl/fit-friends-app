@@ -1,5 +1,4 @@
 const HomePage = () => import("@/pages/app/HomePage.vue");
-const OnboardingPage = () => import("@/pages/app/OnboardingPage.vue");
 
 const HOME_ROUTE = {
   path: "/home",
@@ -11,17 +10,7 @@ const HOME_ROUTE = {
   },
 };
 
-const ONBOARDING_ROUTE = {
-  path: "/onboarding",
-  name: "Onboarding",
-  component: OnboardingPage,
-  meta: {
-    requiresAuth: true,
-    pageTitle: "Onboarding",
-  },
-};
-
-const appRoutes = [HOME_ROUTE, ONBOARDING_ROUTE];
+const appRoutes = [HOME_ROUTE];
 
 export default appRoutes;
-export { HOME_ROUTE, ONBOARDING_ROUTE };
+export { HOME_ROUTE };

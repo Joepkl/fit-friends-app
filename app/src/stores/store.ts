@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
-import type { UserProfile } from '@/constants/Users';
-import type Movie from '@/constants/Movie';
+import type UserProfile from '@/constants/UserProfile';
 
 export const useStore = defineStore('store', {
   state: () => {
@@ -8,6 +7,7 @@ export const useStore = defineStore('store', {
       activeApiCalls: 0 as number,
       isLoading: null as null | boolean,
       isAuthenticated: null as null | boolean,
+      userProfile: null as null | UserProfile,
       accessToken: null as null | string,
       isSearchExpanded: false as false | boolean
     };
@@ -25,6 +25,9 @@ export const useStore = defineStore('store', {
     },
     getAccessToken(): null | string {
       return this.accessToken;
+    },
+    getUserProfile(): null | UserProfile {
+      return this.userProfile;
     },
     getIsSearchExpanded():boolean {
       return this.isSearchExpanded;
@@ -45,6 +48,9 @@ export const useStore = defineStore('store', {
     },
     setAccessToken(value: string) {
       this.accessToken = value;
+    },
+    setUserProfile(userProfile: UserProfile) {
+      this.userProfile = userProfile;
     },
     setIsSearchExpanded(value: boolean) {
       this.isSearchExpanded = value;

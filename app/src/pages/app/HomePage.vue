@@ -8,7 +8,6 @@
 <script setup lang="ts">
 /** Vue */
 import { useRouter } from "vue-router";
-import { computed } from "vue";
 
 /** Store */
 // @ts-ignore
@@ -19,4 +18,9 @@ import CHeader from "@/components/partials/layout/CHeader.vue";
 
 const store = useStore();
 const router = useRouter();
+
+scrollToTop();
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
 </script>

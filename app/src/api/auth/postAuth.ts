@@ -1,8 +1,4 @@
-/** Store */ // @ts-ignore
-import { useStore } from "@/stores/store.ts";
 import { postData } from "@/api/helpers/post";
-
-const store = useStore();
 
 /** Create an account */
 export async function postCreateAccount(email: string, username: string, password: string) {
@@ -31,7 +27,7 @@ export async function postLoginAccount(username: string, password: string) {
   const response = await postData(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`, bodyData);
 
   if (response.isSuccess) {
-    return { accessToken: response.token };
+    return { responseData: response.responseData };
   } else {
     throw new Error(response.error);
   }
