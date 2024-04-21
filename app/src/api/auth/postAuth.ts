@@ -8,7 +8,7 @@ export async function postCreateAccount(email: string, username: string, passwor
     username: username,
     password: password,
   };
-  const response = await postData(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`, bodyData);
+  const response = await postData(`${import.meta.env.VITE_API_BASE_URL}auth/${endpoint}`, bodyData);
 
   if (response.isSuccess) {
     return true;
@@ -24,7 +24,7 @@ export async function postLoginAccount(username: string, password: string) {
     username: username,
     password: password,
   };
-  const response = await postData(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`, bodyData);
+  const response = await postData(`${import.meta.env.VITE_API_BASE_URL}auth/${endpoint}`, bodyData);
 
   if (response.isSuccess) {
     return { responseData: response.responseData };
