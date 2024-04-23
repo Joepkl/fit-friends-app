@@ -18,10 +18,6 @@
 /** Vue */
 import { onMounted, ref } from "vue";
 
-/** Store */
-// @ts-ignore
-import { useStore } from "@/stores/store.ts";
-
 /** Components */
 import HamburgerMenu from "@/components/ui/HamburgerMenu.vue";
 import CButton from "@/components/ui/CButton.vue";
@@ -29,7 +25,10 @@ import CButton from "@/components/ui/CButton.vue";
 /** Images */
 import AccountIcon from "@/assets/icons/ic_account_green.svg";
 
-const store = useStore();
+/** Routes */
+import { ACCOUNTS_SETTINGS_ROUTE } from "@/router/appRoutes";
+import router from "@/router/router";
+
 const header = ref(null);
 const isHeaderSticky = ref(false);
 
@@ -50,7 +49,7 @@ function setStickyHeader(entries: IntersectionObserverEntry[]): void {
 }
 
 function goToAccount() {
-  console.log("Go to account route");
+  router.push(ACCOUNTS_SETTINGS_ROUTE);
 }
 
 onMounted(() => {

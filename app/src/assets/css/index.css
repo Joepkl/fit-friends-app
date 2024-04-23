@@ -136,6 +136,10 @@ input:focus {
   outline: var(--green) auto 1px;
 }
 
+input:disabled {
+  background-color: var(--white-2);
+}
+
 /* Change autocomplete styles in WebKit */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

@@ -1,8 +1,7 @@
 <template>
-  <div class="page-wrapper">
-    <img class="w-14 mb-10" src="@/assets/icons/ic_logo.svg" alt="Logo" />
-    <h1>Account</h1>
-    <p class="mt-4">Get started by setting up your account details.</p>
+  <CHeader />
+  <div class="page-wrapper-header">
+    <h1>Account settings</h1>
     <!-- Inputs -->
     <form class="mt-8">
       <ul class="flex flex-col gap-4">
@@ -40,7 +39,7 @@
         <li class="flex flex-col mt-2">
           <label class="container">
             Agree to share data with friends
-            <input @input="toggleCheckboxValue" type="checkbox" />
+            <input v-model="shareData" type="checkbox" />
             <span class="checkmark"></span>
           </label>
           <button @click.prevent="showDataModal" class="button-link w-fit ml-6">More info</button>
@@ -70,8 +69,12 @@ import { ShareDataContent } from "@/constants/ModalContent";
 // @ts-ignore
 import { useStore } from "@/stores/store.ts";
 
+/** Components */
+import CHeader from "@/components/partials/layout/CHeader.vue";
+
 /** API calls */
 import { saveAccountSettings } from "@/api/auth/postAuth";
+import { fetchUserAccount } from "@/api/app/fetchUser";
 
 /** Routes */
 import { HOME_ROUTE } from "@/router/appRoutes";
@@ -89,6 +92,19 @@ const isDataModalShown = ref(false);
 const userProfile = computed(() => store.getUserProfile);
 const username = computed(() => userProfile.value?.username);
 
+fetchAccountSettings();
+async function fetchAccountSettings() {
+  await fetchUserAccount(username.value as string);
+  updateAccountSettings();
+}
+
+function updateAccountSettings() {
+  age.value = userProfile.value?.settings?.age ?? null;
+  bio.value = userProfile.value?.settings?.bio ?? null;
+  weeklyGoal.value = userProfile.value?.settings?.weeklyGoal as number;
+  shareData.value = userProfile.value?.settings?.shareData as boolean;
+}
+
 function increaseWeeklyGoal() {
   if (weeklyGoal.value === 7) {
     return;
@@ -100,10 +116,6 @@ function decreaseWeeklyGoal() {
   if (weeklyGoal.value > 1) {
     weeklyGoal.value--;
   }
-}
-
-function toggleCheckboxValue() {
-  shareData.value = !shareData.value;
 }
 
 function goToHome() {

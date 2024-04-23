@@ -10,6 +10,16 @@
       The goal of this platform is to help you achieve your fitness goals while staying up-to-date with your friends'
       activity!
     </p>
+    <!-- Quote -->
+    <div class="mt-4 flex flex-col">
+      <p class="text-green italic">
+        "The social context acts as a key determinant of the engagement in physical activity."
+      </p>
+      <div class="max-w-64 ml-auto mt-2">
+        <p>- R. Trigueros</p>
+        <p class="text-sm">International Journal of Environmental Research and Public Health</p>
+      </div>
+    </div>
     <!-- Onboarding steps -->
     <OnboardingSteps
       @next-step="goToNextStep"
@@ -23,6 +33,7 @@
       class="mt-12"
     />
   </div>
+  <button class="button-outline hidden">test</button>
 </template>
 
 <script setup lang="ts">
@@ -68,12 +79,12 @@ const onboardingContent = {
     },
     {
       title: "Compete with, and against friends.",
-      text: "Monthly competition with your friends in achieving fitness goals.",
+      text: "Monthly competition with your friends in achieving fitness goals. Earn points by completing achievements.",
       image: OnboardingImage3,
     },
     {
       title: "Achieve your goals.",
-      text: "Reach your fitness milestones and exceed your goals.",
+      text: "Set personal goals, and work towards achieving these goals. Stay motivated and consistent.",
       image: OnboardingImage4,
     },
   ],

@@ -1,3 +1,6 @@
+/** Vue */
+import { computed } from "vue";
+
 /** Store */ // @ts-ignore
 import { useStore } from "@/stores/store.ts";
 
@@ -5,18 +8,25 @@ import { useStore } from "@/stores/store.ts";
 import type ApiResponse from '@/constants/ApiResponse';
 
 const store = useStore();
+const accessToken = computed(() => store.getAccessToken);
 
 /** Base POST data function */
 export async function postData(url: string, bodyData: any): Promise<ApiResponse> {
   store.setIsLoading(true);
   store.increaseActiveApiCalls();
   try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json"
+    }
+
+    // Add bearer token if available
+    if (accessToken.value) {
+      headers.Authorization = `Bearer ${accessToken.value}`;
+    }
+
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`,
-      },
+      headers,
       body: JSON.stringify(bodyData),
     });
 

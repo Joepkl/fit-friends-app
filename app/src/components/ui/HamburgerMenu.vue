@@ -17,8 +17,8 @@
       class="font-semibold whitespace-nowrap hover:text-green"
       :class="{ 'bg-green text-light-grey hover:text-light-grey': currentRoute === item.name }"
     >
-      <a :href="item.link" class="flex items-center gap-4 pl-8 pr-default py-2">
-        <img :src="currentRoute === item.name ? item.activeIcon : item.icon" class="h-5 w-5" alt="Icon" />
+      <a @click="goTo(item.link)" class="flex items-center gap-4 pl-8 pr-default py-2">
+        <img :src="getIcon(item)" class="h-5 w-5" alt="Icon" />
         {{ item.name }}
       </a>
     </li>
@@ -47,21 +47,47 @@ import LeaderboardIcon from "@/assets/icons/ic_leaderboard.svg";
 import LeaderboardGreyIcon from "@/assets/icons/ic_leaderboard_grey.svg";
 import AddIcon from "@/assets/icons/ic_add.svg";
 import AddGreyIcon from "@/assets/icons/ic_add_grey.svg";
+import CalendarIcon from "@/assets/icons/ic_calendar.svg";
+import CalendarGreyIcon from "@/assets/icons/ic_calendar_grey.svg";
+
+/** Types */
+import type MenuItem from '@/constants/MenuItem';
+import type Route from '@/constants/Route';
+
+/** Routes */
+import {
+  HOME_ROUTE,
+  FRIENDS_ROUTE,
+  MEETUP_ROUTE,
+  ACHIEVEMENTS_ROUTE,
+  LEADERBOARD_ROUTE,
+  CREATE_POST_ROUTE,
+} from "@/router/appRoutes";
 
 const isMenuOpen = ref(false);
 const menuItems = ref([
-  { name: "Home", link: "#", icon: HomeIcon, activeIcon: HomeGreyIcon },
-  { name: "Friends", link: "#", icon: FriendsIcon, activeIcon: FriendsGreyIcon },
-  { name: "Leaderboard", link: "#", icon: LeaderboardIcon, activeIcon: LeaderboardGreyIcon },
-  { name: "Achievements", link: "#", icon: AchievementsIcon, activeIcon: AchievementsGreyIcon },
-  { name: "Create post", link: "#", icon: AddIcon, activeIcon: AddGreyIcon },
+  { name: "Home", link: HOME_ROUTE, icon: HomeIcon, activeIcon: HomeGreyIcon },
+  { name: "Friends", link: FRIENDS_ROUTE, icon: FriendsIcon, activeIcon: FriendsGreyIcon },
+  { name: "Meetup", link: MEETUP_ROUTE, icon: CalendarIcon, activeIcon: CalendarGreyIcon },
+  { name: "Achievements", link: ACHIEVEMENTS_ROUTE, icon: AchievementsIcon, activeIcon: AchievementsGreyIcon },
+  { name: "Leaderboard", link: LEADERBOARD_ROUTE, icon: LeaderboardIcon, activeIcon: LeaderboardGreyIcon },
+  { name: "Create post", link: CREATE_POST_ROUTE, icon: AddIcon, activeIcon: AddGreyIcon },
 ]);
 
 const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value.matched[0].name);
 
+function getIcon(item: MenuItem) {
+  return currentRoute.value === item.name ? item.activeIcon : item.icon;
+}
+
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value;
+}
+
+function goTo(route: Route) {
+  router.push(route);
+  isMenuOpen.value = false;
 }
 </script>
 
@@ -128,3 +154,4 @@ function toggleMenu() {
   transition: 0.4s ease-in-out;
 }
 </style>
+@/constants/test

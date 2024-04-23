@@ -1,26 +1,32 @@
+/** Vue */
+import { computed } from "vue";
+
 /** Store */ // @ts-ignore
 import { useStore } from "@/stores/store.ts";
-import type Movie from "@/constants/Movie";
+
+/** Constants */
+import type ApiResponse from '@/constants/ApiResponse';
 
 const store = useStore();
-
-interface ApiResponse {
-  isSuccess?: boolean,
-  data?: Array<Movie>,
-  error?: string,
-}
+const accessToken = computed(() => store.getAccessToken);
 
 /** Base POST data function */
 export async function fetchData(url:string):Promise<ApiResponse> {
   store.setIsLoading(true);
   store.increaseActiveApiCalls();
   try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json"
+    }
+
+    // Add bearer token if available
+    if (accessToken.value) {
+      headers.Authorization = `Bearer ${accessToken.value}`;
+    }
+
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`
-      }
+      headers
     })
     
     // 4xx or 5xx status code error -> not caught by try catch
@@ -30,7 +36,7 @@ export async function fetchData(url:string):Promise<ApiResponse> {
     }
 
     const data = await response.json();
-    return { isSuccess: true, data: data.results };
+    return { isSuccess: true, responseData: data.user };
   } 
   catch(err) {
     console.log(err);
