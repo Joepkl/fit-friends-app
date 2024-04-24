@@ -13,11 +13,11 @@ const ONBOARDING_ROUTE = {
 
 const ACCOUNT_SETUP_ROUTE = {
   path: "/account-setup",
-  name: "Account",
+  name: "Account setup",
   component: AccountSetupPage,
   meta: {
     requiresAuth: true,
-    pageTitle: "Account",
+    pageTitle: "Account setup",
   },
 };
 

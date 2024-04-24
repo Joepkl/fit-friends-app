@@ -1,5 +1,5 @@
 <template>
-  <div class="w-fit">
+  <div>
     <!-- Link -->
     <a v-if="isLink" @click="handleClick">
       <img :src="image" :alt="`${name} icon`" />

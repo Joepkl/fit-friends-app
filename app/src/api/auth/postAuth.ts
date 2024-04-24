@@ -17,6 +17,7 @@ export async function postCreateAccount(email: string, username: string, passwor
   if (response.isSuccess) {
     return true;
   } else {
+    console.log(response.status)
     throw new Error(response.error);
   }
 }

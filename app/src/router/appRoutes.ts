@@ -66,13 +66,13 @@ const CREATE_POST_ROUTE = {
   },
 };
 
-const ACCOUNTS_SETTINGS_ROUTE = {
-  path: "/settings",
-  name: "Settings",
+const ACCOUNT_ROUTE = {
+  path: "/account",
+  name: "Account",
   component: AccountSettingsPage,
   meta: {
     requiresAuth: true,
-    pageTitle: "Account settings",
+    pageTitle: "Account",
   },
 };
 
@@ -83,7 +83,7 @@ const appRoutes = [
   ACHIEVEMENTS_ROUTE,
   LEADERBOARD_ROUTE,
   CREATE_POST_ROUTE,
-  ACCOUNTS_SETTINGS_ROUTE,
+  ACCOUNT_ROUTE,
 ];
 
 export default appRoutes;
@@ -94,5 +94,5 @@ export {
   ACHIEVEMENTS_ROUTE,
   LEADERBOARD_ROUTE,
   CREATE_POST_ROUTE,
-  ACCOUNTS_SETTINGS_ROUTE,
+  ACCOUNT_ROUTE,
 };

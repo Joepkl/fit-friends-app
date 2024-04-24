@@ -6,7 +6,6 @@ import { useStore } from "@/stores/store.ts";
 
 /** Constants */
 import type ApiResponse from '@/constants/ApiResponse';
-
 const store = useStore();
 const accessToken = computed(() => store.getAccessToken);
 
@@ -14,6 +13,8 @@ const accessToken = computed(() => store.getAccessToken);
 export async function postData(url: string, bodyData: any): Promise<ApiResponse> {
   store.setIsLoading(true);
   store.increaseActiveApiCalls();
+  let responseStatus = 0;
+
   try {
     const headers: Record<string, string> = {
       "Content-Type": "application/json"
@@ -30,17 +31,18 @@ export async function postData(url: string, bodyData: any): Promise<ApiResponse>
       body: JSON.stringify(bodyData),
     });
 
+    responseStatus = response.status;
+
     // 4xx or 5xx status code error -> not caught by try catch
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message);
     }
-
     const responseData = await response.json();
     return { isSuccess: true, responseData };
   } catch (err) {
     console.log(err);
-    return { isSuccess: false, error: (err as Error).message || "Unknown error" };
+    return { isSuccess: false, error: (err as Error).message || "Unknown error", status: responseStatus };
   } finally {
     store.isLoading = false;
     store.decreaseActiveApiCalls();

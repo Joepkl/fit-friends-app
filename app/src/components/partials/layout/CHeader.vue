@@ -26,7 +26,7 @@ import CButton from "@/components/ui/CButton.vue";
 import AccountIcon from "@/assets/icons/ic_account_green.svg";
 
 /** Routes */
-import { ACCOUNTS_SETTINGS_ROUTE } from "@/router/appRoutes";
+import { ACCOUNT_ROUTE } from "@/router/appRoutes";
 import router from "@/router/router";
 
 const header = ref(null);
@@ -49,7 +49,7 @@ function setStickyHeader(entries: IntersectionObserverEntry[]): void {
 }
 
 function goToAccount() {
-  router.push(ACCOUNTS_SETTINGS_ROUTE);
+  router.push(ACCOUNT_ROUTE);
 }
 
 onMounted(() => {

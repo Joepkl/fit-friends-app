@@ -137,7 +137,12 @@ input:focus {
 }
 
 input:disabled {
-  background-color: var(--white-2);
+  background-color: var(--white-2) !important;
+  -webkit-background-color: var(--white-2) !important;
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-text-fill-color: var(--dark-grey);
+  opacity: 1; /* required on iOS */
 }
 
 /* Change autocomplete styles in WebKit */

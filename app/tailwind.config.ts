@@ -15,6 +15,9 @@ export default {
         "dark-grey-30": "var(--dark-grey-30)",
         "dark-grey-80": "var(--dark-grey-80)",
         red: "var(--red)",
+        bronze: "var(--bronze)",
+        silver: "var(--silver)",
+        gold: "var(--gold)",
       },
       padding: {
         default: "var(--padding-default)",
