@@ -72,6 +72,7 @@ import { useStore } from "@/stores/store.ts";
 
 /** API calls */
 import { saveAccountSettings } from "@/api/auth/postAuth";
+import { fetchUserAccount } from "@/api/app/fetchUser";
 
 /** Routes */
 import { HOME_ROUTE } from "@/router/appRoutes";
@@ -110,6 +111,14 @@ function goToHome() {
   router.push(HOME_ROUTE);
 }
 
+async function fetchAccountSettings() {
+  try {
+    await fetchUserAccount(username.value as string);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 async function saveAccount() {
   if (!shareData.value && !isDataModalShown.value) {
     showDataModal();
@@ -126,6 +135,7 @@ async function saveAccount() {
   if (username.value && weeklyGoal.value) {
     try {
       await saveAccountSettings(settings);
+      fetchAccountSettings();
       goToHome();
     } catch (error) {
       console.error(error);
