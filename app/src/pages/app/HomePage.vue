@@ -23,6 +23,8 @@ import PostCard from "@/components/partials/home/PostCard.vue";
 const store = useStore();
 const router = useRouter();
 
+console.log("test");
+
 const today = new Date();
 const hours = today.getHours();
 const minutes = today.getMinutes();
