@@ -9,7 +9,7 @@
       </button>
       <div class="flex mt-4 justify-center items-center">
         <div>
-          <h1>
+          <h1 class="text-bronze">
             @{{ userProfile?.username }}
             <span v-if="userProfile?.settings?.age" class="text-white font-medium">
               , {{ userProfile?.settings?.age }}
