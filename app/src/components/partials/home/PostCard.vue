@@ -66,7 +66,7 @@ function handleClick(): void {
   emits("click");
 }
 
-function getAchievementIcon(level: number): string {
+function getAchievementIcon(level: number) {
   if(level === 1) {
     return DumbbellBronzeIcon;
   }
