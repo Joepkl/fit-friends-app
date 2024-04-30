@@ -1,8 +1,8 @@
 <template>
   <CHeader />
-  <div class="page-wrapper-header">
+  <section class="page-wrapper-header">
     <h1>Achievements</h1>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">

@@ -11,22 +11,21 @@
       ></li>
     </ul>
     <div class="flex justify-between mt-4">
-      <p>0/{{ weeklyGoal }} weekly goal</p>
-      <p class="text-bronze">0 week streak</p>
+      <p>{{ weeklyFrequency }}/{{ weeklyGoal }} weekly goal</p>
+      <p :class="getColorClass(status, true)">{{ consistencyStreak }} week streak</p>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-/** Vue */
-import { ref } from "vue";
-
-/** Constants */
-import type UserProfile from '@/constants/UserProfile';
-
 const props = defineProps<{
   weeklyGoal: number;
+  weeklyFrequency: number;
+  consistencyStreak: number;
+  status: number;
 }>();
+
+const statusColors = ["bronze", "silver", "gold"];
 
 const months = [
   "January",
@@ -74,5 +73,22 @@ function getWeeklyGoalClass() {
   } else if (props.weeklyGoal === 7) {
     return "w-[14.3%]";
   }
+}
+
+function getColorClass(
+  status: number,
+  isText: boolean | null = null,
+  isBorder: boolean | null = null,
+  isBackground: boolean | null = null
+) {
+  let prefix;
+  if (isText) {
+    prefix = "text-";
+  } else if (isBorder) {
+    prefix = "border-";
+  } else if (isBackground) {
+    prefix = "bg-";
+  }
+  return prefix + statusColors[status];
 }
 </script>

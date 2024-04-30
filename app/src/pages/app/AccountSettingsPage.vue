@@ -1,15 +1,16 @@
 <template>
   <CHeader />
-  <div class="page-wrapper-header">
+  <section class="page-wrapper-header">
     <!-- Account -->
     <section v-if="!isEditActive">
-      <!-- Profile picture and username -->
       <AccountIntro @edit-is-active="isEditActive = true" :is-edit-active="isEditActive" :user-profile="userProfile" />
-      <!-- Showcase achievements -->
       <AchievementShowCase :achievements="userProfile?.showcaseAchievements || []" />
-      <!-- Consistency -->
-      <ConsistencyCard :weekly-goal="userProfile?.settings?.weeklyGoal || 1" />
-      <!-- Personal goals -->
+      <ConsistencyCard
+        :weekly-goal="userProfile?.settings?.weeklyGoal || 1"
+        :consistency-streak="userProfile?.weeklyConsistencyStreak || 0"
+        :weekly-frequency="userProfile?.weeklyFrequency || 0"
+        :status="userProfile?.status || 0"
+      />
       <PersonalGoalsCard :personal-goals="userProfile?.personalGoals || []" />
     </section>
     <!-- Edit account -->
@@ -67,7 +68,7 @@
         <CButton text="Save" button-class="primary" @click="saveAccount" />
       </div>
     </section>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">

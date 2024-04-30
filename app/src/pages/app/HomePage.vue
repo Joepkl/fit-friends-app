@@ -1,13 +1,13 @@
 <template>
   <CHeader />
-  <div class="page-wrapper-header">
+  <section class="page-wrapper-header">
     <h1 class="mb-6">Home</h1>
     <ul class="flex flex-col gap-4">
       <li v-for="(post, index) in posts" :key="index">
         <PostCard @like-post="handleLikePost(index)" @unlike-post="handleUnLikePost(index)" :content="post" />
       </li>
     </ul>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -31,6 +31,9 @@ const hours = today.getHours();
 const minutes = today.getMinutes();
 
 function getMinutes(minutes: number) {
+  if (minutes < 0) {
+    return 60 + minutes;
+  }
   return minutes < 10 ? `0${minutes}` : minutes;
 }
 
@@ -112,7 +115,7 @@ const posts = ref([
         status: 2,
       },
       {
-        author: "sammy_02",
+        author: "jayJo.K",
         comment: "Nicee",
         status: 1,
       },

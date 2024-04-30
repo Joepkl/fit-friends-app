@@ -2,7 +2,7 @@
   <section class="bg-light-grey rounded-default p-4">
     <div class="flex">
       <!-- Username and profile picture -->
-      <a @click="goToProfile" class="flex items-center gap-2">
+      <a @click="goToProfile(content.author)" class="flex items-center gap-2">
         <div
           class="block w-8 h-auto rounded-full border-2 overflow-hidden"
           :class="getColorClass(content.status, null, true)"
@@ -90,6 +90,7 @@
 <script setup lang="ts">
 /** Vue */
 import { nextTick, ref } from "vue";
+import { useRouter } from "vue-router";
 
 /** Images */
 import AccountIcon from "@/assets/icons/ic_account.svg";
@@ -106,19 +107,23 @@ import CButton from "@/components/ui/CButton.vue";
 import type PostContent from "@/constants/PostContent";
 import { AllAchievements } from "@/constants/Achievements";
 
+/** Routes */
+import { USER_PROFILE_ROUTE } from "@/router/appRoutes";
+
 const emits = defineEmits(["goToProfile", "likePost", "unlikePost"]);
 
 const props = defineProps<{
   content: PostContent;
 }>();
 
+const router = useRouter();
 
 const statusColors = ["bronze", "silver", "gold"];
 const isCommentsToggled = ref(false);
 const allCommentsEl = ref<HTMLElement | null>(null);
 
-function goToProfile(): void {
-  emits("goToProfile");
+function goToProfile(username: string) {
+  router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });
 }
 
 function likePost() {

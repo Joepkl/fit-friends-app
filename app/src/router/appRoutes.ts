@@ -5,6 +5,7 @@ const AchievementsPage = () => import("@/pages/app/AchievementsPage.vue");
 const LeaderboardPage = () => import("@/pages/app/LeaderboardPage.vue");
 const CreatePostPage = () => import("@/pages/app/CreatePostPage.vue");
 const AccountSettingsPage = () => import("@/pages/app/AccountSettingsPage.vue");
+const UserProfilePage = () => import("@/pages/app/UserProfilePage.vue");
 
 const HOME_ROUTE = {
   path: "/home",
@@ -76,6 +77,16 @@ const ACCOUNT_ROUTE = {
   },
 };
 
+const USER_PROFILE_ROUTE = {
+  path: "/user/:username",
+  name: "User profile",
+  component: UserProfilePage,
+  meta: {
+    requiresAuth: true,
+    pageTitle: "User profile",
+  },
+};
+
 const appRoutes = [
   HOME_ROUTE,
   FRIENDS_ROUTE,
@@ -84,6 +95,7 @@ const appRoutes = [
   LEADERBOARD_ROUTE,
   CREATE_POST_ROUTE,
   ACCOUNT_ROUTE,
+  USER_PROFILE_ROUTE,
 ];
 
 export default appRoutes;
@@ -95,4 +107,5 @@ export {
   LEADERBOARD_ROUTE,
   CREATE_POST_ROUTE,
   ACCOUNT_ROUTE,
+  USER_PROFILE_ROUTE,
 };
