@@ -1,15 +1,15 @@
 <template>
   <CHeader />
   <section class="page-wrapper-header">
-    <AccountIntro :user-profile="currentUser" :is-edit-active="false" />
-    <AchievementShowCase :achievements="currentUser?.showcaseAchievements || []" />
+    <AccountIntro :user-profile="currentUser" :is-edit-active="false" :isLoggedInAccount="false" />
+    <AchievementShowCase :achievements="currentUser?.showcaseAchievements || []" :is-logged-in-account="false" />
     <ConsistencyCard
       :weekly-goal="currentUser?.settings?.weeklyGoal || 1"
       :consistency-streak="currentUser?.weeklyConsistencyStreak || 0"
       :status="currentUser?.status || 0"
       :weekly-frequency="currentUser?.weeklyFrequency || 0"
     />
-    <PersonalGoalsCard :personal-goals="currentUser?.personalGoals || []" />
+    <PersonalGoalsCard :personal-goals="currentUser?.personalGoals || []" :is-logged-in-account="false" />
   </section>
 </template>
 

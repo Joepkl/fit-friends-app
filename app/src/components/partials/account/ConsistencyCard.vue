@@ -1,13 +1,13 @@
 <template>
   <section class="bg-light-grey mt-6 p-4 rounded-default">
-    <h2>Consistency</h2>
+    <h2 class="text-green">Consistency</h2>
     <p class="mt-2">{{ formattedDate }}</p>
     <ul class="flex gap-4 mt-4">
       <li
         v-for="(day, index) in weeklyGoal"
         :key="index"
         class="h-8 rounded-default border-2 border-green"
-        :class="getWeeklyGoalClass()"
+        :class="getWeeklyGoalClass(index)"
       ></li>
     </ul>
     <div class="flex justify-between mt-4">
@@ -57,22 +57,25 @@ function getWeekNumber(date: Date) {
   return weekNumber;
 }
 
-function getWeeklyGoalClass() {
+function getWeeklyGoalClass(index: number) {
+  const fillClass = index < props.weeklyFrequency ? "bg-green" : "bg-light-grey";
+  let widthClass;
   if (props.weeklyGoal === 1) {
-    return "w-full";
+    widthClass = "w-full";
   } else if (props.weeklyGoal === 2) {
-    return "w-1/2";
+    widthClass = "w-1/2";
   } else if (props.weeklyGoal === 3) {
-    return "w-1/3";
+    widthClass = "w-1/3";
   } else if (props.weeklyGoal === 4) {
-    return "w-1/4";
+    widthClass = "w-1/4";
   } else if (props.weeklyGoal === 5) {
-    return "w-1/5";
+    widthClass = "w-1/5";
   } else if (props.weeklyGoal === 6) {
-    return "w-1/6";
+    widthClass = "w-1/6";
   } else if (props.weeklyGoal === 7) {
-    return "w-[14.3%]";
+    widthClass = "w-[14.3%]";
   }
+  return `${fillClass} ${widthClass}`;
 }
 
 function getColorClass(

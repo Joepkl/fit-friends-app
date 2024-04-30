@@ -3,15 +3,20 @@
   <section class="page-wrapper-header">
     <!-- Account -->
     <section v-if="!isEditActive">
-      <AccountIntro @edit-is-active="isEditActive = true" :is-edit-active="isEditActive" :user-profile="userProfile" />
-      <AchievementShowCase :achievements="userProfile?.showcaseAchievements || []" />
+      <AccountIntro
+        @edit-is-active="isEditActive = true"
+        :is-edit-active="isEditActive"
+        :user-profile="userProfile"
+        :isLoggedInAccount="true"
+      />
+      <AchievementShowCase :achievements="userProfile?.showcaseAchievements || []" :is-logged-in-account="true" />
       <ConsistencyCard
         :weekly-goal="userProfile?.settings?.weeklyGoal || 1"
         :consistency-streak="userProfile?.weeklyConsistencyStreak || 0"
         :weekly-frequency="userProfile?.weeklyFrequency || 0"
         :status="userProfile?.status || 0"
       />
-      <PersonalGoalsCard :personal-goals="userProfile?.personalGoals || []" />
+      <PersonalGoalsCard :personal-goals="userProfile?.personalGoals || []" :is-logged-in-account="true" />
     </section>
     <!-- Edit account -->
     <section v-if="isEditActive">

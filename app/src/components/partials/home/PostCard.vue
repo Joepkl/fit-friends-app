@@ -67,7 +67,7 @@
     <div class="absolute z-50 top-0 w-full h-10 bg-gradient-to-b from-light-grey-transparent" />
     <ul ref="allCommentsEl" class="relative z-10 flex flex-col max-h-[270px] overflow-scroll">
       <li v-for="(comment, index) in content.comments" :key="index" class="mt-3">
-        <button class="flex items-center gap-1">
+        <button @click="goToProfile(comment.author)" class="flex items-center gap-1">
           <div
             class="block w-6 h-auto rounded-full border-2 overflow-hidden"
             :class="getColorClass(comment.status, null, true)"
