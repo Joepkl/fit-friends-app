@@ -1,4 +1,5 @@
 import type Achievement from "@/constants/Achievement"
+import type Comment from "@/constants/Comment"
 
 export default interface PostContent {
   author: string;
@@ -8,6 +9,7 @@ export default interface PostContent {
   proudOf: Array<string> | null;
   achievements: Array<Achievement> | null;
   likes: number;
-  comments: Array<string> | null;
+  comments: Array<Comment> | null;
   status: number;
+  isLikedByMe: boolean;
 }

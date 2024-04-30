@@ -25,6 +25,9 @@ export default {
       borderRadius: {
         default: "var(--border-radius-default)",
       },
+      gradientColorStops: {
+        "light-grey-transparent": "var(--dark-grey), transparent",
+      },
     },
   },
 };
