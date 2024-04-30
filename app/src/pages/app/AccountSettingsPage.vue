@@ -4,69 +4,13 @@
     <!-- Account -->
     <section v-if="!isEditActive">
       <!-- Profile picture and username -->
-      <button class="block w-full mx-auto max-w-24 h-auto rounded-full border-2 border-bronze overflow-hidden">
-        <img class="p-3 relative top-4 left-[2px]" :src="AccountIcon" alt="Profile picture" />
-      </button>
-      <div class="flex mt-4 justify-center items-center">
-        <div>
-          <h1 class="text-bronze">
-            @{{ userProfile?.username }}
-            <span v-if="userProfile?.settings?.age" class="text-white font-medium">
-              , {{ userProfile?.settings?.age }}
-            </span>
-          </h1>
-        </div>
-        <CButton @click="isEditActive = true" :image="EditIcon" class="relative left-5 w-6 h-6" />
-      </div>
-      <!-- Bio -->
-      <p class="text-center mt-4">{{ userProfile?.settings?.bio }}</p>
+      <AccountIntro @edit-is-active="isEditActive = true" :is-edit-active="isEditActive" :user-profile="userProfile" />
       <!-- Showcase achievements -->
-      <ul class="flex justify-between mt-6">
-        <li>
-          <a @click="goToAchievements" class="border-2 block border-white rounded-default p-5">
-            <img src="@/assets/icons/ic_add.svg" alt="Add icon" class="w-6 h-6" />
-          </a>
-        </li>
-        <li>
-          <a @click="goToAchievements" class="border-2 block border-white rounded-default p-5">
-            <img src="@/assets/icons/ic_add.svg" alt="Add icon" class="w-6 h-6" />
-          </a>
-        </li>
-        <li>
-          <a @click="goToAchievements" class="border-2 block border-white rounded-default p-5">
-            <img src="@/assets/icons/ic_add.svg" alt="Add icon" class="w-6 h-6" />
-          </a>
-        </li>
-      </ul>
+      <AchievementShowCase :achievements="userProfile?.showcaseAchievements || []" />
       <!-- Consistency -->
-      <section class="bg-light-grey mt-6 p-4 rounded-default">
-        <h2>Consistency</h2>
-        <p class="mt-2">{{ formattedDate }}</p>
-        <ul class="flex gap-4 mt-4">
-          <li
-            v-for="(day, index) in userProfile?.settings?.weeklyGoal"
-            :key="index"
-            class="h-8 rounded-default border-2 border-green"
-            :class="getWeeklyGoalClass()"
-          ></li>
-        </ul>
-        <div class="flex justify-between mt-4">
-          <p>0/{{ userProfile?.settings?.weeklyGoal }} weekly goal</p>
-          <p class="text-bronze">0 week streak</p>
-        </div>
-      </section>
+      <ConsistencyCard :weekly-goal="userProfile?.settings?.weeklyGoal || 1" />
       <!-- Personal goals -->
-      <section class="bg-light-grey mt-6 p-4 rounded-default">
-        <h2>Personal goals</h2>
-        <ul class="flex flex-col gap-4 mt-4">
-          <li class="flex items-center">
-            <a @click="goToAchievements" class="border-2 block border-white rounded-default p-4">
-              <img src="@/assets/icons/ic_add.svg" alt="Add icon" class="w-5 h-5" />
-            </a>
-            <p class="ml-4">No goals set.</p>
-          </li>
-        </ul>
-      </section>
+      <PersonalGoalsCard :personal-goals="userProfile?.personalGoals || []" />
     </section>
     <!-- Edit account -->
     <section v-if="isEditActive">
@@ -144,18 +88,17 @@ import { useStore } from "@/stores/store.ts";
 
 /** Routes */
 import { AUTHENTICATION_ROUTE } from "@/router/authRoutes";
-import { ACHIEVEMENTS_ROUTE } from "@/router/appRoutes";
 
 /** Components */
 import CHeader from "@/components/partials/layout/CHeader.vue";
+import AccountIntro from "@/components/partials/account/AccountIntro.vue";
+import AchievementShowCase from "@/components/partials/account/AchievementShowCase.vue";
+import ConsistencyCard from "@/components/partials/account/ConsistencyCard.vue";
+import PersonalGoalsCard from "@/components/partials/account/PersonalGoalsCard.vue";
 
 /** API calls */
 import { saveAccountSettings } from "@/api/auth/postAuth";
 import { fetchUserAccount } from "@/api/app/fetchUser";
-
-/** Images */
-import AccountIcon from "@/assets/icons/ic_account.svg";
-import EditIcon from "@/assets/icons/ic_edit.svg";
 
 const store = useStore();
 const router = useRouter();
@@ -168,57 +111,8 @@ const weeklyGoal = ref(1);
 const shareData = ref(false);
 const isDataModalShown = ref(false);
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const date = new Date();
-const formattedDate = `${months[date.getMonth()]} ${date.getFullYear()} - week ${getWeekNumber(date)}`;
-
 const userProfile = computed(() => store.getUserProfile);
 const username = computed(() => userProfile.value?.username);
-
-function getWeekNumber(date: Date) {
-  date = new Date(date);
-  date.setHours(0, 0, 0, 0);
-  // Set to nearest Thursday: current date + 4 - current day number
-  // Make Sunday's day number 7
-  date.setDate(date.getDate() + 4 - (date.getDay() || 7));
-  // Get first day of year
-  const yearStart = new Date(date.getFullYear(), 0, 1);
-  // Calculate full weeks to nearest Thursday
-  const weekNumber = Math.ceil(((Number(date) - Number(yearStart)) / 86400000 + 1) / 7);
-  return weekNumber;
-}
-
-function getWeeklyGoalClass() {
-  if (weeklyGoal.value === 1) {
-    return "w-full";
-  } else if (weeklyGoal.value === 2) {
-    return "w-1/2";
-  } else if (weeklyGoal.value === 3) {
-    return "w-1/3";
-  } else if (weeklyGoal.value === 4) {
-    return "w-1/4";
-  } else if (weeklyGoal.value === 5) {
-    return "w-1/5";
-  } else if (weeklyGoal.value === 6) {
-    return "w-1/6";
-  } else if (weeklyGoal.value === 7) {
-    return "w-[14.3%]";
-  }
-}
 
 // Update account settings on page load with store data
 updateAccountSettings();
@@ -250,10 +144,6 @@ function decreaseWeeklyGoal() {
   if (weeklyGoal.value > 1) {
     weeklyGoal.value--;
   }
-}
-
-function goToAchievements() {
-  router.push(ACHIEVEMENTS_ROUTE);
 }
 
 async function saveAccount() {

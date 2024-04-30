@@ -32,6 +32,7 @@
             id="username"
             type="text"
             placeholder="john_doe123"
+            autocomplete="username"
           />
         </li>
         <!-- Password -->
@@ -44,6 +45,7 @@
             type="password"
             ref="passwordEl"
             placeholder="**********"
+            autocomplete="new-password"
           />
         </li>
         <!-- Password confirmation -->
@@ -57,6 +59,7 @@
             type="password"
             id="confirm-password"
             placeholder="**********"
+            autocomplete="confirm-password"
           />
         </li>
         <!-- Password visibility toggle -->

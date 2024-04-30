@@ -9,7 +9,7 @@
         >
           <img class="p-1 relative top-[5px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
         </div>
-        <h2 class="text-[18px] font-medium" :class="getColorClass(content.status, true)">{{ content.author }}</h2>
+        <h2 class="text-[18px] font-medium" :class="getColorClass(content.status, true)">@{{ content.author }}</h2>
       </a>
       <!-- Date -->
       <ul class="text-right leading-4 ml-auto relative top-2 text-green">
