@@ -64,8 +64,8 @@
   </div>
   <!-- All comments -->
   <div v-if="isCommentsToggled" class="relative">
-    <div class="absolute z-50 top-0 w-full h-10 bg-gradient-to-b from-light-grey-transparent" />
-    <ul ref="allCommentsEl" class="relative z-10 flex flex-col max-h-[270px] overflow-scroll">
+    <div class="absolute z-50 bottom-0 w-full h-10 bg-gradient-to-t from-dark-grey-transparent" />
+    <ul ref="allCommentsEl" class="relative z-10 flex flex-col max-h-[250px] overflow-scroll pb-3">
       <li v-for="(comment, index) in content.comments" :key="index" class="mt-3">
         <button @click="goToProfile(comment.author)" class="flex items-center gap-1">
           <div
@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 /** Vue */
-import { nextTick, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 /** Images */
@@ -110,7 +110,7 @@ import { AllAchievements } from "@/constants/Achievements";
 /** Routes */
 import { USER_PROFILE_ROUTE } from "@/router/appRoutes";
 
-const emits = defineEmits(["goToProfile", "likePost", "unlikePost"]);
+const emits = defineEmits(["likePost", "unlikePost"]);
 
 const props = defineProps<{
   content: PostContent;
@@ -136,11 +136,6 @@ function likePost() {
 
 function toggleComments() {
   isCommentsToggled.value = !isCommentsToggled.value;
-  nextTick(() => {
-    if(allCommentsEl.value) {
-      allCommentsEl.value.scrollTop = allCommentsEl.value.scrollHeight;
-    }
-  })
 }
 
 function getAchievementIcon(level: number) {

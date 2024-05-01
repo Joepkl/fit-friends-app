@@ -42,6 +42,10 @@ function getTime(hourOffset: number, minuteOffset: number) {
 }
 
 function getDate(dayOffset: number, monthOffset: number, yearOffset: number) {
+  if (today.getDate() - dayOffset < 1) {
+    return `${30 + today.getDate() - dayOffset}-${today.getMonth() + 1 - monthOffset}-${today.getFullYear() -
+      yearOffset}`;
+  }
   return `${today.getDate() - dayOffset}-${today.getMonth() + 1 - monthOffset}-${today.getFullYear() - yearOffset}`;
 }
 

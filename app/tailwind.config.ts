@@ -26,7 +26,8 @@ export default {
         default: "var(--border-radius-default)",
       },
       gradientColorStops: {
-        "light-grey-transparent": "var(--dark-grey), transparent",
+        "dark-grey-transparent": "var(--dark-grey), transparent",
+        "light-grey-transparent": "var(--light-grey), transparent",
       },
     },
   },
