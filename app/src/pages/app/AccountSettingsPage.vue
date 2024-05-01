@@ -8,6 +8,7 @@
         :is-edit-active="isEditActive"
         :user-profile="userProfile"
         :isLoggedInAccount="true"
+        :is-friend="false"
       />
       <AchievementShowCase :achievements="userProfile?.showcaseAchievements || []" :is-logged-in-account="true" />
       <ConsistencyCard

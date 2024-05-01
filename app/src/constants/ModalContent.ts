@@ -17,3 +17,7 @@ export const ShareDataContent = {
 export const RemoveFriendContent = {
   title: "Remove friend",
 };
+
+export const AddFriendContent = {
+  title: "Add friend",
+};

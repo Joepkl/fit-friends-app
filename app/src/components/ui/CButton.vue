@@ -13,7 +13,7 @@
       :class="{ [`button-${buttonClass}`]: buttonClass, disabled: isDisabled }"
     >
       <img v-if="image" :src="image" :alt="`${name} icon`" />
-      <p v-if="text">{{ text }}</p>
+      <p v-if="text" class="whitespace-nowrap">{{ text }}</p>
     </button>
   </div>
 </template>

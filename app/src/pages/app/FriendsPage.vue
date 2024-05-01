@@ -3,7 +3,9 @@
   <section class="page-wrapper-header">
     <h1 class="mb-6">Friends</h1>
     <!-- Search for users -->
-    <SearchUsers />
+    <SearchUsers class="mb-4" />
+    <!-- Friend Requests -->
+    <h2 class="text-green">Friend requests</h2>
     <!-- Friends -->
     <MyFriends />
   </section>

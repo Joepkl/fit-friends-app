@@ -1,7 +1,7 @@
 <template>
   <CHeader />
   <section class="page-wrapper-header">
-    <AccountIntro :user-profile="currentUser" :is-edit-active="false" :isLoggedInAccount="false" />
+    <AccountIntro :user-profile="currentUser" :is-edit-active="false" :isLoggedInAccount="false" :is-friend="true" />
     <AchievementShowCase :achievements="currentUser?.showcaseAchievements || []" :is-logged-in-account="false" />
     <ConsistencyCard
       :weekly-goal="currentUser?.settings?.weeklyGoal || 1"
