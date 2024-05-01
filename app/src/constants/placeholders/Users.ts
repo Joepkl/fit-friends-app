@@ -29,7 +29,19 @@ const Users: Array<UserProfile> = [
         level: 2,
       },
     ],
-    personalGoals: [null, null, null],
+    personalGoals: [
+      {
+        category: 2,
+        achievement: 3,
+        level: 3,
+      },
+      {
+        category: 3,
+        achievement: 3,
+        level: 2,
+      },
+      null
+    ],
     weeklyFrequency: 4,
     weeklyConsistencyStreak: 16,
     status: 2,
@@ -62,7 +74,23 @@ const Users: Array<UserProfile> = [
         level: 1,
       },
     ],
-    personalGoals: [null, null, null],
+    personalGoals: [
+      {
+        category: 5,
+        achievement: 2,
+        level: 2,
+      },
+      {
+        category: 4,
+        achievement: 5,
+        level: 2,
+      },
+      {
+        category: 2,
+        achievement: 5,
+        level: 3,
+      },
+    ],
     weeklyFrequency: 1,
     weeklyConsistencyStreak: 6,
     status: 1,
@@ -87,7 +115,18 @@ const Users: Array<UserProfile> = [
       null,
       null
     ],
-    personalGoals: [null, null, null],
+    personalGoals: [
+      {
+        category: 2,
+        achievement: 2,
+        level: 2,
+      },
+      {
+        category: 2,
+        achievement: 4,
+        level: 1,
+      },
+    ],
     weeklyConsistencyStreak: 3,
     weeklyFrequency: 1,
     status: 0,
@@ -120,7 +159,19 @@ const Users: Array<UserProfile> = [
         level: 2,
       },
     ],
-    personalGoals: [null, null, null],
+    personalGoals: [
+      {
+        category: 2,
+        achievement: 3,
+        level: 3,
+      },
+      {
+        category: 2,
+        achievement: 5,
+        level: 2,
+      },
+      null
+    ],
     weeklyFrequency: 1,
     weeklyConsistencyStreak: 22,
     status: 2,
@@ -211,7 +262,19 @@ const Users: Array<UserProfile> = [
         level: 1,
       },
     ],
-    personalGoals: [null, null, null],
+    personalGoals: [
+      {
+        category: 3,
+        achievement: 4,
+        level: 2,
+      },
+      {
+        category: 5,
+        achievement: 1,
+        level: 3,
+      },
+      null
+    ],
     weeklyFrequency: 1,
     weeklyConsistencyStreak: 12,
     status: 2,
@@ -244,7 +307,23 @@ const Users: Array<UserProfile> = [
         level: 2,
       },
     ],
-    personalGoals: [null, null, null],
+    personalGoals: [
+      {
+        category: 1,
+        achievement: 4,
+        level: 3,
+      },
+      {
+        category: 2,
+        achievement: 4,
+        level: 2,
+      },
+      {
+        category: 0,
+        achievement: 4,
+        level: 3,
+      },
+    ],
     weeklyFrequency: 2,
     weeklyConsistencyStreak: 15,
     status: 2,
@@ -256,7 +335,7 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "lianne_22",
         age: 24,
-        bio: "Hi there! My name is Lianne and I like to go to the gym in my spare time. I try to combine this with my internship and work.",
+        bio: "Hi there! My name is Lianne and I like to go to the gym in my spare time. Try to combine this with my internship and work.",
         weeklyGoal: 3,
         shareData: true,
     },
@@ -277,7 +356,23 @@ const Users: Array<UserProfile> = [
         level: 2,
       },
     ],
-    personalGoals: [null, null, null],
+    personalGoals: [
+      {
+        category: 4,
+        achievement: 1,
+        level: 1,
+      },
+      {
+        category: 2,
+        achievement: 4,
+        level: 2,
+      },
+      {
+        category: 0,
+        achievement: 0,
+        level: 2,
+      },
+    ],
     weeklyFrequency: 2,
     weeklyConsistencyStreak: 7,
     status: 1,

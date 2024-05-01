@@ -3,23 +3,33 @@
     <h2 class="text-green">Personal goals</h2>
     <ul class="flex flex-col gap-4 mt-4">
       <!-- No goals selected and logged in account-->
-      <li v-if="!hasGoals() && isLoggedInAccount" class="flex items-center">
+      <li v-if="!hasGoals && isLoggedInAccount" class="flex items-center">
         <a @click="goToAchievements" class="border-2 block border-white rounded-default p-4">
           <img src="@/assets/icons/ic_add.svg" alt="Add icon" class="w-5 h-5" />
         </a>
         <p class="ml-4">No goals set.</p>
       </li>
       <!-- No goals and not logged in account -->
-      <li v-else-if="!hasGoals() && !isLoggedInAccount" class="flex items-center">
+      <li v-else-if="!hasGoals && !isLoggedInAccount" class="flex items-center">
         <a class="border-2 block border-white rounded-default w-[56px] h-[56px]"></a>
         <p class="ml-4">This user has set no goals yet.</p>
       </li>
       <!-- Showcase selected goals -->
       <li v-else v-for="(goal, index) in personalGoals" :key="index" class="flex items-center">
-        <a @click="goToGoal(goal as Achievement)" class="border-2 block border-white rounded-default p-4">
-          <img src="@/assets/icons/ic_add.svg" alt="Add icon" class="w-5 h-5" />
-        </a>
-        <p class="ml-4">No goals set.</p>
+        <div v-if="goal" class="flex items-center">
+          <a @click="goToGoal(goal as Achievement)" class="block rounded-default">
+            <img :src="getAchievementIcon(goal.level)" class="w-[56px] h-[56px]" alt="Achievement icon" />
+          </a>
+          <p class="ml-4">
+            {{ AllAchievements[goal.category][goal.achievement].title }}
+            {{ getAchievementLevel(goal.level) }}
+          </p>
+        </div>
+        <!-- No goal selected -->
+        <div v-else class="flex items-center">
+          <a class="border-2 block border-white rounded-default w-[56px] h-[56px]"> </a>
+          <p class="ml-4">No goal set.</p>
+        </div>
       </li>
     </ul>
   </section>
@@ -34,18 +44,26 @@ import { ACHIEVEMENTS_ROUTE } from "@/router/appRoutes";
 
 /** Constants */
 import type Achievement from "@/constants/Achievement"
+import { AllAchievements } from "@/constants/Achievements";
+
+/** Images */
+import DumbbellGoldIcon from "@/assets/icons/ic_dumbbell_gold.svg";
+import DumbbellSilverIcon from "@/assets/icons/ic_dumbbell_silver.svg";
+import DumbbellBronzeIcon from "@/assets/icons/ic_dumbbell_bronze.svg";
 
 const props = defineProps<{
   personalGoals: Array<Achievement | null>;
   isLoggedInAccount: boolean;
 }>();
 
-function hasGoals() {
-  props.personalGoals.forEach(goal => {
-    if(goal) {
+const hasGoals = hasUserGoals();
+
+function hasUserGoals() {
+  for (const goal of props.personalGoals) {
+    if (goal) {
       return true;
     }
-  })
+  }
   return false;
 }
 
@@ -58,5 +76,38 @@ function goToAchievements() {
 function goToGoal(goal: Achievement) {
   // Navigate to selected goal
   console.log(goal)
+}
+
+function getAchievementIcon(level: number) {
+  if(level === 1) {
+    return DumbbellBronzeIcon;
+  }
+    if(level === 2) {
+    return DumbbellSilverIcon;
+  }
+    if(level === 3) {
+    return DumbbellGoldIcon;
+  }
+}
+
+function getAchievementLevel(level:number) {
+  if(level === 1) {
+    return "I";
+  }
+  if(level === 2) {
+    return "II";
+  }
+  if(level === 3) {
+    return "  III";
+  }
+    if(level === 4) {
+    return "  IV";
+  }
+    if(level === 5) {
+    return "  V";
+  }
+    if(level === 6) {
+    return "  VI";
+  }
 }
 </script>
