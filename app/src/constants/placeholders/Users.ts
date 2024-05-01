@@ -8,11 +8,27 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "Mike_330",
         age: 32,
-        bio: "Hi there!",
+        bio: "Hi there! My name is Mike and I'm a fitness enthusiast. I try to combine this with my work.",
         weeklyGoal: 4,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 1,
+        achievement: 3,
+        level: 3,
+      },
+      {
+        category: 2,
+        achievement: 3,
+        level: 2,
+      },
+      {
+        category: 4,
+        achievement: 3,
+        level: 2,
+      },
+    ],
     personalGoals: [null, null, null],
     weeklyFrequency: 4,
     weeklyConsistencyStreak: 16,
@@ -25,11 +41,27 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "WilliamPT",
         age: 28,
-        bio: "Hi there!",
+        bio: "I am a personal trainer. Like to use this app to keep up to date with my friends and clients.",
         weeklyGoal: 2,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 5,
+        achievement: 2,
+        level: 1,
+      },
+      {
+        category: 0,
+        achievement: 2,
+        level: 3,
+      },
+      {
+        category: 4,
+        achievement: 5,
+        level: 1,
+      },
+    ],
     personalGoals: [null, null, null],
     weeklyFrequency: 1,
     weeklyConsistencyStreak: 6,
@@ -42,11 +74,19 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "Sarah.B",
         age: 32,
-        bio: "Hi there!",
+        bio: "Hellooo! I'm Sarah and I love to stay fit. I'm always looking for new challenges.",
         weeklyGoal: 1,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 2,
+        achievement: 2,
+        level: 1,
+      },
+      null,
+      null
+    ],
     personalGoals: [null, null, null],
     weeklyConsistencyStreak: 3,
     weeklyFrequency: 1,
@@ -59,11 +99,27 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "BillyJones",
         age: 23,
-        bio: "Hi there!",
+        bio: "Hi there! I'm Billy and I'm a student at the HvA. I like to stay active and healthy.",
         weeklyGoal: 2,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 2,
+        achievement: 2,
+        level: 3,
+      },
+      {
+        category: 3,
+        achievement: 3,
+        level: 3,
+      },
+      {
+        category: 0,
+        achievement: 5,
+        level: 2,
+      },
+    ],
     personalGoals: [null, null, null],
     weeklyFrequency: 1,
     weeklyConsistencyStreak: 22,
@@ -76,11 +132,27 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "sammy_02",
         age: 24,
-        bio: "Hi there!",
+        bio: "Mostly use this app to stay up to date with my friends and work towards my goal. Let's become friends!",
         weeklyGoal: 4,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 0,
+        achievement: 5,
+        level: 2,
+      },
+      {
+        category: 0,
+        achievement: 4,
+        level: 1,
+      },
+      {
+        category: 3,
+        achievement: 4,
+        level: 1,
+      },
+    ],
     personalGoals: [null, null, null],
     weeklyFrequency: 3,
     weeklyConsistencyStreak: 9,
@@ -93,11 +165,19 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "GregBlake",
         age: 31,
-        bio: "Hi there!",
+        bio: "Just started with this app. I'm looking for some friends to help me stay motivated.",
         weeklyGoal: 2,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 5,
+        achievement: 2,
+        level: 2,
+      },
+      null,
+      null
+    ],
     personalGoals: [null, null, null],
     weeklyFrequency: 1,
     weeklyConsistencyStreak: 1,
@@ -110,11 +190,27 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "jayJo.K",
         age: 21,
-        bio: "Hi there!",
+        bio: "My name is Jay, trying to get to a streak of training each week for half a year.",
         weeklyGoal: 1,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 5,
+        achievement: 1,
+        level: 2,
+      },
+      {
+        category: 1,
+        achievement: 2,
+        level: 1,
+      },
+      {
+        category: 2,
+        achievement: 2,
+        level: 1,
+      },
+    ],
     personalGoals: [null, null, null],
     weeklyFrequency: 1,
     weeklyConsistencyStreak: 12,
@@ -127,11 +223,27 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "mikeyB",
         age: 24,
-        bio: "Hi there!",
+        bio: "Have been using this app for a while. Let's become friends and stay motivated!",
         weeklyGoal: 3,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 1,
+        achievement: 2,
+        level: 3,
+      },
+      {
+        category: 3,
+        achievement: 1,
+        level: 3,
+      },
+      {
+        category: 1,
+        achievement: 4,
+        level: 2,
+      },
+    ],
     personalGoals: [null, null, null],
     weeklyFrequency: 2,
     weeklyConsistencyStreak: 15,
@@ -144,11 +256,27 @@ const Users: Array<UserProfile> = [
     settings: {
         username: "lianne_22",
         age: 24,
-        bio: "Hi there!",
+        bio: "Hi there! My name is Lianne and I like to go to the gym in my spare time. I try to combine this with my internship and work.",
         weeklyGoal: 3,
         shareData: true,
     },
-    showcaseAchievements: [null, null, null],
+    showcaseAchievements: [
+      {
+        category: 3,
+        achievement: 1,
+        level: 1,
+      },
+      {
+        category: 2,
+        achievement: 1,
+        level: 2,
+      },
+      {
+        category: 2,
+        achievement: 3,
+        level: 2,
+      },
+    ],
     personalGoals: [null, null, null],
     weeklyFrequency: 2,
     weeklyConsistencyStreak: 7,

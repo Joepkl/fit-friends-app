@@ -5,7 +5,7 @@
     <!-- Search for users -->
     <SearchUsers class="mb-4" />
     <!-- Friend Requests -->
-    <h2 class="text-green">Friend requests</h2>
+    <h2 class="text-green">Open requests</h2>
     <!-- Friends -->
     <MyFriends />
   </section>
