@@ -277,7 +277,7 @@ const Users: Array<UserProfile> = [
     ],
     weeklyFrequency: 1,
     weeklyConsistencyStreak: 12,
-    status: 2,
+    status: 1,
   },
     {
     username: "mikeyB",

@@ -20,9 +20,16 @@
       <button
         @click="selectedMeetupTab = 1"
         :class="{ 'bg-green text-dark-grey': selectedMeetupTab === 1, 'text-green': selectedMeetupTab !== 1 }"
-        class="border-2 border-green border-l-0 rounded-br-default rounded-tr-default font-semibold px-2 py-1"
+        class="border-2 border-green border-l-0 font-semibold px-2 py-1"
       >
         Invites
+      </button>
+      <button
+        @click="selectedMeetupTab = 2"
+        :class="{ 'bg-green text-dark-grey': selectedMeetupTab === 2, 'text-green': selectedMeetupTab !== 2 }"
+        class="border-2 border-green border-l-0 rounded-br-default rounded-tr-default font-semibold px-2 py-1"
+      >
+        Invited by me
       </button>
     </div>
 
@@ -83,7 +90,37 @@
           />
         </li>
       </ul>
-      <p v-else>No open invites at the moment.</p>
+      <p v-else>You have no open invites at the moment.</p>
+    </section>
+
+    <!-- Invites sent by me-->
+    <section v-if="selectedMeetupTab === 2">
+      <ul v-if="myInvites.length" class="flex flex-col gap-2">
+        <li v-for="(item, index) in myInvites" :key="index" class="bg-light-grey rounded-default p-3 relative">
+          <button class="flex items-center gap-[6px]">
+            <div
+              class="block w-6 h-auto rounded-full border-2 overflow-hidden"
+              :class="getColorClass(item.userStatus, null, true)"
+            >
+              <img class="p-[2px] relative top-[4px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
+            </div>
+            <p :class="getColorClass(item.userStatus, true)">{{ item.username }}</p>
+          </button>
+          <!-- Details meetup -->
+          <div class="mt-3">
+            <p><span class="text-green">Date: </span>{{ item.date }}</p>
+            <p class="mt-1"><span class="text-green">Time: </span>{{ item.time }}</p>
+            <p class="mt-1"><span class="text-green">Location: </span>{{ item.gym }}</p>
+          </div>
+          <!-- Remove meetup button -->
+          <CButton
+            @click="openCancelInviteModal(item.username, item.id)"
+            :image="CloseIcon"
+            class="w-4 h-4 absolute top-3 right-3"
+          />
+        </li>
+      </ul>
+      <p v-else>No invites sent by you are open at the moment.</p>
     </section>
 
     <!-- Send invite -->
@@ -179,10 +216,11 @@
     <!-- Select time -->
     <div class="flex flex-col mt-4">
       <label for="time">Select time</label>
-      <input v-model="time" @change="checkInviteValid" type="time" id="time" />
+      <input v-model="time" @change="checkInviteValid" :class="{ error: timeError }" type="time" id="time" />
     </div>
     <!-- Error -->
     <p v-if="dateError" class="error mt-2">{{ dateError }}</p>
+    <p v-if="timeError" class="error mt-2">{{ timeError }}</p>
     <!-- Buttons -->
     <div class="mt-8 flex justify-end">
       <CButton @click="closeInviteModal" button-class="outline" text="Cancel" class="mr-6" />
@@ -276,10 +314,12 @@ const selectedGymTab = ref(0);
 const isInviteModalActive = ref(false);
 const selectedUser = ref("");
 const isInviteValid = ref(false);
-const time = ref("");
+const time = ref(`${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`);
 const date = ref(`${currentYear}-${currentMonth}-${currentDay}`);
 const dateError = ref("");
+const timeError = ref("");
 const isDateValid = ref(true);
+const isTimeValid = ref(true);
 const isCancelMeetupModalActive = ref(false);
 const isCancelInviteModalActive = ref(false);
 const selectedMeetupId = ref<number | null>(null);
@@ -297,6 +337,7 @@ const meetups = ref<Array<Meetup>>([
 ]);
 
 const invites = ref<Array<Meetup>>([]);
+const myInvites = ref<Array<Meetup>>([]);
 
 scrollToTop();
 function scrollToTop() {
@@ -328,13 +369,25 @@ function checkDateValid() {
   }
 }
 
+function checkTimeValid() {
+  timeError.value = "";
+  const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
+  if(date.value === `${currentYear}-${currentMonth}-${currentDay}` && time.value < currentTime) {
+    isTimeValid.value = false;
+    timeError.value = "Not possible to select a time in the past.";
+  } else {
+    isTimeValid.value = true;
+  }
+}
+
 function openGymDropdown() {
   isGymDropdownActive.value = true;
 }
 
 function checkInviteValid() {
   checkDateValid();
-  if (isDateValid.value && time.value) {
+  checkTimeValid();
+  if (isDateValid.value && isTimeValid.value ) {
     isInviteValid.value = true;
   } else {
     isInviteValid.value = false;
@@ -387,10 +440,11 @@ function cancelMeetup() {
 function cancelInvite() {
   // Make API request here
   isCancelInviteModalActive.value = false;
-  invites.value = invites.value.filter((invite) => invite.id !== selectedInviteId.value);
+  myInvites.value = myInvites.value.filter((invite) => invite.id !== selectedInviteId.value);
 }
 
 function showInviteModal(username: string) {
+  checkInviteValid();
   isInviteModalActive.value = true;
   selectedUser.value = username;
 }
@@ -409,7 +463,7 @@ function resetValues() {
   selectedUser.value = "";
   selectedGym.value = myGym.value;
   date.value = `${currentYear}-${currentMonth}-${currentDay}`;
-  time.value = "";
+  time.value = `${now.getHours()}:${now.getMinutes()}`;
   isInviteValid.value = false;
 }
 
@@ -428,15 +482,15 @@ function sendInvite() {
   // Make API request here
   isInviteModalActive.value = false;
 
-  invites.value.push({
-    id: invites.value.length + 1,
+  myInvites.value.push({
+    id: myInvites.value.length + 1,
     username: selectedUser.value,
     gym: selectedGym.value,
     date: date.value,
     time: time.value,
     userStatus: getUserStatus(selectedUser.value) || 1,
   });
-  invites.value.sort(compareMeetups);
+  myInvites.value.sort(compareMeetups);
   resetValues();
 }
 </script>

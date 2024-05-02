@@ -42,6 +42,7 @@ function setCurrentProfile() {
   if(user) {
     currentUser.value = user;
   }
+  console.log(currentUser.value);
 }
 
 scrollToTop();
