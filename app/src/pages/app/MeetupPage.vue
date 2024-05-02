@@ -6,6 +6,7 @@
       Invite your friends to join you on your gym adventures! Working together helps in staying motivated and reaching
       your goals.
     </p>
+
     <!-- My meetups -->
     <h2 class="text-green mb-2">My meetups</h2>
     <div class="flex mb-4">
@@ -24,6 +25,7 @@
         Invites
       </button>
     </div>
+
     <!-- Meetups -->
     <section v-if="selectedMeetupTab === 0">
       <ul v-if="meetups.length">
@@ -44,7 +46,11 @@
             <p class="mt-1"><span class="text-green">Location: </span>{{ item.gym }}</p>
           </div>
           <!-- Remove meetup button -->
-          <CButton @click="openCancelModal(item.username)" :image="CloseIcon" class="w-4 h-4 absolute top-3 right-3" />
+          <CButton
+            @click="openCancelMeetupModal(item.username, item.id)"
+            :image="CloseIcon"
+            class="w-4 h-4 absolute top-3 right-3"
+          />
         </li>
       </ul>
       <p v-else>No meetups planned yet.</p>
@@ -52,8 +58,34 @@
 
     <!-- Invites -->
     <section v-if="selectedMeetupTab === 1">
-      <p>No open invites at the moment.</p>
+      <ul v-if="invites.length" class="flex flex-col gap-2">
+        <li v-for="(item, index) in invites" :key="index" class="bg-light-grey rounded-default p-3 relative">
+          <button class="flex items-center gap-[6px]">
+            <div
+              class="block w-6 h-auto rounded-full border-2 overflow-hidden"
+              :class="getColorClass(item.userStatus, null, true)"
+            >
+              <img class="p-[2px] relative top-[4px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
+            </div>
+            <p :class="getColorClass(item.userStatus, true)">{{ item.username }}</p>
+          </button>
+          <!-- Details meetup -->
+          <div class="mt-3">
+            <p><span class="text-green">Date: </span>{{ item.date }}</p>
+            <p class="mt-1"><span class="text-green">Time: </span>{{ item.time }}</p>
+            <p class="mt-1"><span class="text-green">Location: </span>{{ item.gym }}</p>
+          </div>
+          <!-- Remove meetup button -->
+          <CButton
+            @click="openCancelInviteModal(item.username, item.id)"
+            :image="CloseIcon"
+            class="w-4 h-4 absolute top-3 right-3"
+          />
+        </li>
+      </ul>
+      <p v-else>No open invites at the moment.</p>
     </section>
+
     <!-- Send invite -->
     <h2 class="text-green mb-2 mt-10">Send invite</h2>
     <div class="flex mb-4">
@@ -72,6 +104,7 @@
         Other gym
       </button>
     </div>
+
     <!-- Invite user from my gym -->
     <section v-if="selectedGymTab === 0">
       <ul>
@@ -90,11 +123,13 @@
         </li>
       </ul>
     </section>
+
     <!-- Invite user from other gym -->
     <section v-if="selectedGymTab === 1" class="mt-4">
       <SearchUsers @clicked-user="showInviteModal" label-text="Invite a friend" />
     </section>
   </section>
+
   <!-- Invite modal -->
   <CModal
     @close-modal="closeInviteModal"
@@ -154,10 +189,11 @@
       <CButton @click="sendInvite" button-class="primary" text="Send invite" :is-disabled="!isInviteValid" />
     </div>
   </CModal>
+
   <!-- Cancel meetup modal -->
   <CModal
-    @close-modal="closeCancelModal"
-    :isActive="isCancelModalActive"
+    @close-modal="closeCancelMeetupModal"
+    :isActive="isCancelMeetupModalActive"
     :content="CancelMeetupContent"
     :hide-close-button="true"
   >
@@ -167,8 +203,26 @@
     </p>
     <!-- Buttons -->
     <div class="mt-8 flex justify-end">
-      <CButton @click="closeCancelModal" button-class="outline" text="Don't cancel" class="mr-6" />
+      <CButton @click="closeCancelMeetupModal" button-class="outline" text="Don't cancel" class="mr-6" />
       <CButton @click="cancelMeetup" button-class="primary" text="Cancel" />
+    </div>
+  </CModal>
+
+  <!-- Cancel invite modal -->
+  <CModal
+    @close-modal="closeCancelInviteModal"
+    :isActive="isCancelInviteModalActive"
+    :content="CancelInviteContent"
+    :hide-close-button="true"
+  >
+    <p>
+      Are you sure you want to cancel this invite to <span class="text-green">{{ selectedUser }}</span
+      >?
+    </p>
+    <!-- Buttons -->
+    <div class="mt-8 flex justify-end">
+      <CButton @click="closeCancelInviteModal" button-class="outline" text="Don't cancel" class="mr-6" />
+      <CButton @click="cancelInvite" button-class="primary" text="Cancel" />
     </div>
   </CModal>
 </template>
@@ -193,7 +247,7 @@ import AccountIcon from "@/assets/icons/ic_account.svg";
 import CloseIcon from "@/assets/icons/ic_close_green.svg";
 
 /** Constants */
-import { MeetupContent, CancelMeetupContent } from "@/constants/ModalContent";
+import { MeetupContent, CancelMeetupContent, CancelInviteContent } from "@/constants/ModalContent";
 import type Meetup from "@/constants/Meetup";
 
 /** Components */
@@ -214,7 +268,7 @@ const currentDay = now
   .toString()
   .padStart(2, "0");
 
-const selectedMeetupTab = ref(0);
+const selectedMeetupTab = ref(0);getUserStatus
 const isGymDropdownActive = ref(false);
 const myGym = ref("SportCity Amstelveen");
 const selectedGym = ref(myGym.value);
@@ -226,7 +280,10 @@ const time = ref("");
 const date = ref(`${currentYear}-${currentMonth}-${currentDay}`);
 const dateError = ref("");
 const isDateValid = ref(true);
-const isCancelModalActive = ref(false);
+const isCancelMeetupModalActive = ref(false);
+const isCancelInviteModalActive = ref(false);
+const selectedMeetupId = ref<number | null>(null);
+const selectedInviteId = ref<number | null>(null);
 
 const meetups = ref<Array<Meetup>>([
   {
@@ -235,9 +292,11 @@ const meetups = ref<Array<Meetup>>([
     gym: "SportCity Amstelveen",
     date: "2024-05-09",
     time: "12:00",
-    userStatus: 1,
+    userStatus: getUserStatus("sammy_02") || 1,
   },
 ]);
+
+const invites = ref<Array<Meetup>>([]);
 
 scrollToTop();
 function scrollToTop() {
@@ -304,19 +363,31 @@ function getColorClass(
   return prefix + statusColors[status];
 }
 
-function closeCancelModal() {
-  isCancelModalActive.value = false;
+function closeCancelMeetupModal() {
+  isCancelMeetupModalActive.value = false;
+  console.log('frires')
 }
 
-function openCancelModal(username: string) {
-  isCancelModalActive.value = true;
+function openCancelMeetupModal(username: string, meetupId: number) {
+  isCancelMeetupModalActive.value = true;
   selectedUser.value = username;
+  selectedMeetupId.value = meetupId;
+}
+
+function closeCancelInviteModal() {
+  isCancelInviteModalActive.value = false;
 }
 
 function cancelMeetup() {
   // Make API request here
-  isCancelModalActive.value = false;
-  meetups.value = meetups.value.filter((meetup) => meetup.username !== selectedUser.value);
+  isCancelMeetupModalActive.value = false;
+  meetups.value = meetups.value.filter((meetup) => meetup.id !== selectedMeetupId.value);
+}
+
+function cancelInvite() {
+  // Make API request here
+  isCancelInviteModalActive.value = false;
+  invites.value = invites.value.filter((invite) => invite.id !== selectedInviteId.value);
 }
 
 function showInviteModal(username: string) {
@@ -328,8 +399,44 @@ function closeInviteModal() {
   isInviteModalActive.value = false;
 }
 
+function openCancelInviteModal(username: string, inviteId: number) {
+  isCancelInviteModalActive.value = true;
+  selectedUser.value = username;
+  selectedInviteId.value = inviteId
+}
+
+function resetValues() {
+  selectedUser.value = "";
+  selectedGym.value = myGym.value;
+  date.value = `${currentYear}-${currentMonth}-${currentDay}`;
+  time.value = "";
+  isInviteValid.value = false;
+}
+
+function compareMeetups(a: Meetup, b: Meetup) {
+  const dateA = new Date(`${a.date}T${a.time}`);
+  const dateB = new Date(`${b.date}T${b.time}`);
+  return dateA.getTime() - dateB.getTime();
+}
+
+function getUserStatus(username: string) {
+  const user = Users.find((item) => item.username === username);
+  return user?.status;
+}
+
 function sendInvite() {
   // Make API request here
   isInviteModalActive.value = false;
+
+  invites.value.push({
+    id: invites.value.length + 1,
+    username: selectedUser.value,
+    gym: selectedGym.value,
+    date: date.value,
+    time: time.value,
+    userStatus: getUserStatus(selectedUser.value) || 1,
+  });
+  invites.value.sort(compareMeetups);
+  resetValues();
 }
 </script>

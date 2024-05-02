@@ -29,3 +29,7 @@ export const MeetupContent = {
 export const CancelMeetupContent = {
   title: "Cancel meetup",
 };
+
+export const CancelInviteContent = {
+  title: "Cancel invite",
+};

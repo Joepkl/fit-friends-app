@@ -1,8 +1,8 @@
 <template>
   <section>
-    <h2 class="text-green mb-4">My friends ({{ Users.length }})</h2>
+    <h2 class="text-green mb-4">My friends ({{ usersCopy.length }})</h2>
     <ul>
-      <li v-for="(user, index) in Users" :key="index" class="bg-light-grey mt-3 p-3 flex rounded-default">
+      <li v-for="(user, index) in usersCopy" :key="index" class="bg-light-grey mt-3 p-3 flex rounded-default">
         <button @click="goToProfile(user.username)" class="flex items-center gap-[6px]">
           <div
             class="block w-6 h-auto rounded-full border-2 overflow-hidden"
@@ -66,6 +66,8 @@ const statusColors = ["bronze", "silver", "gold"];
 const isRemoveFriendModalActive = ref(false);
 const selectedFriend = ref<string | null>(null);
 
+const usersCopy = ref(Users);
+
 scrollToTop();
 function scrollToTop() {
   window.scrollTo(0, 0);
@@ -104,5 +106,6 @@ function closeRemoveFriendModal() {
 function removeFriend() {
   // Make API request here to remove from DB
   closeRemoveFriendModal();
+  usersCopy.value = usersCopy.value.filter((user) => user.username !== selectedFriend.value);
 }
 </script>

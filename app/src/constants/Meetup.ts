@@ -5,4 +5,5 @@ export default interface Comment {
   date: string;
   time: string;
   userStatus: number;
+  isAccepted?: boolean;
 }
