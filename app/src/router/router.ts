@@ -25,14 +25,14 @@ router.beforeEach((to, from, next) => {
   }
   document.title = pageTitle;
   /** Add route guard for authentication */
-  // if (to?.meta?.requiresAuth) {
-  //   const store = useStore();
-  //   const isAuthenticated = computed(() => store.getIsAuthenticated);
-  //   if (!isAuthenticated.value) {
-  //     next(AUTHENTICATION_ROUTE);
-  //     return;
-  //   }
-  // }
+  if (to?.meta?.requiresAuth) {
+    const store = useStore();
+    const isAuthenticated = computed(() => store.getIsAuthenticated);
+    if (!isAuthenticated.value) {
+      next(AUTHENTICATION_ROUTE);
+      return;
+    }
+  }
   next();
 });
 
