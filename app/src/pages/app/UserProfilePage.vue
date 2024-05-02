@@ -43,4 +43,9 @@ function setCurrentProfile() {
     currentUser.value = user;
   }
 }
+
+scrollToTop();
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
 </script>

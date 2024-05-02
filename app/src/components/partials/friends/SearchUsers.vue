@@ -1,12 +1,12 @@
 <template>
   <section class="flex flex-col relative">
-    <label for="add-friend">Add a friend</label>
+    <label for="input-search">{{ labelText }}</label>
     <input
       @input="searchUsers"
       v-model="searchInput"
       type="text"
-      id="add-friend"
-      placeholder="Enter a username"
+      id="input-search"
+      placeholder="Enter username"
       autocomplete="off"
     />
     <CButton @click="clearSearchInput" v-if="searchInput.length" :image="CloseIcon" class="absolute right-3 top-8" />
@@ -14,11 +14,11 @@
     <section class="relative">
       <div
         v-if="searchResults.length"
-        class="absolute z-50 bottom-0 w-full h-10 bg-gradient-to-t from-light-grey-transparent rounded-bl-default rounded-br-default"
+        class="absolute z-50 bottom-0 w-full h-5 bg-gradient-to-t from-light-grey-transparent rounded-bl-default rounded-br-default"
       />
       <ul class="bg-light-grey z-10 rounded-default max-h-[170px] overflow-scroll overflow-x-hidden relative pb-1">
         <li v-for="(user, index) in searchResults" :key="index" class="p-3">
-          <button @click="goToProfile(user?.username as string)" class="flex items-center gap-1 w-full">
+          <button @click="handleClickUser(user?.username as string)" class="flex items-center gap-1 w-full">
             <div
               class="block w-6 h-auto rounded-full border-2 overflow-hidden"
               :class="getColorClass(user?.status as number, null, true)"
@@ -40,10 +40,6 @@
 <script setup lang="ts">
 /** Vue */
 import { ref } from "vue";
-import { useRouter } from "vue-router";
-
-/** Routes */
-import { USER_PROFILE_ROUTE } from "@/router/appRoutes";
 
 /** Constants */
 import type UserProfile from '@/constants/UserProfile';
@@ -59,11 +55,11 @@ import Users from "@/constants/placeholders/Users";
 import AccountIcon from "@/assets/icons/ic_account.svg";
 import CloseIcon from "@/assets/icons/ic_close_light_grey.svg";
 
-const emits = defineEmits(["click"]);
-const router = useRouter();
+const emits = defineEmits(["clickedUser"]);
 
 defineProps<{
   isDisabled?: boolean | null;
+  labelText: string;
 }>();
 
 const searchInput = ref("");
@@ -84,13 +80,13 @@ function searchUsers() {
   }
 }
 
+function handleClickUser(username: string) {
+  emits("clickedUser", username);
+}
+
 function clearSearchInput() {
   searchInput.value = "";
   searchResults.value = [];
-}
-
-function goToProfile(username: string) {
-  router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });
 }
 
 function getColorClass(status: number, isText: boolean | null = null, isBorder: boolean | null = null, isBackground: boolean | null = null) {

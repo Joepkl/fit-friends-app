@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2 class="text-green mt-6 mb-4">My friends ({{ Users.length }})</h2>
+    <h2 class="text-green mb-4">My friends ({{ Users.length }})</h2>
     <ul>
       <li v-for="(user, index) in Users" :key="index" class="bg-light-grey mt-3 p-3 flex rounded-default">
         <button @click="goToProfile(user.username)" class="flex items-center gap-[6px]">
@@ -65,6 +65,11 @@ const router = useRouter();
 const statusColors = ["bronze", "silver", "gold"];
 const isRemoveFriendModalActive = ref(false);
 const selectedFriend = ref<string | null>(null);
+
+scrollToTop();
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
 
 function goToProfile(username: string) {
   router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });

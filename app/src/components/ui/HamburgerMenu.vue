@@ -25,7 +25,7 @@
   </ul>
   <!-- Overlay -->
   <div
-    @touchstart="toggleMenu"
+    @touchstart.passive="toggleMenu"
     class="fixed h-[100dvh] inset-0 z-10"
     :class="{ block: isMenuOpen, hidden: !isMenuOpen }"
   />
