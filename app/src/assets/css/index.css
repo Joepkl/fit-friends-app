@@ -118,8 +118,7 @@ p {
   @apply font-semibold;
 }
 
-input,
-select {
+input {
   appearance: none;
   border-radius: var(--border-radius-default);
   -webkit-appearance: none;
@@ -127,6 +126,7 @@ select {
   padding: 4px 8px;
   color: var(--dark-grey);
   border: 2px solid var(--dark-grey);
+  text-align: left;
 }
 
 input.error {
