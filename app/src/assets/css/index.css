@@ -130,6 +130,12 @@ input {
   align-items: start;
 }
 
+input[type="date"],
+input[type="time"],
+input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
 input.error {
   border: 2px solid var(--red);
 }
