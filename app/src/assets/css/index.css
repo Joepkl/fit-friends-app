@@ -118,7 +118,8 @@ p {
   @apply font-semibold;
 }
 
-input {
+input,
+select {
   appearance: none;
   border-radius: var(--border-radius-default);
   -webkit-appearance: none;

@@ -124,6 +124,11 @@ const username = computed(() => userProfile.value?.username);
 // Update account settings on page load with store data
 updateAccountSettings();
 
+scrollToTop();
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
+
 async function fetchAccountSettings() {
   try {
     await fetchUserAccount(username.value as string);

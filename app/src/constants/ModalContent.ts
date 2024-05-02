@@ -25,3 +25,7 @@ export const AddFriendContent = {
 export const MeetupContent = {
   title: "Meetup invite",
 };
+
+export const CancelMeetupContent = {
+  title: "Cancel meetup",
+};
