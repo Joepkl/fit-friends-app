@@ -19,6 +19,7 @@
             id="email"
             type="text"
             placeholder="johndoe@gmail.com"
+            autocomplete="off"
           />
         </li>
         <!-- Username -->
@@ -32,7 +33,7 @@
             id="username"
             type="text"
             placeholder="john_doe123"
-            autocomplete="username"
+            autocomplete="off"
           />
         </li>
         <!-- Password -->
@@ -45,7 +46,7 @@
             type="password"
             ref="passwordEl"
             placeholder="**********"
-            autocomplete="new-password"
+            autocomplete="off"
           />
         </li>
         <!-- Password confirmation -->
@@ -59,7 +60,7 @@
             type="password"
             id="confirm-password"
             placeholder="**********"
-            autocomplete="confirm-password"
+            autocomplete="off"
           />
         </li>
         <!-- Password visibility toggle -->

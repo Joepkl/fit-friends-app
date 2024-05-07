@@ -18,7 +18,7 @@
             id="username"
             type="text"
             placeholder="johndoe@gmail.com"
-            autocomplete="username"
+            autocomplete="off"
           />
         </li>
         <!-- Password -->
@@ -32,7 +32,7 @@
             id="password"
             type="password"
             placeholder="**********"
-            autocomplete="current-password"
+            autocomplete="off"
           />
         </li>
         <!-- Password visibility toggle -->
