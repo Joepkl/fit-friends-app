@@ -14,18 +14,18 @@
         <!-- Age -->
         <li class="flex flex-col">
           <label for="age">Age</label>
-          <input v-model="age" id="age" type="number" placeholder="25" />
+          <input v-model="age" id="age" type="number" placeholder="25" autocomplete="off" />
         </li>
         <!-- Bio -->
         <li class="flex flex-col">
           <label for="bio">Bio</label>
-          <input v-model="bio" id="bio" type="text" placeholder="Tell us something about you" />
+          <input v-model="bio" id="bio" type="text" placeholder="Tell us something about you" autocomplete="off" />
         </li>
         <!-- Frequency weekly goal -->
         <li class="flex">
           <div class="w-[70%] flex flex-col">
             <label for="weekly-goal">Weekly fitness goal *</label>
-            <input v-model="weeklyGoal" disabled id="weekly-goal" type="number" placeholder="2" />
+            <input v-model="weeklyGoal" disabled id="weekly-goal" type="number" placeholder="2" autocomplete="off" />
           </div>
           <div class="flex gap-4 mt-4 justify-center ml-4">
             <button @click.prevent="decreaseWeeklyGoal" class="w-5">
