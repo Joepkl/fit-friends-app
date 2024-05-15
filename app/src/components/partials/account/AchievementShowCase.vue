@@ -19,7 +19,11 @@
     <!-- Showcase achievements -->
     <li v-else v-for="(achievement, index) in achievements" :key="'else-' + index" class="flex w-[68px]">
       <a v-if="achievement" @click="goToAchievement(achievement.id as number)" class="block rounded-default">
-        <img :src="getAchievementIcon(achievement.level)" class="w-[68px] h-[68px]" alt="Achievement icon" />
+        <img
+          :src="getAchievementIcon(achievement.level, achievement.category)"
+          class="w-[68px] h-[68px]"
+          alt="Achievement icon"
+        />
         <p class="mt-2">
           {{ AllAchievements[achievement.category][achievement.achievement].title }}
           {{ getAchievementLevel(achievement.level) }}
@@ -42,10 +46,8 @@ import { ACHIEVEMENTS_ROUTE } from "@/router/appRoutes";
 import type Achievement from "@/constants/Achievement"
 import { AllAchievements } from "@/constants/Achievements";
 
-/** Images */
-import DumbbellGoldIcon from "@/assets/icons/ic_dumbbell_gold.svg";
-import DumbbellSilverIcon from "@/assets/icons/ic_dumbbell_silver.svg";
-import DumbbellBronzeIcon from "@/assets/icons/ic_dumbbell_bronze.svg";
+/** Helpers */
+import { getAchievementIcon, getAchievementLevel } from "@/helpers/achievementHelpers";
 
 const props = defineProps<{
   achievements: Array<Achievement | null>;
@@ -70,38 +72,5 @@ function goToAchievements() {
 
 function goToAchievement(achievementId: number) {
   console.log('Go to specific achievement' + achievementId)
-}
-
-function getAchievementIcon(level: number) {
-  if(level === 1) {
-    return DumbbellBronzeIcon;
-  }
-    if(level === 2) {
-    return DumbbellSilverIcon;
-  }
-    if(level === 3) {
-    return DumbbellGoldIcon;
-  }
-}
-
-function getAchievementLevel(level:number) {
-  if(level === 1) {
-    return "I";
-  }
-  if(level === 2) {
-    return "II";
-  }
-  if(level === 3) {
-    return "  III";
-  }
-    if(level === 4) {
-    return "  IV";
-  }
-    if(level === 5) {
-    return "  V";
-  }
-    if(level === 6) {
-    return "  VI";
-  }
 }
 </script>

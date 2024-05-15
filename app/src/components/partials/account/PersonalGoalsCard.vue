@@ -18,7 +18,11 @@
       <li v-else v-for="(goal, index) in personalGoals" :key="index" class="flex items-center">
         <div v-if="goal" class="flex items-center">
           <a @click="goToGoal(goal as Achievement)" class="block rounded-default">
-            <img :src="getAchievementIcon(goal.level)" class="w-[56px] h-[56px]" alt="Achievement icon" />
+            <img
+              :src="getAchievementIcon(goal.level, goal.category)"
+              class="w-[56px] h-[56px]"
+              alt="Achievement icon"
+            />
           </a>
           <p class="ml-4">
             {{ AllAchievements[goal.category][goal.achievement].title }}
@@ -46,10 +50,8 @@ import { ACHIEVEMENTS_ROUTE } from "@/router/appRoutes";
 import type Achievement from "@/constants/Achievement"
 import { AllAchievements } from "@/constants/Achievements";
 
-/** Images */
-import DumbbellGoldIcon from "@/assets/icons/ic_dumbbell_gold.svg";
-import DumbbellSilverIcon from "@/assets/icons/ic_dumbbell_silver.svg";
-import DumbbellBronzeIcon from "@/assets/icons/ic_dumbbell_bronze.svg";
+/** Helpers */
+import { getAchievementIcon, getAchievementLevel } from "@/helpers/achievementHelpers";
 
 const props = defineProps<{
   personalGoals: Array<Achievement | null>;
@@ -76,38 +78,5 @@ function goToAchievements() {
 function goToGoal(goal: Achievement) {
   // Navigate to selected goal
   console.log(goal)
-}
-
-function getAchievementIcon(level: number) {
-  if(level === 1) {
-    return DumbbellBronzeIcon;
-  }
-    if(level === 2) {
-    return DumbbellSilverIcon;
-  }
-    if(level === 3) {
-    return DumbbellGoldIcon;
-  }
-}
-
-function getAchievementLevel(level:number) {
-  if(level === 1) {
-    return "I";
-  }
-  if(level === 2) {
-    return "II";
-  }
-  if(level === 3) {
-    return "  III";
-  }
-    if(level === 4) {
-    return "  IV";
-  }
-    if(level === 5) {
-    return "  V";
-  }
-    if(level === 6) {
-    return "  VI";
-  }
 }
 </script>

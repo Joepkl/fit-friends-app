@@ -98,6 +98,9 @@ import { AddFriendContent } from "@/constants/ModalContent";
 import CloseIcon from "@/assets/icons/ic_close_green.svg";
 import AddIcon from "@/assets/icons/ic_add_green.svg";
 
+/** Helpers */
+import { getColorClass } from "@/helpers/userHelpers";
+
 const props = defineProps<{
   isEditActive: boolean;
   isLoggedInAccount: boolean;
@@ -106,7 +109,6 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits(["editIsActive"]);
-const statusColors = ["bronze", "silver", "gold"];
 
 const selectedFriend = ref(props.userProfile?.username);
 const isRemoveFriendModalActive = ref(false);
@@ -116,18 +118,6 @@ const isFriendRequestPending = ref(false);
 
 function emitEditActive() {
   emits("editIsActive");
-}
-
-function getColorClass(status: number, isText: boolean | null = null, isBorder: boolean | null = null, isBackground: boolean | null = null) {
-  let prefix;
-  if(isText) {
-    prefix = "text-";
-  } else if(isBorder) {
-    prefix = "border-";
-  } else if(isBackground) {
-    prefix = "bg-";
-  }
-  return prefix + statusColors[status];
 }
 
 function showAddFriendModal() {

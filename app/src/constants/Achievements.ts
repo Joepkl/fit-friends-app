@@ -2,31 +2,37 @@ export const MonthlyAchievements = Object.freeze({
   0: {
     title: "Consistency",
     description: "Met the personal frequency goal for 1 week, 2 weeks, and 4 weeks.",
+    maxLevel: 3,
     id: 1,
   },
   1: {
     title: "Competitor",
     description: "Achieved 10, 20, 50 points in the leaderboard competition.",
+    maxLevel: 3,
     id: 2,
   },
   2: {
     title: "Gym Rat",
     description: "Visited the gym 5, 10, 20 times this month.",
+    maxLevel: 3,
     id: 3,
   },
   3: {
     title: "Achiever",
     description: "Accomplished 1, 2, 3 achievements this month.",
+    maxLevel: 3,
     id: 4,
   },
   4: {
     title: "Cross Trainer",
     description: "Achieved achievements from different muscle groups: 2, 3, 5.",
+    maxLevel: 3,
     id: 5,
   },
   5: {
     title: "Social Life",
     description: "Commented on 2, 5, 10 posts this month.",
+    maxLevel: 3,
     id: 6,
   },
 });
@@ -35,31 +41,38 @@ export const ChestAchievements = Object.freeze({
   0: {
     title: "Cable flies",
     description: "Exercise description",
+    maxLevel: 6,
     id: 7,
   },
   1: {
     title: "Machine flies",
     description: "Exercise description",
+    maxLevel: 6,
     id: 8,
   },
   2: {
     title: "Dumbbell press",
     description: "Exercise description",
+    maxLevel: 6,
     id: 9,
   },
   3: {
     title: "Incline dumbbell press",
     description: "Exercise description",
+    maxLevel: 6,
     id: 10,
   },
   4: {
     title: "Bench press",
     description: "Exercise description",
+    maxLevel: 6,
+    id: 11,
   },
   5: {
     title: "Incline bench press",
     description: "Exercise description",
-    id: 11,
+    maxLevel: 6,
+    id: 12,
   },
 });
 
@@ -67,32 +80,38 @@ export const LegAchievements = Object.freeze({
   0: {
     title: "Squats",
     description: "Exercise description",
-    id: 12,
+    maxLevel: 6,
+    id: 13,
   },
   1: {
     title: "Deadlift",
     description: "Exercise description",
-    id: 13,
+    maxLevel: 6,
+    id: 14,
   },
   2: {
     title: "Lunges",
     description: "Exercise description",
-    id: 14,
+    maxLevel: 6,
+    id: 15,
   },
   3: {
     title: "Hack squat",
     description: "Exercise description",
-    id: 15,
+    maxLevel: 6,
+    id: 16,
   },
   4: {
     title: "Leg extension",
     description: "Exercise description",
-    id: 16,
+    maxLevel: 6,
+    id: 17,
   },
   5: {
     title: "Calf raises",
     description: "Exercise description",
-    id: 17,
+    maxLevel: 6,
+    id: 18,
   },
 });
 
@@ -100,32 +119,38 @@ export const BackAchievements = Object.freeze({
   0: {
     title: "Barbell row",
     description: "Exercise description",
-    id: 18,
+    maxLevel: 6,
+    id: 19,
   },
   1: {
     title: "Dumbbell row",
     description: "Exercise description",
-    id: 19,
+    maxLevel: 6,
+    id: 20,
   },
   2: {
     title: "Lat pulldown",
     description: "Exercise description",
-    id: 20,
+    maxLevel: 6,
+    id: 21,
   },
   3: {
     title: "Low row",
     description: "Exercise description",
-    id: 21,
+    maxLevel: 6,
+    id: 22,
   },
   4: {
     title: "Face pulls",
     description: "Exercise description",
-    id: 22,
+    maxLevel: 6,
+    id: 23,
   },
   5: {
     title: "Reverse flies",
     description: "Exercise description",
-    id: 23,
+    maxLevel: 6,
+    id: 24,
   },
 });
 
@@ -133,32 +158,38 @@ export const ShoulderAchievements = Object.freeze({
   0: {
     title: "Shoulder press",
     description: "Exercise description",
-    id: 24,
+    maxLevel: 6,
+    id: 25,
   },
   1: {
     title: "Overhead press",
     description: "Exercise description",
-    id: 25,
+    maxLevel: 6,
+    id: 26,
   },
   2: {
     title: "Lateral raises",
     description: "Exercise description",
-    id: 25,
+    maxLevel: 6,
+    id: 27,
   },
   3: {
     title: "Front raises",
     description: "Exercise description",
-    id: 25,
+    maxLevel: 6,
+    id: 28,
   },
   4: {
     title: "Trap raises",
     description: "Exercise description",
-    id: 26,
+    maxLevel: 6,
+    id: 29,
   },
   5: {
     title: "High pulls",
     description: "Exercise description",
-    id: 27,
+    maxLevel: 6,
+    id: 30,
   },
 });
 
@@ -166,17 +197,20 @@ export const BicepAchievements = Object.freeze({
   0: {
     title: "Bicep curl",
     description: "Exercise description",
-    id: 28,
+    maxLevel: 3,
+    id: 31,
   },
   1: {
     title: "Hammer curl",
     description: "Exercise description",
-    id: 29,
+    maxLevel: 3,
+    id: 32,
   },
   2: {
     title: "Preacher curl",
     description: "Exercise description",
-    id: 30,
+    maxLevel: 3,
+    id: 33,
   },
 });
 
@@ -184,33 +218,38 @@ export const TricepAchievements = Object.freeze({
   0: {
     title: "Skull crushers",
     description: "Exercise description",
-    id: 31,
+    maxLevel: 3,
+    id: 34,
   },
   1: {
     title: "Overhead tricep extension",
     description: "Exercise description",
-    id: 32,
+    maxLevel: 3,
+    id: 35,
   },
   2: {
     title: "Tricep push down",
     description: "Exercise description",
-    id: 33,
+    maxLevel: 3,
+    id: 36,
   },
 });
 
-interface MonthlyAchievements {
+export interface Achievements {
   [key: number]: {
     title: string;
     description: string;
+    maxLevel: number;
+    id: number;
   };
 }
 
 export const AllAchievements = [
-  MonthlyAchievements as MonthlyAchievements,
-  ChestAchievements as MonthlyAchievements,
-  LegAchievements as MonthlyAchievements,
-  BackAchievements as MonthlyAchievements,
-  ShoulderAchievements as MonthlyAchievements,
-  BicepAchievements as MonthlyAchievements,
-  TricepAchievements as MonthlyAchievements,
+  MonthlyAchievements as Achievements,
+  ChestAchievements as Achievements,
+  LegAchievements as Achievements,
+  BackAchievements as Achievements,
+  ShoulderAchievements as Achievements,
+  BicepAchievements as Achievements,
+  TricepAchievements as Achievements,
 ];

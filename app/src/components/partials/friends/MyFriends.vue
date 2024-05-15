@@ -61,8 +61,10 @@ import CloseIcon from "@/assets/icons/ic_close_green.svg";
 import CButton from "@/components/ui/CButton.vue";
 import CModal from "@/components/ui/CModal.vue";
 
+/** Helpers */
+import { getColorClass } from "@/helpers/userHelpers";
+
 const router = useRouter();
-const statusColors = ["bronze", "silver", "gold"];
 const isRemoveFriendModalActive = ref(false);
 const selectedFriend = ref<string | null>(null);
 
@@ -75,23 +77,6 @@ function scrollToTop() {
 
 function goToProfile(username: string) {
   router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });
-}
-
-function getColorClass(
-  status: number,
-  isText: boolean | null = null,
-  isBorder: boolean | null = null,
-  isBackground: boolean | null = null
-) {
-  let prefix;
-  if (isText) {
-    prefix = "text-";
-  } else if (isBorder) {
-    prefix = "border-";
-  } else if (isBackground) {
-    prefix = "bg-";
-  }
-  return prefix + statusColors[status];
 }
 
 function showRemoveFriendModal(username: string) {

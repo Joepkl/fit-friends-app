@@ -31,7 +31,7 @@
       <p class="text-green">Accomplished achievements</p>
       <ul>
         <li v-for="(item, index) in content.achievements" :key="index" class="flex items-center mt-2">
-          <img :src="getAchievementIcon(item.level)" class="w-12" alt="Achievement icon" />
+          <img :src="getAchievementIcon(item.level, item.category)" class="w-12" alt="Achievement icon" />
           <p class="ml-2">
             {{ AllAchievements[item.category][item.achievement].title }} {{ getAchievementLevel(item.level) }}
           </p>
@@ -94,9 +94,6 @@ import { useRouter } from "vue-router";
 
 /** Images */
 import AccountIcon from "@/assets/icons/ic_account.svg";
-import DumbbellGoldIcon from "@/assets/icons/ic_dumbbell_gold.svg";
-import DumbbellSilverIcon from "@/assets/icons/ic_dumbbell_silver.svg";
-import DumbbellBronzeIcon from "@/assets/icons/ic_dumbbell_bronze.svg";
 import LikeOutlineIcon from "@/assets/icons/ic_like_outline.svg";
 import LikeFillIcon from "@/assets/icons/ic_like_fill.svg";
 
@@ -110,6 +107,10 @@ import { AllAchievements } from "@/constants/Achievements";
 /** Routes */
 import { USER_PROFILE_ROUTE } from "@/router/appRoutes";
 
+/** Helpers */
+import { getAchievementIcon, getAchievementLevel } from "@/helpers/achievementHelpers";
+import { getColorClass } from "@/helpers/userHelpers";
+
 const emits = defineEmits(["likePost", "unlikePost"]);
 
 const props = defineProps<{
@@ -118,7 +119,6 @@ const props = defineProps<{
 
 const router = useRouter();
 
-const statusColors = ["bronze", "silver", "gold"];
 const isCommentsToggled = ref(false);
 const allCommentsEl = ref<HTMLElement | null>(null);
 
@@ -136,50 +136,5 @@ function likePost() {
 
 function toggleComments() {
   isCommentsToggled.value = !isCommentsToggled.value;
-}
-
-function getAchievementIcon(level: number) {
-  if(level === 1) {
-    return DumbbellBronzeIcon;
-  }
-    if(level === 2) {
-    return DumbbellSilverIcon;
-  }
-    if(level === 3) {
-    return DumbbellGoldIcon;
-  }
-}
-
-function getAchievementLevel(level:number) {
-  if(level === 1) {
-    return "I";
-  }
-  if(level === 2) {
-    return "II";
-  }
-  if(level === 3) {
-    return "  III";
-  }
-    if(level === 4) {
-    return "  IV";
-  }
-    if(level === 5) {
-    return "  V";
-  }
-    if(level === 6) {
-    return "  VI";
-  }
-}
-
-function getColorClass(status: number, isText: boolean | null = null, isBorder: boolean | null = null, isBackground: boolean | null = null) {
-  let prefix;
-  if(isText) {
-    prefix = "text-";
-  } else if(isBorder) {
-    prefix = "border-";
-  } else if(isBackground) {
-    prefix = "bg-";
-  }
-  return prefix + statusColors[status];
 }
 </script>

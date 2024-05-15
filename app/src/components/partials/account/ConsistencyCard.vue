@@ -18,14 +18,15 @@
 </template>
 
 <script setup lang="ts">
+/** Helpers */
+import { getColorClass } from "@/helpers/userHelpers";
+
 const props = defineProps<{
   weeklyGoal: number;
   weeklyFrequency: number;
   consistencyStreak: number;
   status: number;
 }>();
-
-const statusColors = ["bronze", "silver", "gold"];
 
 const months = [
   "January",
@@ -76,22 +77,5 @@ function getWeeklyGoalClass(index: number) {
     widthClass = "w-[14.3%]";
   }
   return `${fillClass} ${widthClass}`;
-}
-
-function getColorClass(
-  status: number,
-  isText: boolean | null = null,
-  isBorder: boolean | null = null,
-  isBackground: boolean | null = null
-) {
-  let prefix;
-  if (isText) {
-    prefix = "text-";
-  } else if (isBorder) {
-    prefix = "border-";
-  } else if (isBackground) {
-    prefix = "bg-";
-  }
-  return prefix + statusColors[status];
 }
 </script>

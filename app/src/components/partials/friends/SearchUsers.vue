@@ -50,10 +50,12 @@ import CButton from "@/components/ui/CButton.vue";
 /** Placeholder data */
 import Users from "@/constants/placeholders/Users";
 
-
 /** Images */
 import AccountIcon from "@/assets/icons/ic_account.svg";
 import CloseIcon from "@/assets/icons/ic_close_light_grey.svg";
+
+/** Helpers */
+import { getColorClass } from "@/helpers/userHelpers";
 
 const emits = defineEmits(["clickedUser"]);
 
@@ -64,8 +66,6 @@ defineProps<{
 
 const searchInput = ref("");
 const searchResults = ref<Array<UserProfile | null>>([]);
-
-const statusColors = ["bronze", "silver", "gold"];
 
 function searchUsers() {
   const input = searchInput.value.toLowerCase();
@@ -87,17 +87,5 @@ function handleClickUser(username: string) {
 function clearSearchInput() {
   searchInput.value = "";
   searchResults.value = [];
-}
-
-function getColorClass(status: number, isText: boolean | null = null, isBorder: boolean | null = null, isBackground: boolean | null = null) {
-  let prefix;
-  if(isText) {
-    prefix = "text-";
-  } else if(isBorder) {
-    prefix = "border-";
-  } else if(isBackground) {
-    prefix = "bg-";
-  }
-  return prefix + statusColors[status];
 }
 </script>
