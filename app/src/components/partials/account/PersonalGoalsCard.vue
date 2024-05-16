@@ -25,7 +25,8 @@
             />
           </a>
           <p class="ml-4">
-            {{ AllAchievements[goal.category][goal.achievement].title }}
+            <!-- {{ AllAchievements[goal.category][goal.achievement].title }} -->
+            {{ getAchievementInfo(goal.id as number)?.title }}
             {{ getAchievementLevel(goal.level) }}
           </p>
         </div>
@@ -51,7 +52,7 @@ import type Achievement from "@/constants/Achievement"
 import { AllAchievements } from "@/constants/Achievements";
 
 /** Helpers */
-import { getAchievementIcon, getAchievementLevel } from "@/helpers/achievementHelpers";
+import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 
 const props = defineProps<{
   personalGoals: Array<Achievement | null>;

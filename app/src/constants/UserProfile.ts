@@ -1,5 +1,5 @@
 import type AccountSettings from '@/constants/AccountSettings';
-import type Achievement from "@/constants/Achievement"
+import type SingleAchievement from "@/constants/SingleAchievement";
 
 export default interface UserProfile {
   _id?: string;
@@ -7,8 +7,8 @@ export default interface UserProfile {
   password: string;
   email: string;
   settings: null | AccountSettings;
-  showcaseAchievements: Array<Achievement | null>;
-  personalGoals: Array<Achievement | null>;
+  showcaseAchievements: Array<SingleAchievement | null>;
+  personalGoals: Array<SingleAchievement | null>;
   weeklyFrequency: number;
   weeklyConsistencyStreak: number;
   status: number;

@@ -20,13 +20,13 @@
     <li v-else v-for="(achievement, index) in achievements" :key="'else-' + index" class="flex w-[68px]">
       <a v-if="achievement" @click="goToAchievement(achievement.id as number)" class="block rounded-default">
         <img
-          :src="getAchievementIcon(achievement.level, achievement.category)"
+          :src="getAchievementIcon(achievement.level as number, achievement.category)"
           class="w-[68px] h-[68px]"
           alt="Achievement icon"
         />
         <p class="mt-2">
-          {{ AllAchievements[achievement.category][achievement.achievement].title }}
-          {{ getAchievementLevel(achievement.level) }}
+          {{ getAchievementInfo(achievement.id as number)?.title }}
+          {{ getAchievementLevel(achievement.level as number) }}
         </p>
       </a>
       <!-- No achievement selected -->
@@ -43,14 +43,13 @@ import { useRouter } from "vue-router";
 import { ACHIEVEMENTS_ROUTE } from "@/router/appRoutes";
 
 /** Constants */
-import type Achievement from "@/constants/Achievement"
-import { AllAchievements } from "@/constants/Achievements";
+import type SingleAchievement from "@/constants/SingleAchievement";
 
 /** Helpers */
-import { getAchievementIcon, getAchievementLevel } from "@/helpers/achievementHelpers";
+import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 
 const props = defineProps<{
-  achievements: Array<Achievement | null>;
+  achievements: Array<SingleAchievement | null>;
   isLoggedInAccount: boolean;
 }>();
 

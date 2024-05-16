@@ -15,30 +15,30 @@ const Users: Array<UserProfile> = [
     showcaseAchievements: [
       {
         category: 1,
-        achievement: 3,
+        id: 7,
         level: 3,
       },
       {
         category: 2,
-        achievement: 3,
+        id: 14,
         level: 2,
       },
       {
         category: 4,
-        achievement: 3,
+        id: 3,
         level: 2,
       },
     ],
     personalGoals: [
       {
         category: 2,
-        achievement: 3,
+        id: 14,
         level: 3,
       },
       {
         category: 3,
-        achievement: 3,
-        level: 2,
+        id: 3,
+        level: 3,
       },
       null
     ],
@@ -60,35 +60,35 @@ const Users: Array<UserProfile> = [
     showcaseAchievements: [
       {
         category: 5,
-        achievement: 2,
+        id: 31,
         level: 1,
       },
       {
         category: 0,
-        achievement: 2,
+        id: 6,
         level: 3,
       },
       {
         category: 4,
-        achievement: 5,
+        id: 29,
         level: 1,
       },
     ],
     personalGoals: [
       {
         category: 5,
-        achievement: 2,
+        id: 31,
         level: 2,
       },
       {
         category: 4,
-        achievement: 5,
-        level: 2,
+        id: 30,
+        level: 3,
       },
       {
-        category: 2,
-        achievement: 5,
-        level: 3,
+        category: 1,
+        id: 5,
+        level: 2,
       },
     ],
     weeklyFrequency: 1,
@@ -108,8 +108,8 @@ const Users: Array<UserProfile> = [
     },
     showcaseAchievements: [
       {
-        category: 2,
-        achievement: 2,
+        category: 0,
+        id: 2,
         level: 1,
       },
       null,
@@ -117,13 +117,13 @@ const Users: Array<UserProfile> = [
     ],
     personalGoals: [
       {
-        category: 2,
-        achievement: 2,
+        category: 0,
+        id: 2,
         level: 2,
       },
       {
         category: 2,
-        achievement: 4,
+        id: 13,
         level: 1,
       },
     ],
@@ -144,31 +144,31 @@ const Users: Array<UserProfile> = [
     },
     showcaseAchievements: [
       {
-        category: 2,
-        achievement: 2,
+        category: 4,
+        id: 26,
         level: 3,
       },
       {
         category: 3,
-        achievement: 3,
+        id: 20,
         level: 3,
       },
       {
         category: 0,
-        achievement: 5,
+        id: 5,
         level: 2,
       },
     ],
     personalGoals: [
       {
         category: 2,
-        achievement: 3,
+        id: 17,
         level: 3,
       },
       {
-        category: 2,
-        achievement: 5,
-        level: 2,
+        category: 0,
+        id: 5,
+        level: 3,
       },
       null
     ],
@@ -190,17 +190,17 @@ const Users: Array<UserProfile> = [
     showcaseAchievements: [
       {
         category: 0,
-        achievement: 5,
+        id: 5,
         level: 2,
       },
       {
-        category: 0,
-        achievement: 4,
+        category: 6,
+        id: 32,
         level: 1,
       },
       {
         category: 3,
-        achievement: 4,
+        id: 4,
         level: 1,
       },
     ],
@@ -222,8 +222,8 @@ const Users: Array<UserProfile> = [
     },
     showcaseAchievements: [
       {
-        category: 5,
-        achievement: 2,
+        category: 6,
+        id: 19,
         level: 2,
       },
       null,
@@ -247,31 +247,31 @@ const Users: Array<UserProfile> = [
     },
     showcaseAchievements: [
       {
-        category: 5,
-        achievement: 1,
+        category: 3,
+        id: 24,
         level: 2,
       },
       {
-        category: 1,
-        achievement: 2,
+        category: 4,
+        id: 27,
         level: 1,
       },
       {
-        category: 2,
-        achievement: 2,
+        category: 0,
+        id: 6,
         level: 1,
       },
     ],
     personalGoals: [
       {
-        category: 3,
-        achievement: 4,
-        level: 2,
+        category: 0,
+        id: 1,
+        level: 3,
       },
       {
-        category: 5,
-        achievement: 1,
-        level: 3,
+        category: 4,
+        id: 27,
+        level: 2,
       },
       null
     ],
@@ -292,35 +292,35 @@ const Users: Array<UserProfile> = [
     },
     showcaseAchievements: [
       {
-        category: 1,
-        achievement: 2,
+        category: 2,
+        id: 16,
         level: 3,
       },
       {
         category: 3,
-        achievement: 1,
+        id: 23,
         level: 3,
       },
       {
-        category: 1,
-        achievement: 4,
+        category: 0,
+        id: 4,
         level: 2,
       },
     ],
     personalGoals: [
       {
-        category: 1,
-        achievement: 4,
+        category: 0,
+        id: 4,
         level: 3,
       },
       {
         category: 2,
-        achievement: 4,
+        id: 15,
         level: 2,
       },
       {
-        category: 0,
-        achievement: 4,
+        category: 1,
+        id: 12,
         level: 3,
       },
     ],
@@ -342,35 +342,35 @@ const Users: Array<UserProfile> = [
     showcaseAchievements: [
       {
         category: 3,
-        achievement: 1,
+        id: 22,
         level: 1,
       },
       {
-        category: 2,
-        achievement: 1,
+        category: 4,
+        id: 25,
         level: 2,
       },
       {
-        category: 2,
-        achievement: 3,
+        category: 0,
+        id: 6,
         level: 2,
       },
     ],
     personalGoals: [
       {
-        category: 4,
-        achievement: 1,
-        level: 1,
+        category: 3,
+        id: 22,
+        level: 2,
       },
       {
         category: 2,
-        achievement: 4,
+        id: 4,
         level: 2,
       },
       {
         category: 0,
-        achievement: 0,
-        level: 2,
+        id: 1,
+        level: 3,
       },
     ],
     weeklyFrequency: 2,

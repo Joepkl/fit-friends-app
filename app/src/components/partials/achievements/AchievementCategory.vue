@@ -1,8 +1,20 @@
 <template>
-  <CHeader />
-  <section class="page-wrapper-header">
-    <h1 class="mb-4">Achievements</h1>
-    <AchievementCategory title="Monthly" :achievements="MonthlyAchievements" />
+  <section>
+    <div class="bg-light-grey rounded-default p-4">
+      <h2 class="mb-3">{{ title }}</h2>
+      <!-- Preview -->
+      <ul class="flex justify-between">
+        <li v-for="achievement in splitAchievements(achievements)" :key="achievement.id">
+          <AchievementStack :achievement="achievement" />
+        </li>
+      </ul>
+      <!-- All achievements -->
+      <ul v-if="allAchievementsToggled">
+        <li v-for="achievement in splitAchievements(achievements, true)" :key="achievement.id">
+          <AchievementStack :achievement="achievement" />
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -11,10 +23,6 @@
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
-/** Store */
-// @ts-ignore
-import { useStore } from "@/stores/store.ts";
-
 /** Placeholders */
 import { AchievementLevels } from "@/constants/placeholders/AchievementLevels";
 
@@ -22,40 +30,27 @@ import { AchievementLevels } from "@/constants/placeholders/AchievementLevels";
 import type { Achievements } from "@/constants/Achievements";
 
 /** Components */
-import AchievementCategory from "@/components/partials/achievements/AchievementCategory.vue";
+import AchievementStack from "@/components/partials/achievements/AchievementStack.vue";
 
-import {
-  MonthlyAchievements,
-  ChestAchievements,
-  LegAchievements,
-  BackAchievements,
-  ShoulderAchievements,
-  BicepAchievements,
-  TricepAchievements,
-} from "@/constants/Achievements";
-
-/** Components */
-import CHeader from "@/components/partials/layout/CHeader.vue";
-
-const store = useStore();
 const router = useRouter();
-
 const allAchievementsToggled = ref(false);
 
-scrollToTop();
-function scrollToTop() {
-  window.scrollTo(0, 0);
-}
+defineProps<{
+  title: string;
+  achievements: Achievements;
+}>();
+
+const emits = defineEmits(["updateSelectedMeetupTab"]);
 
 function splitAchievements(achievements: Achievements, renderAll: boolean = false) {
   let returnAchievements = [];
   const keys = Object.keys(achievements);
   // Render first 3 achievements
-  if(!renderAll) {
+  if (!renderAll) {
     for (let i = 0; i < 3; i++) {
       returnAchievements.push(achievements[i]);
     }
-  // Render the rest of the achievements
+    // Render the rest of the achievements
   } else {
     for (let i = 3; i < keys.length; i++) {
       returnAchievements.push(achievements[i]);

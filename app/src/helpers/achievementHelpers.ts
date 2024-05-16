@@ -6,6 +6,9 @@ import TimeGoldIcon from "../assets/icons/ic_time_gold.svg";
 import TimeSilverIcon from "../assets/icons/ic_time_silver.svg";
 import TimeBronzeIcon from "../assets/icons/ic_time_bronze.svg";
 
+/** Constants */
+import { AllAchievements } from "@/constants/Achievements";
+
 export function getAchievementIcon(level: number, category: number) {
   // Monthly achievements
   if (category === 0) {
@@ -47,5 +50,16 @@ export function getAchievementLevel(level: number) {
   }
   if (level === 6) {
     return "  VI";
+  }
+}
+
+export function getAchievementInfo(id: number) {
+  for (let i = 0; i < AllAchievements.length; i++) {
+    const keys = Object.keys(AllAchievements[i]);
+    for (let j = 0; j < keys.length; j++) {
+      if (AllAchievements[i][j].id === id) {
+        return AllAchievements[i][j];
+      }
+    }
   }
 }
