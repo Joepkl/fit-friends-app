@@ -37,8 +37,8 @@ const Posts: Array<PostContent> = [
     achievements: [
       {
         category: 1,
-        achievement: 3,
-        level: 3,
+        id: 10,
+        level: 4,
       },
     ],
     likes: 23,
@@ -86,7 +86,7 @@ const Posts: Array<PostContent> = [
     achievements: [
       {
         category: 2,
-        achievement: 0,
+        id: 13,
         level: 1,
       },
     ],

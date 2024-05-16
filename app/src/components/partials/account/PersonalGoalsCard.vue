@@ -17,17 +17,16 @@
       <!-- Showcase selected goals -->
       <li v-else v-for="(goal, index) in personalGoals" :key="index" class="flex items-center">
         <div v-if="goal" class="flex items-center">
-          <a @click="goToGoal(goal as Achievement)" class="block rounded-default">
+          <a @click="goToGoal(goal as SingleAchievement)" class="block rounded-default">
             <img
-              :src="getAchievementIcon(goal.level, goal.category)"
+              :src="getAchievementIcon(goal.level as number, goal.category)"
               class="w-[56px] h-[56px]"
               alt="Achievement icon"
             />
           </a>
           <p class="ml-4">
-            <!-- {{ AllAchievements[goal.category][goal.achievement].title }} -->
             {{ getAchievementInfo(goal.id as number)?.title }}
-            {{ getAchievementLevel(goal.level) }}
+            {{ getAchievementLevel(goal.level as number) }}
           </p>
         </div>
         <!-- No goal selected -->
@@ -48,14 +47,13 @@ import { useRouter } from "vue-router";
 import { ACHIEVEMENTS_ROUTE } from "@/router/appRoutes";
 
 /** Constants */
-import type Achievement from "@/constants/Achievement"
-import { AllAchievements } from "@/constants/Achievements";
+import type SingleAchievement from "@/constants/SingleAchievement"
 
 /** Helpers */
 import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 
 const props = defineProps<{
-  personalGoals: Array<Achievement | null>;
+  personalGoals: Array<SingleAchievement | null>;
   isLoggedInAccount: boolean;
 }>();
 
@@ -76,7 +74,7 @@ function goToAchievements() {
   router.push(ACHIEVEMENTS_ROUTE);
 }
 
-function goToGoal(goal: Achievement) {
+function goToGoal(goal: SingleAchievement) {
   // Navigate to selected goal
   console.log(goal)
 }

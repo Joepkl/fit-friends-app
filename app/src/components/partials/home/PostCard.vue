@@ -31,9 +31,10 @@
       <p class="text-green">Accomplished achievements</p>
       <ul>
         <li v-for="(item, index) in content.achievements" :key="index" class="flex items-center mt-2">
-          <img :src="getAchievementIcon(item.level, item.category)" class="w-12" alt="Achievement icon" />
+          <img :src="getAchievementIcon(item.level as number, item.category)" class="w-12" alt="Achievement icon" />
           <p class="ml-2">
-            {{ AllAchievements[item.category][item.achievement].title }} {{ getAchievementLevel(item.level) }}
+            {{ getAchievementInfo(item.id)?.title }}
+            {{ getAchievementLevel(item.level as number) }}
           </p>
         </li>
       </ul>
@@ -102,13 +103,12 @@ import CButton from "@/components/ui/CButton.vue";
 
 /** Constants */
 import type PostContent from "@/constants/PostContent";
-import { AllAchievements } from "@/constants/Achievements";
 
 /** Routes */
 import { USER_PROFILE_ROUTE } from "@/router/appRoutes";
 
 /** Helpers */
-import { getAchievementIcon, getAchievementLevel } from "@/helpers/achievementHelpers";
+import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 import { getColorClass } from "@/helpers/userHelpers";
 
 const emits = defineEmits(["likePost", "unlikePost"]);
