@@ -6,7 +6,7 @@ interface AchievementLevel {
 export const AchievementLevels: Array<AchievementLevel> = [
   {
     id: 1,
-    level: 1,
+    level: 0,
   },
   {
     id: 2,

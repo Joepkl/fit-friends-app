@@ -1,5 +1,5 @@
 <template>
-  <ul class="flex justify-between mt-6">
+  <ul class="flex justify-between mt-6 text-center">
     <!-- Has no achievements selected for showcase -->
     <li v-if="!hasAchievements && !isLoggedInAccount">
       <a class="border-2 w-[68px] h-[68px] block border-white rounded-default p-5"></a>

@@ -10,7 +10,7 @@
         :class="getWeeklyGoalClass(index)"
       ></li>
     </ul>
-    <div class="flex justify-between mt-4">
+    <div class="flex justify-between mt-4 flex-wrap gap-2">
       <p>{{ weeklyFrequency }}/{{ weeklyGoal }} weekly goal</p>
       <p :class="getColorClass(status, true)">{{ consistencyStreak }} week streak</p>
     </div>

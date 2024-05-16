@@ -24,7 +24,7 @@ const isLoading = computed(() => {
   <RouterView />
 </template>
 
-<style lang="scss">
+<style>
 @import "@/assets/css/index.css";
 @import "@/assets/css/variables.css";
 </style>

@@ -91,7 +91,7 @@ function goTo(route: Route) {
 }
 </script>
 
-<style>
+<style scoped>
 .hamburger-menu {
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
@@ -154,4 +154,3 @@ function goTo(route: Route) {
   transition: 0.4s ease-in-out;
 }
 </style>
-@/constants/test

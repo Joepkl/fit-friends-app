@@ -1,8 +1,16 @@
 <template>
   <CHeader />
   <section class="page-wrapper-header">
-    <h1 class="mb-4">Achievements</h1>
-    <AchievementCategory title="Monthly" :achievements="MonthlyAchievements" />
+    <h1 class="mb-8">Achievements</h1>
+    <div class="flex flex-col gap-6">
+      <AchievementCategory title="Monthly" :achievements="MonthlyAchievements" />
+      <AchievementCategory title="Chest" :achievements="ChestAchievements" />
+      <AchievementCategory title="Legs" :achievements="LegAchievements" />
+      <AchievementCategory title="Back" :achievements="BackAchievements" />
+      <AchievementCategory title="Shoulders" :achievements="ShoulderAchievements" />
+      <AchievementCategory title="Bicep" :achievements="BicepAchievements" />
+      <AchievementCategory title="Tricep" :achievements="TricepAchievements" />
+    </div>
   </section>
 </template>
 
@@ -14,12 +22,6 @@ import { ref } from "vue";
 /** Store */
 // @ts-ignore
 import { useStore } from "@/stores/store.ts";
-
-/** Placeholders */
-import { AchievementLevels } from "@/constants/placeholders/AchievementLevels";
-
-/** Constants */
-import type { Achievements } from "@/constants/Achievements";
 
 /** Components */
 import AchievementCategory from "@/components/partials/achievements/AchievementCategory.vue";
@@ -40,32 +42,8 @@ import CHeader from "@/components/partials/layout/CHeader.vue";
 const store = useStore();
 const router = useRouter();
 
-const allAchievementsToggled = ref(false);
-
 scrollToTop();
 function scrollToTop() {
   window.scrollTo(0, 0);
-}
-
-function splitAchievements(achievements: Achievements, renderAll: boolean = false) {
-  let returnAchievements = [];
-  const keys = Object.keys(achievements);
-  // Render first 3 achievements
-  if(!renderAll) {
-    for (let i = 0; i < 3; i++) {
-      returnAchievements.push(achievements[i]);
-    }
-  // Render the rest of the achievements
-  } else {
-    for (let i = 3; i < keys.length; i++) {
-      returnAchievements.push(achievements[i]);
-    }
-  }
-  return returnAchievements;
-}
-
-function getAchievementLevel(id: number) {
-  const achievement = AchievementLevels.find((achievement) => achievement.id === id);
-  return achievement ? achievement.level : 1;
 }
 </script>
