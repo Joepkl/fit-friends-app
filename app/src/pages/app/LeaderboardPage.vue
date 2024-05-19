@@ -1,7 +1,7 @@
 <template>
   <CHeader />
   <section class="page-wrapper-header">
-    <h1>Leaderboard</h1>
+    <h1 class="mb-8">Leaderboard</h1>
   </section>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <CHeader />
   <section class="page-wrapper-header">
-    <h1>Create post</h1>
+    <h1 class="mb-8">Create post</h1>
   </section>
 </template>
 

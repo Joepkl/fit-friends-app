@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center text-center">
+  <button @click="goToAchievement(achievement.id)" class="flex flex-col w-full items-center text-center">
     <img
       :src="getStackIcon(achievementLevel, achievement.maxLevel as number, achievement.category)"
       alt="Achievement stack"
@@ -7,7 +7,7 @@
     />
     <p>{{ achievement.title }}</p>
     <p>{{ achievementLevel }}/{{ achievement.maxLevel }}</p>
-  </div>
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +20,9 @@ import { AchievementLevels } from "@/constants/placeholders/AchievementLevels";
 
 /** Constants */
 import type SingleAchievement from "@/constants/SingleAchievement";
+
+/** Routes */
+import { ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoutes";
 
 /** Images */
 import DumbbellStackGoldIcon from "@/assets/icons/ic_stack_dumbbell_gold.svg";
@@ -72,5 +75,9 @@ function getStackIcon(level: number, maxLevel: number, category: number) {
 function getAchievementLevel(id: number) {
   const achievement = AchievementLevels.find((achievement) => achievement.id === id);
   return achievement ? achievement.level : 1;
+}
+
+function goToAchievement(id: number) {
+  router.push({ name: ACHIEVEMENT_DETAILS_ROUTE.name, params: { id: id } });
 }
 </script>

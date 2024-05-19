@@ -9,7 +9,13 @@
         </li>
       </ul>
     </div>
-    <CButton @click="toggleAchievements" :text="buttonText" button-class="link" class="w-fit ml-auto mt-1" />
+    <CButton
+      v-if="achievementsLength > displayedAchievements.length || isAchievementsToggled"
+      @click="toggleAchievements"
+      :text="buttonText"
+      button-class="link"
+      class="w-fit ml-auto mt-1"
+    />
   </section>
 </template>
 
@@ -19,6 +25,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 /** Constants */
 import type { Achievements } from '@/constants/Achievements';
+import type SingleAchievement from "@/constants/SingleAchievement";
 
 /** Components */
 import AchievementStack from '@/components/partials/achievements/AchievementStack.vue';
@@ -28,16 +35,18 @@ import CButton from "@/components/ui/CButton.vue";
 
 const isAchievementsToggled = ref(false);
 const buttonText = ref("View all")
-const displayedAchievements = ref({});
+const displayedAchievements = ref<SingleAchievement[]>([]);
 
 const props = defineProps<{
   title: string;
   achievements: Achievements;
 }>();
 
+const achievementsLength = Object.values(props.achievements).length;
+
 function setDisplayedAchievements() {
   if(isAchievementsToggled.value) {
-    displayedAchievements.value = props.achievements;
+    displayedAchievements.value = Object.values(props.achievements);
   } else {
     const screenWidth = window.innerWidth;
     const count = screenWidth > 380 ? 3 : 2;

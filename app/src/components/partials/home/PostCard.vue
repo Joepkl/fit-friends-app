@@ -30,12 +30,14 @@
     <div v-if="content.achievements?.length" class="mt-4">
       <p class="text-green">Accomplished achievements</p>
       <ul>
-        <li v-for="(item, index) in content.achievements" :key="index" class="flex items-center mt-2">
-          <img :src="getAchievementIcon(item.level as number, item.category)" class="w-12" alt="Achievement icon" />
-          <p class="ml-2">
-            {{ getAchievementInfo(item.id)?.title }}
-            {{ getAchievementLevel(item.level as number) }}
-          </p>
+        <li v-for="(item, index) in content.achievements" :key="index">
+          <button @click="goToAchievement(item.id)" class="flex items-center mt-2">
+            <img :src="getAchievementIcon(item.level as number, item.category)" class="w-12" alt="Achievement icon" />
+            <p class="ml-2">
+              {{ getAchievementInfo(item.id)?.title }}
+              {{ getAchievementLevel(item.level as number) }}
+            </p>
+          </button>
         </li>
       </ul>
     </div>
@@ -105,7 +107,7 @@ import CButton from "@/components/ui/CButton.vue";
 import type PostContent from "@/constants/PostContent";
 
 /** Routes */
-import { USER_PROFILE_ROUTE } from "@/router/appRoutes";
+import { USER_PROFILE_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoutes";
 
 /** Helpers */
 import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
@@ -136,5 +138,9 @@ function likePost() {
 
 function toggleComments() {
   isCommentsToggled.value = !isCommentsToggled.value;
+}
+
+function goToAchievement(id: number) {
+  router.push({ name: ACHIEVEMENT_DETAILS_ROUTE.name, params: { id: id } });
 }
 </script>

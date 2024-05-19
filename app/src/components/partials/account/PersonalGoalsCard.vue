@@ -17,7 +17,7 @@
       <!-- Showcase selected goals -->
       <li v-else v-for="(goal, index) in personalGoals" :key="index" class="flex items-center">
         <div v-if="goal" class="flex items-center">
-          <a @click="goToGoal(goal as SingleAchievement)" class="block rounded-default">
+          <a @click="goToGoal(goal.id)" class="block rounded-default">
             <img
               :src="getAchievementIcon(goal.level as number, goal.category)"
               class="w-[56px] h-[56px]"
@@ -44,7 +44,7 @@
 import { useRouter } from "vue-router";
 
 /** Routes */
-import { ACHIEVEMENTS_ROUTE } from "@/router/appRoutes";
+import { ACHIEVEMENTS_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoutes";
 
 /** Constants */
 import type SingleAchievement from "@/constants/SingleAchievement"
@@ -74,8 +74,7 @@ function goToAchievements() {
   router.push(ACHIEVEMENTS_ROUTE);
 }
 
-function goToGoal(goal: SingleAchievement) {
-  // Navigate to selected goal
-  console.log(goal)
+function goToGoal(id: number) {
+  router.push({ name: ACHIEVEMENT_DETAILS_ROUTE.name, params: { id: id } });
 }
 </script>

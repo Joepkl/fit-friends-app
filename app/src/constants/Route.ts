@@ -3,7 +3,8 @@ export default interface Route {
   name: string;
   component: any;
   meta: {
-    requiresAuth: boolean;
+    requiresAuth?: boolean;
     pageTitle: string;
   };
+  children?: Route[];
 }

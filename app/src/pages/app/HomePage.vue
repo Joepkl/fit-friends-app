@@ -1,7 +1,7 @@
 <template>
   <CHeader />
   <section class="page-wrapper-header">
-    <h1 class="mb-6">Home</h1>
+    <h1 class="mb-8">Home</h1>
     <ul class="flex flex-col gap-4">
       <li v-for="(post, index) in postsCopy" :key="index">
         <PostCard @like-post="handleLikePost(index)" @unlike-post="handleUnLikePost(index)" :content="post" />

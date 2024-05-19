@@ -40,7 +40,7 @@
 import { useRouter } from "vue-router";
 
 /** Routes */
-import { ACHIEVEMENTS_ROUTE } from "@/router/appRoutes";
+import { ACHIEVEMENTS_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoutes";
 
 /** Constants */
 import type SingleAchievement from "@/constants/SingleAchievement";
@@ -69,7 +69,7 @@ function goToAchievements() {
   router.push(ACHIEVEMENTS_ROUTE);
 }
 
-function goToAchievement(achievementId: number) {
-  console.log('Go to specific achievement' + achievementId)
+function goToAchievement(id: number) {
+  router.push({ name: ACHIEVEMENT_DETAILS_ROUTE.name, params: { id: id } });
 }
 </script>

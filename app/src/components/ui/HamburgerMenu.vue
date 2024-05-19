@@ -15,7 +15,10 @@
       v-for="(item, index) in menuItems"
       :key="index"
       class="font-semibold whitespace-nowrap hover:text-green"
-      :class="{ 'bg-green text-light-grey hover:text-light-grey': currentRoute === item.name }"
+      :class="{
+        'bg-green text-light-grey hover:text-light-grey':
+          currentRoute === item.name || parentRouteWithActiveChild === item.name,
+      }"
     >
       <a @click="goTo(item.link)" class="flex items-center gap-4 pl-8 pr-default py-2">
         <img :src="getIcon(item)" class="h-5 w-5" alt="Icon" />
@@ -65,6 +68,7 @@ import {
 } from "@/router/appRoutes";
 
 const isMenuOpen = ref(false);
+const parentRouteWithActiveChild = ref("");
 const menuItems = ref([
   { name: "Home", link: HOME_ROUTE, icon: HomeIcon, activeIcon: HomeGreyIcon },
   { name: "Friends", link: FRIENDS_ROUTE, icon: FriendsIcon, activeIcon: FriendsGreyIcon },
@@ -78,7 +82,21 @@ const router = useRouter();
 const currentRoute = computed(() => router.currentRoute.value.matched[0].name);
 
 function getIcon(item: MenuItem) {
-  return currentRoute.value === item.name ? item.activeIcon : item.icon;
+  // Check if child route is active
+  if(item.link.children) {
+    for(let i = 0; i < item.link.children.length; i++) {
+      if(item.link.children[i].name === currentRoute.value) {
+        parentRouteWithActiveChild.value = item.link.name;
+        return item.activeIcon;
+      }
+    }
+  }
+  // Check if route is active
+  if(currentRoute.value === item.name) {
+    return item.activeIcon;
+  } else {
+    return item.icon;
+  }
 }
 
 function toggleMenu() {
