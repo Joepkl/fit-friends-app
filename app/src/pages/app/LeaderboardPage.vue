@@ -2,6 +2,7 @@
   <CHeader />
   <section class="page-wrapper-header">
     <h1 class="mb-8">Leaderboard</h1>
+    <p>Collect points by claiming the monthly, or exercise achievements.</p>
   </section>
 </template>
 

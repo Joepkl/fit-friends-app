@@ -8,7 +8,17 @@
     <section v-if="achievementInfo" class="bg-light-grey p-4 rounded-default">
       <h2 class="mb-4 text-green">{{ achievementInfo.title }}</h2>
       <p>{{ achievementInfo.description }}</p>
-      <p class="mt-4">Claim an achievement by clicking on the icon.</p>
+      <!-- Info how to claim -->
+      <button @click="toggleShowClaimInfo" class="button-link mt-4 mb-2">
+        How to claim
+        <span class="ml-[2px] inline-block" :class="{ 'rotate-90': showClaimInfo, 'rotate-[270deg]': !showClaimInfo }">
+          &lt;
+        </span>
+      </button>
+      <p v-if="showClaimInfo">
+        Claim an achievement by clicking on the icon. When claiming an achievement multiple levels ahead, all the
+        achievements between will also be claimed.
+      </p>
       <!-- Levels -->
       <ul class="mt-8 flex justify-between gap-x-2 gap-y-3 flex-wrap">
         <li v-for="(item, index) in achievementInfo.levels" :key="index" class="w-[30%] min-w-[90px]">
@@ -79,6 +89,7 @@ import {
 const router = useRouter();
 const isClaimAchievementModalActive = ref(false);
 const isAlreadyClaimedAchievementModalActive = ref(false);
+const showClaimInfo = ref(false);
 
 const currentAchievementId = computed(() => parseInt(router.currentRoute.value.params.id as string));
 const maxLevel = computed(() => achievementInfo?.maxLevel);
@@ -93,6 +104,10 @@ function handleAchievementClick(isAchievementClaimed: boolean) {
   } else {
     isClaimAchievementModalActive.value = true;
   }
+}
+
+function toggleShowClaimInfo() {
+  showClaimInfo.value = !showClaimInfo.value;
 }
 
 function closeClaimAchievementModal() {

@@ -24,19 +24,19 @@ export const MonthlyAchievements = Object.freeze({
   },
   1: {
     title: "Competitor",
-    description: "Achieve points in the leaderboard competition.",
+    description: "Collect points in the leaderboard competition.",
     maxLevel: 3,
     levels: {
       0: {
-        level: "10 points", 
+        level: "10 pts. collected.", 
         points: 5,
       },
       1: {
-        level: "20 points",
+        level: "20 pts. collected.",
         points: 10,
       },
       2: {
-        level: "30 points",
+        level: "30 pts. collected.",
         points: 15,
       },
     },
