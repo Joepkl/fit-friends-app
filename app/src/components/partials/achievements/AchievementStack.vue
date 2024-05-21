@@ -41,7 +41,7 @@ const props = defineProps<{
 const emits = defineEmits(["updateSelectedMeetupTab"]);
 
 const router = useRouter();
-const achievementLevel = getAchievementLevel(props.achievement.id);
+const achievementLevel = getAchievementUserLevel(props.achievement.id);
 
 function getStackIcon(level: number, maxLevel: number, category: number) {
   const levelPercentage = (level / maxLevel) * 100;
@@ -72,7 +72,7 @@ function getStackIcon(level: number, maxLevel: number, category: number) {
   }
 }
 
-function getAchievementLevel(id: number) {
+function getAchievementUserLevel(id: number) {
   const achievement = AchievementLevels.find((achievement) => achievement.id === id);
   return achievement ? achievement.level : 1;
 }
