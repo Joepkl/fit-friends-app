@@ -51,3 +51,11 @@ Users are being motived by a social aspect and gamification techniques.
 - Add "I'm proud of:"
 - Add "Accomplished achievements"
 - Create post
+
+## Start local dev
+1. `cd app`
+2. `npm install`
+3. `npm run dev`
+
+## Deployed app
+https://fit-friends-app.vercel.app/
