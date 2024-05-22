@@ -73,6 +73,14 @@ Users are being motivated by a social aspect and gamification techniques.
 </details>
 
 <details>
+<summary><strong>TO-DO Leaderboard</strong></summary>
+
+- Some feature
+- Some feature
+
+</details>
+
+<details>
 <summary><strong>Create post</strong></summary>
 
 - Add description
