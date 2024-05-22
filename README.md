@@ -24,7 +24,10 @@ Users are being motivated by a social aspect and gamification techniques.
 <summary><strong>Account</strong></summary>
 
 - Save account settings
-- Change settings
+- Change settings (age, bio, weekly fitness goal, data sharing, gym)
+- Achievements showcase
+- Display of weekly goal
+- Display of personal goals
 
 </details>
 
