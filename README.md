@@ -3,11 +3,13 @@
 This is the front-end repository for the Fit Friends platform. This platform acts as a way for gain motivation to stay consistent troughout the fitness journey.
 Users are being motivated by a social aspect and gamification techniques.
 
+
 ## Tech stack:
 
 - Vue.js
 - Typescript
 - Tailwind
+
 
 ##  Features
 
@@ -21,52 +23,77 @@ Users are being motivated by a social aspect and gamification techniques.
 </details>
 
 
+<details>
+<summary><strong>Account</strong></summary>
 
-**Authentication**
-- Login
-- Register
-- Reset password
-
-**Account**
 - Save account settings
 - Change settings
 
-**Activity feed (home)**
+</details>
+
+
+<details>
+<summary><strong>Activity feed (home)</summary>
+
 - Like post
 - Comment on post
 - View all comments
 - View accomplished achievements
 
-**Friends**
+</details>
+
+
+<details>
+<summary><strong>Friends</summary>
+
 - Search friends
 - Remove friends
 - Add friends
 - View profile
+  
+</details>
 
-**Meetup**
+
+<details>
+<summary><strong>Meetup</summary>
+
 - View accepted meetups
 - View received invites
 - View invited by me
 - Send invite to user from same gym
 - Send invite to user from different gym
+  
+</details>
 
-**Achievements**
+
+<details>
+<summary><strong>Achievements</summary>
+
 - View achievements per category
 - Toggle all achievements
 - View achievement details (title, description, current level)
 - Claim achievement
+  
+</details>
 
-**Create post** 
+
+<details>
+<summary><strong>Create post</summary>
+
 - Add description
 - Add date
 - Add "I'm proud of:"
 - Add "Accomplished achievements"
 - Create post
+  
+</details>
+
 
 ## Start local dev
 1. `cd app`
 2. `npm install`
 3. `npm run dev`
+
 
 ## Deployed app
 https://fit-friends-app.vercel.app/
