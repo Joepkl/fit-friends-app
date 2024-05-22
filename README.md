@@ -11,6 +11,15 @@ Users are being motivated by a social aspect and gamification techniques.
 
 ##  Features
 
+<details open>
+<summary>**Authentication**</summary>
+<br>
+- Login
+- Register
+- Reset password
+</details>
+
+
 **Authentication**
 - Login
 - Register
