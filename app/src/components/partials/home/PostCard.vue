@@ -85,7 +85,7 @@
     </ul>
     <!-- Write comment -->
     <div v-if="isWritingComment" class="flex mt-2 gap-2">
-      <input v-model="comment" type="text" class="w-full capitalize" />
+      <input @input="capitalizeComment" v-model="comment" type="text" class="w-full" />
       <CButton @click="sendComment" text="Send" button-class="primary" class="h-[36px]" />
     </div>
   </div>
@@ -163,6 +163,12 @@ function startCommenting() {
     toggleComments();
   }
   isWritingComment.value = true;
+}
+
+function capitalizeComment() {
+  if(comment.value) {
+    comment.value = comment.value.charAt(0).toUpperCase() + comment.value.slice(1);
+  }
 }
 
 function sendComment() {

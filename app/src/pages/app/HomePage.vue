@@ -48,7 +48,6 @@ function handleUnLikePost(index: number) {
 }
 
 function handleCommentPost(index: number, comment: string) {
-  console.log(comment);
   if (userProfile.value) {
     postsCopy.value[index].comments?.push({
       author: userProfile.value.username,
