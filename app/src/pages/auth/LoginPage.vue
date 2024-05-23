@@ -12,7 +12,7 @@
         <li class="flex flex-col">
           <label for="username">Username</label>
           <input
-            @change="handleUsernameChange"
+            @input="handleUsernameChange"
             v-model="username"
             :class="{ error: isUsernameValid === false }"
             id="username"
@@ -26,7 +26,8 @@
           <label for="password">Password</label>
           <input
             v-model="password"
-            @input="isPasswordValid = true"
+            @input="handlePasswordInput"
+            @keydown.enter="handleEnterKey"
             :class="{ error: isPasswordValid === false }"
             ref="passwordEl"
             id="password"
@@ -51,7 +52,7 @@
       </ul>
     </form>
     <!-- CTA -->
-    <button @click="login" class="button-primary mt-6" :class="{ disabled: !isDataValid }">Login</button>
+    <button @click="login" class="button button-primary mt-6" :class="{ disabled: !isDataValid }">Login</button>
     <p class="mt-4">Don't have an account? <a class="button-link" @click="goToRegister">Register</a></p>
     <div class="mt-2 flex gap-1 items-center">
       <p>Forgot password?</p>
@@ -142,6 +143,17 @@ function openPasswordModal() {
 
 function closePasswordModal() {
   isPasswordModalActive.value = false;
+}
+
+function handlePasswordInput() {
+  isPasswordValid.value = true;
+  setError(false, "Invalid password.");
+}
+
+function handleEnterKey() {
+  if (isDataValid.value) {
+    login();
+  }
 }
 
 function handleUsernameChange() {

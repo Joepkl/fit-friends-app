@@ -7,7 +7,6 @@
     <!-- TO-DO Friend Requests -->
     <h2 class="text-green">Open requests</h2>
     <p>No open request at the moment.</p>
-
     <!-- Friends -->
     <MyFriends class="mt-10" />
   </section>

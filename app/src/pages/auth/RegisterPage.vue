@@ -54,6 +54,7 @@
           <label for="confirm-password">Confirm password</label>
           <input
             @input="validatePassword"
+            @keydown.enter="handleEnterKey"
             v-model="confirmPassword"
             :class="{ error: isPasswordValid === false }"
             ref="confirmPasswordEl"
@@ -79,7 +80,7 @@
       </ul>
     </form>
     <!-- CTA -->
-    <button @click="createAccount" :class="{ disabled: !isDataValid }" class="button-primary mt-6">
+    <button @click="createAccount" :class="{ disabled: !isDataValid }" class="button button-primary mt-6">
       Create account
     </button>
     <p class="mt-4">Already have an account? <a class="button-link" @click="goToLogin">Login</a></p>
@@ -159,6 +160,12 @@ function checkCapslock(e: KeyboardEvent) {
     } else {
       isCapslockActive.value = false;
     }
+  }
+}
+
+function handleEnterKey() {
+  if (isDataValid.value) {
+    createAccount();
   }
 }
 

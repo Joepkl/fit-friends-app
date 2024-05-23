@@ -18,6 +18,15 @@
         :status="userProfile?.status || 0"
       />
       <PersonalGoalsCard :personal-goals="userProfile?.personalGoals || []" :is-logged-in-account="true" />
+      <!-- Log out and delete account buttons -->
+      <ul class="flex gap-4 items-center mt-8 justify-end">
+        <li>
+          <CButton @click="toggleLogOutModal" text="Log out" button-class="outline" />
+        </li>
+        <li>
+          <CButton @click="toggleDeleteAccountModal" text="Delete account" button-class="warning" />
+        </li>
+      </ul>
     </section>
     <!-- Edit account -->
     <section v-if="isEditActive">
@@ -75,7 +84,7 @@
           </li>
         </ul>
       </form>
-      <!-- Modal -->
+      <!-- Data sharing modal -->
       <CModal @close-modal="closeDataModal" :isActive="isDataModalActive" :content="ShareDataContent" />
       <!-- CTA -->
       <div class="flex justify-end mt-8">
@@ -83,6 +92,25 @@
         <CButton @click="saveAccount" text="Save" button-class="primary" :is-disabled="!isDataValid" />
       </div>
     </section>
+    <!-- Log out modal -->
+    <CModal @close-modal="toggleLogOutModal" :isActive="isLogOutModalActive" :content="LogOutContent">
+      <div class="flex gap-4 justify-end flex-wrap mt-6">
+        <CButton @click="toggleLogOutModal" text="Cancel" button-class="outline" />
+        <CButton @click="logOut" text="Log out" button-class="primary" />
+      </div>
+    </CModal>
+    <!-- Delete account modal -->
+    <CModal
+      @close-modal="toggleDeleteAccountModal"
+      :isActive="isDeleteAccountModalActive"
+      :content="DeleteAccountContent"
+    >
+      <div class="flex gap-4 justify-end flex-wrap mt-6">
+        <CButton @click="toggleDeleteAccountModal" text="Cancel" button-class="outline" />
+        <CButton @click="handleDeleteAccount" text="Delete account" button-class="warning" />
+      </div>
+    </CModal>
+    <button class="button-warning hidden"></button>
   </section>
 </template>
 
@@ -96,7 +124,7 @@ import CButton from "@/components/ui/CButton.vue";
 import CModal from "@/components/ui/CModal.vue";
 
 /** Constants */
-import { ShareDataContent } from "@/constants/ModalContent";
+import { ShareDataContent, LogOutContent, DeleteAccountContent } from "@/constants/ModalContent";
 import type { Gym } from "@/constants/placeholders/Gyms";
 
 /** Store */
@@ -105,6 +133,9 @@ import { useStore } from "@/stores/store.ts";
 
 /** Routes */
 import { AUTHENTICATION_ROUTE } from "@/router/authRoutes";
+
+/** API requests */
+import { deleteAccount } from "@/api/auth/deleteAccount";
 
 /** Components */
 import CHeader from "@/components/partials/layout/CHeader.vue";
@@ -124,6 +155,8 @@ const router = useRouter();
 const isDataValid = ref(false);
 const currentGym = ref<null | Gym>(null);
 const isEditActive = ref(false);
+const isLogOutModalActive = ref(false);
+const isDeleteAccountModalActive = ref(false);
 const isDataModalActive = ref(false);
 const age = ref<number | null>(null);
 const bio = ref<string | null>(null);
@@ -177,6 +210,29 @@ function decreaseWeeklyGoal() {
   }
 }
 
+function logOut() {
+  store.setAccessToken("");
+  store.setIsAuthenticated(false);
+  router.push(AUTHENTICATION_ROUTE);
+}
+
+async function handleDeleteAccount() {
+  try {
+    await deleteAccount(userProfile.value?.username as string);
+    logOut();
+  } catch(error) {
+    console.log(error)
+  }
+}
+
+function toggleLogOutModal() {
+  isLogOutModalActive.value = !isLogOutModalActive.value;
+}
+
+function toggleDeleteAccountModal() {
+  isDeleteAccountModalActive.value = !isDeleteAccountModalActive.value;
+}
+
 async function saveAccount() {
   if (!shareData.value && !isDataModalShown.value) {
     showDataModal();
@@ -199,9 +255,7 @@ async function saveAccount() {
     } catch (error) {
       // Access token expired
       if ((error as Error).message === "Error while verifying token") {
-        store.setAccessToken("");
-        store.setIsAuthenticated(false);
-        router.push(AUTHENTICATION_ROUTE);
+        logOut();
       }
     }
   }

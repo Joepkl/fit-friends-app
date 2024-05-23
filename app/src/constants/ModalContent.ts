@@ -43,3 +43,13 @@ export const AlreadyClaimedAchievementContent = {
   title: "Already claimed achievement",
   text: "You have already claimed this achievement in the past.",
 };
+
+export const LogOutContent = {
+  title: "Log out",
+  text: "Are you sure you want to log out?",
+};
+
+export const DeleteAccountContent = {
+  title: "Delete account",
+  text: "Are you sure you want to delete your account? All your data will be removed. This action cannot be undone.",
+};

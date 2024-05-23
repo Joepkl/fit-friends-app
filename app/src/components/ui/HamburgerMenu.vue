@@ -8,7 +8,7 @@
   </button>
   <!-- Menu items -->
   <ul
-    class="menu-items fixed right-0 w-0 bg-light-grey top-0 pt-[85px] z-20 h-[100dvh] flex flex-col gap-8 overflow-hidden"
+    class="menu-items fixed right-0 w-0 bg-light-grey top-0 pt-[85px] z-50 h-[100dvh] flex flex-col gap-8 overflow-hidden"
     :class="{ 'open w-60': isMenuOpen }"
   >
     <li
@@ -97,6 +97,10 @@ function getIcon(item: MenuItem) {
   } else {
     return item.icon;
   }
+}
+
+function showLogOutModal() {
+  // Show log out modal
 }
 
 function toggleMenu() {

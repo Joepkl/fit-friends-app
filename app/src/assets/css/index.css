@@ -48,18 +48,16 @@
   }
 
   .button {
-    @apply w-5;
-    @apply h-5;
-  }
-
-  .button-primary {
-    @apply bg-green;
-    @apply text-dark-grey;
     @apply py-[6px];
     @apply px-4;
     @apply rounded-xl;
     @apply font-semibold;
     @apply w-fit;
+  }
+
+  .button-primary {
+    @apply bg-green;
+    @apply text-dark-grey;
     @apply border-2;
     @apply border-green;
   }
@@ -67,11 +65,6 @@
   .button-outline {
     @apply bg-transparent;
     @apply text-green;
-    @apply py-[6px];
-    @apply px-4;
-    @apply rounded-xl;
-    @apply font-semibold;
-    @apply w-fit;
     @apply border-2;
     @apply border-green;
   }
@@ -79,7 +72,16 @@
   .button-link {
     @apply text-green;
     @apply underline;
+    @apply font-normal;
+    @apply rounded-none;
     text-underline-offset: var(--underline-offset);
+  }
+
+  .button-warning {
+    @apply bg-transparent;
+    @apply text-red;
+    @apply border-2;
+    @apply border-red;
   }
 }
 
