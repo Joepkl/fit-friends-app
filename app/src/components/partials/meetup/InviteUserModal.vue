@@ -12,24 +12,24 @@
     <input @click="openGymDropdown" v-model="selectedGym" id="gym" type="text" readonly />
     <ul v-if="isGymDropdownActive" class="absolute bottom-[-70px] w-full">
       <li
-        @click="selectGym(myGym)"
+        @click="selectGym(myGym as string)"
         class="border-2 rounded-default pl-[10px] py-1 bg-dark-grey z-50"
         :class="{
-          'text-green border-green': myGym === selectedGym,
-          'border-light-grey border-b-0': myGym !== selectedGym,
+          'text-green border-green': selectedGym === myGym,
+          'border-light-grey border-b-0': selectedGym !== myGym,
         }"
       >
         {{ myGym }}
       </li>
       <li
-        @click="selectGym('Fit for Free Spaklerweg')"
+        @click="selectGym(userToInviteGym as string)"
         class="border-2 rounded-default pl-[10px] py-1 bg-dark-grey z-50"
         :class="{
-          'text-green border-green': selectedGym === 'Fit for Free Spaklerweg',
-          'border-light-grey border-t-0': selectedGym !== 'Fit for Free Spaklerweg',
+          'text-green border-green': selectedGym === userToInviteGym,
+          'border-light-grey border-t-0': selectedGym !== userToInviteGym,
         }"
       >
-        Fit for Free Spaklerweg
+        {{ userToInviteGym }}
       </li>
     </ul>
   </div>
@@ -55,20 +55,30 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
 
-defineProps<{
+/** Store */
+// @ts-ignore
+import { useStore } from "@/stores/store.ts";
+
+/** Placeholder data */
+import Users from "@/constants/placeholders/Users";
+
+const props = defineProps<{
   selectedGymTab: number;
   selectedUser: string;
 }>();
 
 const emits = defineEmits(["closeInviteModal", "sendInvite"]);
+const store = useStore();
 
-const myGym = ref("SportCity Amstelveen");
+const myGym = computed(() => store.getUserProfile?.settings?.currentGym?.name);
+
 const selectedGym = ref(myGym.value);
+const userToInviteGym = ref("");
 const isInviteValid = ref(false);
 const isGymDropdownActive = ref(false);
 const now = new Date();
@@ -92,6 +102,13 @@ const dateError = ref("");
 const timeError = ref("");
 const isDateValid = ref(true);
 const isTimeValid = ref(true);
+
+function findUserGym() {
+  const gym = Users.find((user) => user.username === props.selectedUser)?.settings?.currentGym;
+  if (gym) {
+    userToInviteGym.value = gym.name;
+  }
+}
 
 function closeInviteModal() {
   emits("closeInviteModal");
@@ -158,4 +175,6 @@ function selectGym(gym: string) {
 function openGymDropdown() {
   isGymDropdownActive.value = true;
 }
+
+findUserGym();
 </script>

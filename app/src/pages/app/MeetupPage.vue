@@ -101,8 +101,7 @@
 
 <script setup lang="ts">
 /** Vue */
-import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 /** Store */
 // @ts-ignore
@@ -129,7 +128,8 @@ import InviteUserSameGym from "@/components/partials/meetup/InviteUserSameGym.vu
 import InviteUserModal from "@/components/partials/meetup/InviteUserModal.vue";
 
 const store = useStore();
-const router = useRouter();
+
+const myGym = computed(() => store.getUserProfile?.settings?.currentGym?.name);
 
 const now = new Date();
 const currentYear = now.getFullYear();
@@ -140,7 +140,6 @@ const currentDay = now
   .padStart(2, "0");
 
 const selectedMeetupTab = ref(0);getUserStatus
-const myGym = ref("SportCity Amstelveen");
 const selectedGym = ref(myGym.value);
 const selectedGymTab = ref(0);
 const isInviteModalActive = ref(false);
@@ -157,7 +156,7 @@ const meetups = ref<Array<Meetup>>([
   {
     id: 1,
     username: "sammy_02",
-    gym: "SportCity Amstelveen",
+    gym: myGym.value as string,
     date: "2024-05-09",
     time: "12:00",
     userStatus: getUserStatus("sammy_02") || 1,

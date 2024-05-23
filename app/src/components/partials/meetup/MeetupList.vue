@@ -2,7 +2,7 @@
   <section v-if="selectedMeetupTab === 0">
     <ul v-if="meetups.length">
       <li v-for="(item, index) in meetups" :key="index" class="bg-light-grey rounded-default p-3 relative">
-        <button class="flex items-center gap-[6px]">
+        <button @click="goToProfile(item.username)" class="flex items-center gap-[6px]">
           <div
             class="block w-6 h-auto rounded-full border-2 overflow-hidden"
             :class="getColorClass(item.userStatus, null, true)"
@@ -30,12 +30,18 @@
 </template>
 
 <script setup lang="ts">
+/** Vue */
+import { useRouter } from "vue-router";
+
 /** Helpers */
 import { getColorClass } from "@/helpers/userHelpers";
 
 /** Images */
 import AccountIcon from "@/assets/icons/ic_account.svg";
 import CloseIcon from "@/assets/icons/ic_close_green.svg";
+
+/** Routes */
+import { USER_PROFILE_ROUTE } from "@/router/appRoutes";
 
 /** Constants */
 import type Meetup from "@/constants/Meetup";
@@ -49,6 +55,11 @@ defineProps<{
 }>();
 
 const emits = defineEmits(["openCancelMeetupModal"]);
+const router = useRouter();
+
+function goToProfile(username: string) {
+  router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });
+}
 
 function openCancelMeetupModal(username: string, meetupId: number) {
   emits("openCancelMeetupModal", username, meetupId);
