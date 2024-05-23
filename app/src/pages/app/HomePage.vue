@@ -8,6 +8,7 @@
           @like-post="handleLikePost"
           @unlike-post="handleUnLikePost"
           @posted-comment="handleCommentPost"
+          @remove-comment="handleRemoveComment"
           :content="post"
           :post-index="index"
         />
@@ -55,6 +56,10 @@ function handleCommentPost(index: number, comment: string) {
       status: userProfile.value.status,
     });
   }
+}
+
+function handleRemoveComment(postIndex: number, commentIndex: number) {
+  postsCopy.value[postIndex].comments?.splice(commentIndex, 1);
 }
 
 scrollToTop();

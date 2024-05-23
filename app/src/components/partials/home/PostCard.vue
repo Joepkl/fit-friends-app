@@ -68,27 +68,46 @@
   </div>
   <!-- All comments -->
   <div v-if="isCommentsToggled" class="relative mt-2">
-    <div class="absolute z-30 top-0 w-full h-10 bg-gradient-to-b from-dark-grey-transparent" />
-    <ul ref="allCommentsEl" class="relative z-10 flex flex-col gap-3 max-h-[230px] overflow-scroll pt-2">
-      <li v-for="(comment, index) in content.comments" :key="index">
-        <button @click="goToProfile(comment.author)" class="flex items-center gap-1">
-          <div
-            class="block w-6 h-auto rounded-full border-2 overflow-hidden"
-            :class="getColorClass(comment.status, null, true)"
-          >
-            <img class="p-[2px] relative top-[4px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
-          </div>
-          <p :class="getColorClass(comment.status, true)">{{ comment.author }}</p>
+    <div class="absolute z-30 top-0 w-full h-5 bg-gradient-to-b from-dark-grey-transparent" />
+    <ul ref="allCommentsEl" class="relative z-10 flex flex-col gap-3 max-h-[210px] overflow-scroll pt-2">
+      <li v-for="(comment, index) in content.comments" :key="index" class="flex">
+        <!-- Comment -->
+        <div class="w-full">
+          <button @click="goToProfile(comment.author)" class="flex items-center gap-1">
+            <div
+              class="block w-6 h-auto rounded-full border-2 overflow-hidden"
+              :class="getColorClass(comment.status, null, true)"
+            >
+              <img class="p-[2px] relative top-[4px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
+            </div>
+            <p :class="getColorClass(comment.status, true)">{{ comment.author }}</p>
+          </button>
+          <p class="mt-1">{{ comment.comment }}</p>
+        </div>
+        <!-- Remove comment -->
+        <button v-if="isMyComment(index)" @click="toggleRemoveCommentModal(index)">
+          <img :src="GarbageOutlineIcon" alt="Remove Icon" />
         </button>
-        <p class="mt-1">{{ comment.comment }}</p>
       </li>
     </ul>
     <!-- Write comment -->
     <div v-if="isWritingComment" class="flex mt-2 gap-2">
-      <input @input="capitalizeComment" v-model="comment" type="text" class="w-full" />
+      <input @input="capitalizeComment" @keydown.enter="sendComment" v-model="comment" type="text" class="w-full" />
       <CButton @click="sendComment" text="Send" button-class="primary" class="h-[36px]" />
     </div>
   </div>
+  <!-- Remove comment modal -->
+  <CModal
+    @close-modal="toggleRemoveCommentModal"
+    :isActive="isRemoveCommentModalActive"
+    :content="RemoveCommentContent"
+    :hide-close-button="true"
+  >
+    <div class="mt-8 flex flex-wrap justify-end">
+      <CButton @click="toggleRemoveCommentModal" button-class="outline" text="Cancel" class="mr-6" />
+      <CButton @click="removeComment" button-class="primary" text="Remove" />
+    </div>
+  </CModal>
 
   <!-- Need this for the dynamic TW class to apply styling -->
   <h2 class="hidden border-gold text-gold"></h2>
@@ -98,29 +117,36 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref, nextTick, watch } from "vue";
+import { ref, computed, nextTick, watch } from "vue";
 import { useRouter } from "vue-router";
 
 /** Images */
 import AccountIcon from "@/assets/icons/ic_account.svg";
 import LikeOutlineIcon from "@/assets/icons/ic_like_outline.svg";
 import LikeFillIcon from "@/assets/icons/ic_like_fill.svg";
-import CommentOutlineIcon from "@/assets/icons/ic_comment_outline.svg";;
+import CommentOutlineIcon from "@/assets/icons/ic_comment_outline.svg";
+import GarbageOutlineIcon from "@/assets/icons/ic_garbage_outline.svg";
 
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
+import CModal from "@/components/ui/CModal.vue";
 
 /** Constants */
 import type PostContent from "@/constants/PostContent";
+import { RemoveCommentContent } from "@/constants/ModalContent";
 
 /** Routes */
 import { USER_PROFILE_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoutes";
+
+/** Store */
+// @ts-ignore
+import { useStore } from "@/stores/store.ts";
 
 /** Helpers */
 import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 import { getColorClass } from "@/helpers/userHelpers";
 
-const emits = defineEmits(["likePost", "unlikePost", "postedComment"]);
+const emits = defineEmits(["likePost", "unlikePost", "postedComment", "removeComment"]);
 
 const props = defineProps<{
   content: PostContent;
@@ -128,11 +154,16 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
+const store = useStore();
 
 const comment = ref("");
 const isCommentsToggled = ref(false);
 const allCommentsEl = ref<HTMLElement | null>(null);
 const isWritingComment = ref(false);
+const isRemoveCommentModalActive = ref(false);
+const selectedCommentIndex = ref<number | null>(null);
+
+const userProfile = computed(() => store.getUserProfile);
 
 
 // Watch for changes in comments
@@ -165,6 +196,18 @@ function startCommenting() {
   isWritingComment.value = true;
 }
 
+function toggleRemoveCommentModal(commentIndex?: number) {
+  if(commentIndex) {
+    selectedCommentIndex.value = commentIndex;
+  }
+  isRemoveCommentModalActive.value = !isRemoveCommentModalActive.value;
+}
+
+function removeComment() {
+  emits("removeComment", props.postIndex, selectedCommentIndex.value);
+  toggleRemoveCommentModal();
+}
+
 function capitalizeComment() {
   if(comment.value) {
     comment.value = comment.value.charAt(0).toUpperCase() + comment.value.slice(1);
@@ -174,6 +217,13 @@ function capitalizeComment() {
 function sendComment() {
   emits("postedComment", props.postIndex, comment.value);
   comment.value = "";
+}
+
+function isMyComment(index: number) {
+  if(props.content.comments) {
+    const author = props.content.comments[index].author;
+    return author === userProfile.value?.username;
+  }
 }
 
 function toggleComments() {

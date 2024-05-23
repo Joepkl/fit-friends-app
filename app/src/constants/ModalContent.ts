@@ -53,3 +53,8 @@ export const DeleteAccountContent = {
   title: "Delete account",
   text: "Are you sure you want to delete your account? All your data will be removed. This action cannot be undone.",
 };
+
+export const RemoveCommentContent = {
+  title: "Remove comment",
+  text: "Are you sure you want to remove your comment? This action cannot be undone.",
+};
