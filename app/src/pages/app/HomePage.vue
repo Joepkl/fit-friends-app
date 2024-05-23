@@ -4,7 +4,13 @@
     <h1 class="mb-8">Home</h1>
     <ul class="flex flex-col gap-4">
       <li v-for="(post, index) in postsCopy" :key="index">
-        <PostCard @like-post="handleLikePost(index)" @unlike-post="handleUnLikePost(index)" :content="post" />
+        <PostCard
+          @like-post="handleLikePost"
+          @unlike-post="handleUnLikePost"
+          @posted-comment="handleCommentPost"
+          :content="post"
+          :post-index="index"
+        />
       </li>
     </ul>
   </section>
@@ -12,7 +18,7 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 /** Store */
 // @ts-ignore
@@ -29,6 +35,8 @@ const store = useStore();
 
 const postsCopy = ref(Posts);
 
+const userProfile = computed(() => store.getUserProfile);
+
 function handleLikePost(index: number) {
   postsCopy.value[index].isLikedByMe = true;
   postsCopy.value[index].likes++;
@@ -37,6 +45,17 @@ function handleLikePost(index: number) {
 function handleUnLikePost(index: number) {
   postsCopy.value[index].isLikedByMe = false;
   postsCopy.value[index].likes--;
+}
+
+function handleCommentPost(index: number, comment: string) {
+  console.log(comment);
+  if (userProfile.value) {
+    postsCopy.value[index].comments?.push({
+      author: userProfile.value.username,
+      comment: comment,
+      status: userProfile.value.status,
+    });
+  }
 }
 
 scrollToTop();

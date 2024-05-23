@@ -59,17 +59,18 @@
       Close comments
     </button>
     <p v-else class="text-green">0 comments</p>
-    <!-- Likes -->
+    <!-- Like and comment -->
     <div class="flex gap-2">
       <p class="text-green">{{ content.likes }}</p>
       <CButton @click="likePost" :image="content.isLikedByMe ? LikeFillIcon : LikeOutlineIcon" class="w-5 h-5" />
+      <CButton @click="startCommenting" :image="CommentOutlineIcon" class="w-5 h-5" />
     </div>
   </div>
   <!-- All comments -->
-  <div v-if="isCommentsToggled" class="relative">
-    <div class="absolute z-50 bottom-0 w-full h-10 bg-gradient-to-t from-dark-grey-transparent" />
-    <ul ref="allCommentsEl" class="relative z-10 flex flex-col max-h-[250px] overflow-scroll pb-3">
-      <li v-for="(comment, index) in content.comments" :key="index" class="mt-3">
+  <div v-if="isCommentsToggled" class="relative mt-2">
+    <div class="absolute z-50 top-0 w-full h-10 bg-gradient-to-b from-dark-grey-transparent" />
+    <ul ref="allCommentsEl" class="relative z-10 flex flex-col gap-3 max-h-[230px] overflow-scroll pt-2">
+      <li v-for="(comment, index) in content.comments" :key="index">
         <button @click="goToProfile(comment.author)" class="flex items-center gap-1">
           <div
             class="block w-6 h-auto rounded-full border-2 overflow-hidden"
@@ -82,6 +83,11 @@
         <p class="mt-1">{{ comment.comment }}</p>
       </li>
     </ul>
+    <!-- Write comment -->
+    <div v-if="isWritingComment" class="flex mt-2 gap-2">
+      <input v-model="comment" type="text" class="w-full capitalize" />
+      <CButton @click="sendComment" text="Send" button-class="primary" class="h-[36px]" />
+    </div>
   </div>
 
   <!-- Need this for the dynamic TW class to apply styling -->
@@ -92,13 +98,14 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref } from "vue";
+import { ref, nextTick, watch } from "vue";
 import { useRouter } from "vue-router";
 
 /** Images */
 import AccountIcon from "@/assets/icons/ic_account.svg";
 import LikeOutlineIcon from "@/assets/icons/ic_like_outline.svg";
 import LikeFillIcon from "@/assets/icons/ic_like_fill.svg";
+import CommentOutlineIcon from "@/assets/icons/ic_comment_outline.svg";;
 
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
@@ -113,16 +120,31 @@ import { USER_PROFILE_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoute
 import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 import { getColorClass } from "@/helpers/userHelpers";
 
-const emits = defineEmits(["likePost", "unlikePost"]);
+const emits = defineEmits(["likePost", "unlikePost", "postedComment"]);
 
 const props = defineProps<{
   content: PostContent;
+  postIndex: number;
 }>();
 
 const router = useRouter();
 
+const comment = ref("");
 const isCommentsToggled = ref(false);
 const allCommentsEl = ref<HTMLElement | null>(null);
+const isWritingComment = ref(false);
+
+
+// Watch for changes in comments
+watch(
+  () => props.content.comments, () => {
+    // Wait for DOM update
+    nextTick(() => {
+      scrollToBottomComments();
+    });
+  },
+  { deep: true }
+);
 
 function goToProfile(username: string) {
   router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });
@@ -130,14 +152,37 @@ function goToProfile(username: string) {
 
 function likePost() {
   if(!props.content.isLikedByMe) {
-    emits("likePost");
+    emits("likePost", props.postIndex);
   } else {
-     emits("unlikePost");
+     emits("unlikePost", props.postIndex);
   }
+}
+
+function startCommenting() {
+  if(!isCommentsToggled.value) {
+    toggleComments();
+  }
+  isWritingComment.value = true;
+}
+
+function sendComment() {
+  emits("postedComment", props.postIndex, comment.value);
+  comment.value = "";
 }
 
 function toggleComments() {
   isCommentsToggled.value = !isCommentsToggled.value;
+  isWritingComment.value = false;
+  // Wait for DOM update
+  nextTick(() => {
+    scrollToBottomComments();
+  })
+}
+
+function scrollToBottomComments() {
+  if (allCommentsEl.value) {
+    allCommentsEl.value.scrollTop = allCommentsEl.value.scrollHeight;
+  }
 }
 
 function goToAchievement(id: number) {

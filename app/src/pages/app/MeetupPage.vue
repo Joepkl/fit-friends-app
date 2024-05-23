@@ -71,8 +71,8 @@
     </p>
     <!-- Buttons -->
     <div class="mt-8 flex justify-end">
-      <CButton @click="closeCancelMeetupModal" button-class="outline" text="Don't cancel" class="mr-6" />
-      <CButton @click="cancelMeetup" button-class="primary" text="Cancel" />
+      <CButton @click="closeCancelMeetupModal" button-class="outline" text="No" class="mr-6" />
+      <CButton @click="cancelMeetup" button-class="primary" text="Yes" />
     </div>
   </CModal>
 
@@ -89,8 +89,8 @@
     </p>
     <!-- Buttons -->
     <div class="mt-8 flex justify-end">
-      <CButton @click="closeCancelInviteModal" button-class="outline" text="Don't cancel" class="mr-6" />
-      <CButton @click="cancelInvite" button-class="primary" text="Cancel" />
+      <CButton @click="closeCancelInviteModal" button-class="outline" text="No" class="mr-6" />
+      <CButton @click="cancelInvite" button-class="primary" text="Yes" />
     </div>
   </CModal>
 </template>
