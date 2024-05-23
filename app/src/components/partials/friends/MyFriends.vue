@@ -2,7 +2,7 @@
   <section>
     <h2 class="text-green mb-4">My friends ({{ usersCopy.length }})</h2>
     <ul>
-      <li v-for="(user, index) in usersCopy" :key="index" class="bg-light-grey mt-3 p-3 flex rounded-default">
+      <li v-for="(user, index) in sortedUsers" :key="index" class="bg-light-grey mt-3 p-3 flex rounded-default">
         <button @click="goToProfile(user.username)" class="flex items-center gap-[6px]">
           <div
             class="block w-6 h-auto rounded-full border-2 overflow-hidden"
@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
 /** Routes */
@@ -69,6 +69,10 @@ const isRemoveFriendModalActive = ref(false);
 const selectedFriend = ref<string | null>(null);
 
 const usersCopy = ref(Users);
+
+const sortedUsers = computed(() =>
+  usersCopy.value.slice().sort((a, b) => a.username.toLowerCase().localeCompare(b.username.toLowerCase()))
+);
 
 scrollToTop();
 function scrollToTop() {

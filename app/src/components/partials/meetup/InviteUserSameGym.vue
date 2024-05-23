@@ -1,7 +1,7 @@
 <template>
   <section v-if="selectedGymTab === 0">
-    <ul>
-      <li v-for="(user, index) in Users" :key="index" class="bg-light-grey mt-3 p-3 flex rounded-default">
+    <ul v-if="friendsInSameGym.length">
+      <li v-for="(user, index) in friendsInSameGym" :key="index" class="bg-light-grey mt-3 p-3 flex rounded-default">
         <button @click="goToProfile(user.username)" class="flex items-center gap-[6px]">
           <div
             class="block w-6 h-auto rounded-full border-2 overflow-hidden"
@@ -15,18 +15,30 @@
         <CButton @click="showInviteModal(user.username)" text="Invite" button-class="link" class="ml-auto" />
       </li>
     </ul>
+    <div v-else>
+      <p>You have no friends yet who go to the same gym as you.</p>
+      <CButton @click="goToFriends" text="Add a friend" button-class="primary" class="mt-2 w-fit ml-auto" />
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 /** Vue */
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
+
+/** Store */
+// @ts-ignore
+import { useStore } from "@/stores/store.ts";
 
 /** Helpers */
 import { getColorClass } from "@/helpers/userHelpers";
 
 /** Routes */
-import { USER_PROFILE_ROUTE } from "@/router/appRoutes";
+import { USER_PROFILE_ROUTE, FRIENDS_ROUTE } from "@/router/appRoutes";
+
+/** Constants */
+import type UserProfile from '@/constants/UserProfile';
 
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
@@ -44,6 +56,16 @@ defineProps<{
 const emits = defineEmits(["showInviteModal"]);
 
 const router = useRouter();
+const store = useStore();
+const friendsInSameGym = ref<UserProfile[]>([]);
+
+const currentGym = computed(() => store.getUserProfile?.settings?.currentGym);
+
+function findSameGymUsers() {
+  friendsInSameGym.value = Users.filter(user => {
+    return user.settings?.currentGym?.id === currentGym.value?.id;
+  });
+}
 
 function showInviteModal(username: string) {
   emits("showInviteModal", username);
@@ -52,4 +74,10 @@ function showInviteModal(username: string) {
 function goToProfile(username: string) {
   router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });
 }
+
+function goToFriends() {
+  router.push(FRIENDS_ROUTE);
+}
+
+findSameGymUsers();
 </script>

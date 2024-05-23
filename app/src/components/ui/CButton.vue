@@ -11,6 +11,7 @@
       @click="handleClick"
       class="h-full w-full"
       :class="{ [`button-${buttonClass}`]: buttonClass, disabled: isDisabled }"
+      :disabled="isDisabled ?? false"
     >
       <img v-if="image" :src="image" :alt="`${name} icon`" />
       <p v-if="text" class="whitespace-nowrap">{{ text }}</p>

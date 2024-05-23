@@ -21,6 +21,15 @@
           <label for="bio">Bio</label>
           <input v-model="bio" id="bio" type="text" placeholder="Tell us something about you" autocomplete="off" />
         </li>
+        <!-- Current gym -->
+        <li class="flex flex-col mb-16 relative">
+          <SearchGym
+            @selected-gym="handleGymSelect"
+            @input-changed="isDataValid = false"
+            label-text="Current gym *"
+            :selected-gym="currentGym ? currentGym.name : ''"
+          />
+        </li>
         <!-- Frequency weekly goal -->
         <li class="flex">
           <div class="w-[70%] flex flex-col">
@@ -39,7 +48,7 @@
         <!-- Share data with friends -->
         <li class="flex flex-col mt-2">
           <label class="container">
-            Agree to share data with friends
+            <span>Agree to share data with friends (optional)</span>
             <input @input="toggleCheckboxValue" type="checkbox" />
             <span class="checkmark"></span>
           </label>
@@ -50,7 +59,7 @@
     <!-- Modal -->
     <CModal @close-modal="closeDataModal" :isActive="isDataModalActive" :content="ShareDataContent" />
     <!-- CTA -->
-    <CButton text="Save" button-class="primary" @click="saveAccount" class="ml-auto mt-8" />
+    <CButton text="Save" button-class="primary" :is-disabled="!isDataValid" @click="saveAccount" class="ml-auto mt-8" />
   </div>
 </template>
 
@@ -62,9 +71,11 @@ import { useRouter } from "vue-router";
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
 import CModal from "@/components/ui/CModal.vue";
+import SearchGym from "@/components/partials/account/SearchGym.vue";
 
 /** Constants */
 import { ShareDataContent } from "@/constants/ModalContent";
+import type { Gym } from "@/constants/placeholders/Gyms";
 
 /** Store */
 // @ts-ignore
@@ -80,6 +91,8 @@ import { HOME_ROUTE } from "@/router/appRoutes";
 const store = useStore();
 const router = useRouter();
 
+const isDataValid = ref(false);
+const currentGym = ref<null | Gym>(null);
 const isDataModalActive = ref(false);
 const age = ref<number | null>(null);
 const bio = ref<string | null>(null);
@@ -111,6 +124,12 @@ function goToHome() {
   router.push(HOME_ROUTE);
 }
 
+function handleGymSelect(gym: Gym) {
+  currentGym.value = gym;
+  isDataValid.value = true;
+}
+
+
 async function fetchAccountSettings() {
   try {
     await fetchUserAccount(username.value as string);
@@ -130,6 +149,7 @@ async function saveAccount() {
     age: age.value,
     bio: bio.value,
     weeklyGoal: weeklyGoal.value,
+    currentGym: currentGym.value,
     shareData: shareData.value,
   };
   if (username.value && weeklyGoal.value) {

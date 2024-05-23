@@ -39,10 +39,14 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 /** Constants */
 import type UserProfile from '@/constants/UserProfile';
+
+/** Store */
+// @ts-ignore
+import { useStore } from "@/stores/store.ts";
 
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
@@ -59,26 +63,38 @@ import { getColorClass } from "@/helpers/userHelpers";
 
 const emits = defineEmits(["clickedUser"]);
 
-defineProps<{
-  isDisabled?: boolean | null;
+const props = defineProps<{
   labelText: string;
+  isDisabled?: boolean | null;
+  showOnlyFriendsInDifferentGym?: boolean | null;
 }>();
 
+const store = useStore();
 const searchInput = ref("");
 const searchResults = ref<Array<UserProfile | null>>([]);
+
+const currentGym = computed(() => store.getUserProfile?.settings?.currentGym);
 
 function searchUsers() {
   const input = searchInput.value.toLowerCase();
   searchResults.value = [];
+  let usersToSearch = Users;
 
   if (input !== "") {
-    Users.forEach((user) => {
+    // Find users in same gym
+    if(props.showOnlyFriendsInDifferentGym) {
+      usersToSearch = Users.filter(user => {
+        return user.settings?.currentGym?.id !== currentGym.value?.id;
+      })
+    }
+    usersToSearch.forEach((user) => {
       if (user.username.toLowerCase().includes(input)) {
         searchResults.value.push(user);
       }
     });
   }
 }
+
 
 function handleClickUser(username: string) {
   emits("clickedUser", username);

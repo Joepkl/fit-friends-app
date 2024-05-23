@@ -39,7 +39,11 @@
 
     <!-- Invite user from other gym -->
     <section v-if="selectedGymTab === 1" class="mt-4">
-      <SearchUsers @clicked-user="showInviteModal" label-text="Invite a friend" />
+      <SearchUsers
+        @clicked-user="showInviteModal"
+        label-text="Invite a friend"
+        :show-only-friends-in-different-gym="true"
+      />
     </section>
   </section>
 

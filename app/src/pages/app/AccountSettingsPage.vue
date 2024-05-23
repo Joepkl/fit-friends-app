@@ -33,12 +33,21 @@
           <!-- Age -->
           <li class="flex flex-col">
             <label for="age">Age</label>
-            <input v-model="age" id="age" type="number" placeholder="25" />
+            <input v-model="age" id="age" type="number" placeholder="25" autocomplete="off" />
           </li>
           <!-- Bio -->
           <li class="flex flex-col">
             <label for="bio">Bio</label>
-            <input v-model="bio" id="bio" type="text" placeholder="Tell us something about you" />
+            <input v-model="bio" id="bio" type="text" placeholder="Tell us something about you" autocomplete="off" />
+          </li>
+          <!-- Current gym -->
+          <li class="flex flex-col mb-16 relative">
+            <SearchGym
+              @selected-gym="handleGymSelect"
+              @input-changed="isDataValid = false"
+              label-text="Current gym *"
+              :selected-gym="currentGym ? currentGym.name : ''"
+            />
           </li>
           <!-- Frequency weekly goal -->
           <li class="flex">
@@ -58,7 +67,7 @@
           <!-- Share data with friends -->
           <li class="flex flex-col mt-2">
             <label class="container">
-              Agree to share data with friends
+              <span>Agree to share data with friends (optional)</span>
               <input v-model="shareData" type="checkbox" />
               <span class="checkmark"></span>
             </label>
@@ -70,8 +79,8 @@
       <CModal @close-modal="closeDataModal" :isActive="isDataModalActive" :content="ShareDataContent" />
       <!-- CTA -->
       <div class="flex justify-end mt-8">
-        <CButton text="Cancel" button-class="outline" @click="isEditActive = false" class="mr-10" />
-        <CButton text="Save" button-class="primary" @click="saveAccount" />
+        <CButton @click="isEditActive = false" text="Cancel" button-class="outline" class="mr-10" />
+        <CButton @click="saveAccount" text="Save" button-class="primary" :is-disabled="!isDataValid" />
       </div>
     </section>
   </section>
@@ -88,6 +97,7 @@ import CModal from "@/components/ui/CModal.vue";
 
 /** Constants */
 import { ShareDataContent } from "@/constants/ModalContent";
+import type { Gym } from "@/constants/placeholders/Gyms";
 
 /** Store */
 // @ts-ignore
@@ -102,6 +112,7 @@ import AccountIntro from "@/components/partials/account/AccountIntro.vue";
 import AchievementShowCase from "@/components/partials/account/AchievementShowCase.vue";
 import ConsistencyCard from "@/components/partials/account/ConsistencyCard.vue";
 import PersonalGoalsCard from "@/components/partials/account/PersonalGoalsCard.vue";
+import SearchGym from "@/components/partials/account/SearchGym.vue";
 
 /** API calls */
 import { saveAccountSettings } from "@/api/auth/postAuth";
@@ -110,6 +121,8 @@ import { fetchUserAccount } from "@/api/app/fetchUser";
 const store = useStore();
 const router = useRouter();
 
+const isDataValid = ref(false);
+const currentGym = ref<null | Gym>(null);
 const isEditActive = ref(false);
 const isDataModalActive = ref(false);
 const age = ref<number | null>(null);
@@ -138,10 +151,16 @@ async function fetchAccountSettings() {
   }
 }
 
+function handleGymSelect(gym: Gym) {
+  currentGym.value = gym;
+  isDataValid.value = true;
+}
+
 function updateAccountSettings() {
   age.value = userProfile.value?.settings?.age ?? null;
   bio.value = userProfile.value?.settings?.bio ?? null;
   weeklyGoal.value = userProfile.value?.settings?.weeklyGoal as number;
+  currentGym.value = userProfile.value?.settings?.currentGym as Gym;
   shareData.value = userProfile.value?.settings?.shareData as boolean;
 }
 
@@ -169,6 +188,7 @@ async function saveAccount() {
     age: age.value,
     bio: bio.value,
     weeklyGoal: weeklyGoal.value,
+    currentGym: currentGym.value,
     shareData: shareData.value,
   };
   if (username.value && weeklyGoal.value) {

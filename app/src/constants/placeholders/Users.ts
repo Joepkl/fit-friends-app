@@ -11,6 +11,10 @@ const Users: Array<UserProfile> = [
         bio: "Hi there! My name is Mike and I'm a fitness enthusiast. I try to combine this with my work.",
         weeklyGoal: 4,
         shareData: true,
+        currentGym: {
+          id: 6,
+          name: 'Basic Fit Amsterdam',
+        }
     },
     showcaseAchievements: [
       {
@@ -56,6 +60,10 @@ const Users: Array<UserProfile> = [
         bio: "I am a personal trainer. Like to use this app to keep up to date with my friends and clients.",
         weeklyGoal: 2,
         shareData: true,
+        currentGym: {
+          id: 10,
+          name: "Sportcity Amsterdam",
+        }
     },
     showcaseAchievements: [
       {
@@ -105,6 +113,10 @@ const Users: Array<UserProfile> = [
         bio: "Hellooo! I'm Sarah and I love to stay fit. I'm always looking for new challenges.",
         weeklyGoal: 1,
         shareData: true,
+        currentGym: {
+          id: 8,
+          name: "Fit for Free Amstelveen",
+        }
     },
     showcaseAchievements: [
       {
@@ -141,6 +153,10 @@ const Users: Array<UserProfile> = [
         bio: "Hi there! I'm Billy and I'm a student at the HvA. I like to stay active and healthy.",
         weeklyGoal: 2,
         shareData: true,
+        currentGym: {
+          id: 1,
+          name: "Basic-Fit Amstelveen",
+        }
     },
     showcaseAchievements: [
       {
@@ -186,6 +202,10 @@ const Users: Array<UserProfile> = [
         bio: "Mostly use this app to stay up to date with my friends and work towards my goal. Let's become friends!",
         weeklyGoal: 4,
         shareData: true,
+        currentGym: {
+          id: 9,
+          name: "Sportcity Amstelveen",
+        }
     },
     showcaseAchievements: [
       {
@@ -219,6 +239,10 @@ const Users: Array<UserProfile> = [
         bio: "Just started with this app. I'm looking for some friends to help me stay motivated.",
         weeklyGoal: 2,
         shareData: true,
+        currentGym: {
+          id: 4,
+          name: "Basic-Fit Aalsmeer",
+        }
     },
     showcaseAchievements: [
       {
@@ -244,6 +268,10 @@ const Users: Array<UserProfile> = [
         bio: "My name is Jay, trying to get to a streak of training each week for half a year.",
         weeklyGoal: 1,
         shareData: true,
+        currentGym: {
+          id: 4,
+          name: "Basic-Fit Aalsmeer",
+        }
     },
     showcaseAchievements: [
       {
@@ -289,6 +317,10 @@ const Users: Array<UserProfile> = [
         bio: "Have been using this app for a while. Let's become friends and stay motivated!",
         weeklyGoal: 3,
         shareData: true,
+        currentGym: {
+          id: 9,
+          name: "Sportcity Amstelveen",
+        }
     },
     showcaseAchievements: [
       {
@@ -338,6 +370,10 @@ const Users: Array<UserProfile> = [
         bio: "Hi there! My name is Lianne and I like to go to the gym in my spare time. Try to combine this with my internship and work.",
         weeklyGoal: 3,
         shareData: true,
+        currentGym: {
+          id: 7,
+          name: "Fit for free Kwakel",
+        }
     },
     showcaseAchievements: [
       {

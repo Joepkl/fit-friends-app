@@ -31,9 +31,10 @@
         class="w-5 h-5 absolute right-0"
       />
       <!-- Edit account button -->
-      <CButton v-if="isLoggedInAccount" @click="emitEditActive()" :image="EditIcon" class="relative left-5 w-6 h-6" />
+      <CButton v-if="isLoggedInAccount" @click="emitEditActive" :image="EditIcon" class="relative left-5 w-6 h-6" />
     </div>
     <p class="text-center mt-4">{{ userProfile?.settings?.bio }}</p>
+    <p class="text-center text-green mt-2">Gym: {{ userProfile?.settings?.currentGym?.name }}</p>
     <!-- Pending friend request -->
     <CButton
       v-if="isFriendRequestPending"
@@ -117,6 +118,7 @@ const isUserFriend = ref(props.isFriend)
 const isFriendRequestPending = ref(false);
 
 function emitEditActive() {
+
   emits("editIsActive");
 }
 
