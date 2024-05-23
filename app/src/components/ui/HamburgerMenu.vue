@@ -1,6 +1,6 @@
 <template>
   <!-- Hamburger menu -->
-  <button @click="toggleMenu" class="hamburger-menu w-[30px] h-[20px] relative z-30" :class="{ open: isMenuOpen }">
+  <button @click="toggleMenu" class="hamburger-menu w-[30px] h-[20px] relative z-50" :class="{ open: isMenuOpen }">
     <span class="block absolute h-[4px] w-full bg-green rounded-[9px] opacity-100 left-0 top-0" />
     <span class="block absolute h-[4px] w-full bg-green rounded-[9px] opacity-100 left-0 top-2" />
     <span class="block absolute h-[4px] w-full bg-green rounded-[9px] opacity-100 left-0 top-2" />
@@ -29,7 +29,7 @@
   <!-- Overlay -->
   <div
     @touchstart.passive="toggleMenu"
-    class="fixed h-[100dvh] inset-0 z-10"
+    class="fixed h-[100dvh] inset-0 z-40"
     :class="{ block: isMenuOpen, hidden: !isMenuOpen }"
   />
 </template>

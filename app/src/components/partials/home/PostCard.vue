@@ -68,7 +68,7 @@
   </div>
   <!-- All comments -->
   <div v-if="isCommentsToggled" class="relative mt-2">
-    <div class="absolute z-50 top-0 w-full h-10 bg-gradient-to-b from-dark-grey-transparent" />
+    <div class="absolute z-30 top-0 w-full h-10 bg-gradient-to-b from-dark-grey-transparent" />
     <ul ref="allCommentsEl" class="relative z-10 flex flex-col gap-3 max-h-[230px] overflow-scroll pt-2">
       <li v-for="(comment, index) in content.comments" :key="index">
         <button @click="goToProfile(comment.author)" class="flex items-center gap-1">
