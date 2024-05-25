@@ -2,7 +2,11 @@
   <CHeader />
   <section class="page-wrapper-header">
     <AccountIntro :user-profile="currentUser" :is-edit-active="false" :isLoggedInAccount="false" :is-friend="true" />
-    <AchievementShowCase :achievements="currentUser?.showcaseAchievements || []" :is-logged-in-account="false" />
+    <AchievementShowCase
+      :achievements="currentUser?.showcaseAchievements || []"
+      :is-logged-in-account="false"
+      class="mt-6"
+    />
     <ConsistencyCard
       :weekly-goal="currentUser?.settings?.weeklyGoal || 1"
       :consistency-streak="currentUser?.weeklyConsistencyStreak || 0"

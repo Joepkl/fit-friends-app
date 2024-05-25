@@ -16,25 +16,27 @@
           </span>
         </h1>
       </div>
-      <!-- Remove friend button -->
-      <CButton
-        @click="showRemoveFriendModal"
-        v-if="!isLoggedInAccount && isUserFriend"
-        :image="CloseIcon"
-        class="w-5 h-5 absolute right-0"
-      />
-      <!-- Add friend button -->
-      <CButton
-        @click="showAddFriendModal"
-        v-else-if="!isLoggedInAccount && !isUserFriend && !isFriendRequestPending"
-        :image="AddIcon"
-        class="w-5 h-5 absolute right-0"
-      />
       <!-- Edit account button -->
       <CButton v-if="isLoggedInAccount" @click="emitEditActive" :image="EditIcon" class="relative left-5 w-6 h-6" />
     </div>
     <p class="text-center mt-4">{{ userProfile?.settings?.bio }}</p>
     <p class="text-center text-green mt-2">Gym: {{ userProfile?.settings?.currentGym?.name }}</p>
+    <!-- Remove friend button -->
+    <CButton
+      @click="showRemoveFriendModal"
+      v-if="!isLoggedInAccount && isUserFriend"
+      text="Remove friend"
+      button-class="outline"
+      class="ml-auto w-fit mt-6"
+    />
+    <!-- Add friend button -->
+    <CButton
+      @click="showAddFriendModal"
+      v-else-if="!isLoggedInAccount && !isUserFriend && !isFriendRequestPending"
+      text="Add friend"
+      button-class="primary"
+      class="ml-auto w-fit mt-6"
+    />
     <!-- Pending friend request -->
     <CButton
       v-if="isFriendRequestPending"
@@ -56,7 +58,7 @@
       <p class="mt-2">This action can't be undone.</p>
       <div class="mt-8 flex justify-end">
         <CButton @click="closeRemoveFriendModal" button-class="outline" text="Cancel" />
-        <CButton @click="removeFriend" button-class="primary" text="Remove" class="ml-6" />
+        <CButton @click="removeFriend" button-class="warning" text="Remove" class="ml-6" />
       </div>
     </CModal>
     <!-- Add friend modal -->
@@ -94,10 +96,6 @@ import CModal from "@/components/ui/CModal.vue";
 import type UserProfile from '@/constants/UserProfile';
 import { RemoveFriendContent } from "@/constants/ModalContent";
 import { AddFriendContent } from "@/constants/ModalContent";
-
-/** Images */
-import CloseIcon from "@/assets/icons/ic_close_green.svg";
-import AddIcon from "@/assets/icons/ic_add_green.svg";
 
 /** Helpers */
 import { getColorClass } from "@/helpers/userHelpers";

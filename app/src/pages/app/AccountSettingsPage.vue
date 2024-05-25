@@ -10,7 +10,11 @@
         :isLoggedInAccount="true"
         :is-friend="false"
       />
-      <AchievementShowCase :achievements="userProfile?.showcaseAchievements || []" :is-logged-in-account="true" />
+      <AchievementShowCase
+        :achievements="userProfile?.showcaseAchievements || []"
+        :is-logged-in-account="true"
+        class="mt-6"
+      />
       <ConsistencyCard
         :weekly-goal="userProfile?.settings?.weeklyGoal || 1"
         :consistency-streak="userProfile?.weeklyConsistencyStreak || 0"

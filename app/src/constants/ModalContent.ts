@@ -34,14 +34,14 @@ export const CancelInviteContent = {
   title: "Cancel invite",
 };
 export const ClaimAchievementContent = {
-  title: "Claim achievement",
+  title: "Unclaimed achievement",
   text:
     "If you have completed the requirements for this achievement, you can claim this achievement by creating a post.",
 };
 
 export const AlreadyClaimedAchievementContent = {
   title: "Already claimed achievement",
-  text: "You have already claimed this achievement in the past.",
+  text: "You have already claimed this achievement in the past. ",
 };
 
 export const LogOutContent = {

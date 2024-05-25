@@ -8,22 +8,40 @@
     <section v-if="achievementInfo" class="bg-light-grey p-4 rounded-default">
       <h2 class="mb-4 text-green">{{ achievementInfo.title }}</h2>
       <p>{{ achievementInfo.description }}</p>
-      <!-- Info how to claim -->
-      <button @click="toggleShowClaimInfo" class="button-link mt-4 mb-2">
-        How to claim
-        <span class="ml-[2px] inline-block" :class="{ 'rotate-90': showClaimInfo, 'rotate-[270deg]': !showClaimInfo }">
-          &lt;
-        </span>
-      </button>
-      <p v-if="showClaimInfo">
-        Claim an achievement by clicking on the icon. When claiming an achievement multiple levels ahead, all the
-        achievements between will also be claimed.
-      </p>
+      <div class="flex flex-col items-start">
+        <!-- Info how to claim -->
+        <button @click="toggleShowClaimInfo" class="button-link mt-4 mb-2">
+          How to claim
+          <span
+            class="ml-[2px] inline-block"
+            :class="{ 'rotate-90': showClaimInfo, 'rotate-[270deg]': !showClaimInfo }"
+          >
+            &lt;
+          </span>
+        </button>
+        <p v-if="showClaimInfo">
+          Claim an achievement by clicking on the icon. When claiming an achievement multiple levels ahead, all the
+          achievements between will also be claimed.
+        </p>
+        <!-- How to set goal -->
+        <button @click="toggleSetGoalInfo" class="button-link mt-2 mb-2">
+          How to set goal
+          <span
+            class="ml-[2px] inline-block"
+            :class="{ 'rotate-90': showSetGoalInfo, 'rotate-[270deg]': !showSetGoalInfo }"
+          >
+            &lt;
+          </span>
+        </button>
+        <p v-if="showSetGoalInfo">
+          Click on a not yet claimed achievement to set it as a goal. You can set up to three goals.
+        </p>
+      </div>
       <!-- Levels -->
       <ul class="mt-8 flex justify-between gap-x-2 gap-y-3 flex-wrap">
         <li v-for="(item, index) in achievementInfo.levels" :key="index" class="w-[30%] min-w-[90px]">
           <button
-            @click="handleAchievementClick(userLevel >= Number(index) + 1)"
+            @click="handleAchievementClick(userLevel >= Number(index) + 1, getAchievementLevel(Number(index) + 1) as string)"
             class="flex flex-col w-full items-center text-center"
           >
             <img
@@ -43,10 +61,14 @@
       @close-modal="closeClaimAchievementModal"
       :isActive="isClaimAchievementModalActive"
       :content="ClaimAchievementContent"
-      :hide-close-button="true"
     >
+      <p class="mt-2">
+        Or you can set
+        <span class="text-green">{{ achievementInfo?.title }} {{ achievementSelectedLevel }}</span>
+        as a goal to work towards.
+      </p>
       <div class="mt-8 flex justify-end">
-        <CButton @click="closeClaimAchievementModal" button-class="outline" text="Cancel" class="mr-6" />
+        <CButton @click="goToProfilePage" button-class="outline" text="Set as goal" class="mr-6" />
         <CButton @click="goToCreatePost" button-class="primary" text="Claim" />
       </div>
     </CModal>
@@ -55,7 +77,17 @@
       @close-modal="closeAlreadyClaimedAchievementModal"
       :isActive="isAlreadyClaimedAchievementModalActive"
       :content="AlreadyClaimedAchievementContent"
-    />
+    >
+      <p class="mt-2">
+        Do you want to put
+        <span class="text-green">{{ achievementInfo?.title }} {{ achievementSelectedLevel }}</span>
+        in your achievements showcase?
+      </p>
+      <div class="mt-8 flex justify-end">
+        <CButton @click="closeAlreadyClaimedAchievementModal" button-class="outline" text="Cancel" class="mr-6" />
+        <CButton @click="goToProfilePage" button-class="primary" text="Set showcase" />
+      </div>
+    </CModal>
   </section>
 </template>
 
@@ -69,7 +101,7 @@ import { AchievementLevels } from "@/constants/placeholders/AchievementLevels";
 import { ClaimAchievementContent, AlreadyClaimedAchievementContent } from "@/constants/ModalContent";
 
 /** Routes */
-import { ACHIEVEMENTS_ROUTE, CREATE_POST_ROUTE } from "@/router/appRoutes";
+import { ACHIEVEMENTS_ROUTE, CREATE_POST_ROUTE, ACCOUNT_ROUTE } from "@/router/appRoutes";
 
 /** Images */
 import BackIcon from "@/assets/icons/ic_back.svg";
@@ -90,6 +122,8 @@ const router = useRouter();
 const isClaimAchievementModalActive = ref(false);
 const isAlreadyClaimedAchievementModalActive = ref(false);
 const showClaimInfo = ref(false);
+const showSetGoalInfo = ref(false);
+const achievementSelectedLevel = ref("");
 
 const currentAchievementId = computed(() => parseInt(router.currentRoute.value.params.id as string));
 const maxLevel = computed(() => achievementInfo?.maxLevel);
@@ -98,7 +132,8 @@ const userLevel = computed(() => getAchievementUserLevel(currentAchievementId.va
 
 const achievementInfo = getAchievementInfo(currentAchievementId.value);
 
-function handleAchievementClick(isAchievementClaimed: boolean) {
+function handleAchievementClick(isAchievementClaimed: boolean, achievementLevel: string) {
+  achievementSelectedLevel.value = achievementLevel;
   if (isAchievementClaimed) {
     isAlreadyClaimedAchievementModalActive.value = true;
   } else {
@@ -110,6 +145,10 @@ function toggleShowClaimInfo() {
   showClaimInfo.value = !showClaimInfo.value;
 }
 
+function toggleSetGoalInfo() {
+  showSetGoalInfo.value = !showSetGoalInfo.value;
+}
+
 function closeClaimAchievementModal() {
   isClaimAchievementModalActive.value = false;
 }
@@ -117,6 +156,10 @@ function closeClaimAchievementModal() {
 function goToCreatePost() {
   //TO DO  prefilled selected achievement
   router.push(CREATE_POST_ROUTE);
+}
+
+function goToProfilePage() {
+  router.push(ACCOUNT_ROUTE);
 }
 
 function closeAlreadyClaimedAchievementModal() {

@@ -56,6 +56,7 @@ import OnboardingImage1 from "@/assets/images/img_onboarding_1.png";
 import OnboardingImage2 from "@/assets/images/img_onboarding_2.png";
 import OnboardingImage3 from "@/assets/images/img_onboarding_3.png";
 import OnboardingImage4 from "@/assets/images/img_onboarding_4.png";
+import OnboardingImage5 from "@/assets/images/img_onboarding_5.png";
 
 const store = useStore();
 const router = useRouter();
@@ -86,6 +87,11 @@ const onboardingContent = {
       title: "Achieve your goals.",
       text: "Set personal goals, and work towards achieving these goals. Stay motivated and consistent.",
       image: OnboardingImage4,
+    },
+    {
+      title: "Meetup with your friends.",
+      text: "Connect easy, and meetup with your friends to workout together.",
+      image: OnboardingImage5,
     },
   ],
 };
