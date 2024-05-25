@@ -2,49 +2,52 @@
   <CHeader />
   <section class="page-wrapper-header">
     <h1 class="mb-2">Meetup</h1>
-    <p class="mb-10">
-      Invite your friends to join you on your gym adventures! Working together helps in staying motivated and reaching
-      your goals.
-    </p>
 
-    <!-- Meetups tabs -->
-    <MeetupTabs :selectedMeetupTab="selectedMeetupTab" @update-selected-meetup-tab="updateSelectedMeetupTab" />
+    <div v-if="isDataSharingEnabled">
+      <p class="mb-10">
+        Invite your friends to join you on your gym adventures! Working together helps in staying motivated and reaching
+        your goals.
+      </p>
+      <!-- Meetups tabs -->
+      <MeetupTabs :selectedMeetupTab="selectedMeetupTab" @update-selected-meetup-tab="updateSelectedMeetupTab" />
 
-    <!-- Meetups -->
-    <MeetupList
-      :selectedMeetupTab="selectedMeetupTab"
-      :meetups="meetups"
-      @open-cancel-meetup-modal="openCancelMeetupModal"
-    />
-
-    <!-- Invites -->
-    <MeetupInvites
-      :selectedMeetupTab="selectedMeetupTab"
-      :invites="invites"
-      @open-cancel-invite-modal="openCancelInviteModal"
-    />
-
-    <!-- Invites sent by me-->
-    <MeetupInvitedByMe
-      :selectedMeetupTab="selectedMeetupTab"
-      :myInvites="myInvites"
-      @open-cancel-invite-modal="openCancelInviteModal"
-    />
-
-    <!-- Invite tabs-->
-    <MeetupInviteTabs :selectedGymTab="selectedGymTab" @update-selected-gym-tab="updateSelectedGymTab" />
-
-    <!-- Invite user from same gym -->
-    <InviteUserSameGym :selected-gym-tab="selectedGymTab" @show-invite-modal="showInviteModal" />
-
-    <!-- Invite user from other gym -->
-    <section v-if="selectedGymTab === 1" class="mt-4">
-      <SearchUsers
-        @clicked-user="showInviteModal"
-        label-text="Invite a friend"
-        :show-only-friends-in-different-gym="true"
+      <!-- Meetups -->
+      <MeetupList
+        :selectedMeetupTab="selectedMeetupTab"
+        :meetups="meetups"
+        @open-cancel-meetup-modal="openCancelMeetupModal"
       />
-    </section>
+
+      <!-- Invites -->
+      <MeetupInvites
+        :selectedMeetupTab="selectedMeetupTab"
+        :invites="invites"
+        @open-cancel-invite-modal="openCancelInviteModal"
+      />
+
+      <!-- Invites sent by me-->
+      <MeetupInvitedByMe
+        :selectedMeetupTab="selectedMeetupTab"
+        :myInvites="myInvites"
+        @open-cancel-invite-modal="openCancelInviteModal"
+      />
+
+      <!-- Invite tabs-->
+      <MeetupInviteTabs :selectedGymTab="selectedGymTab" @update-selected-gym-tab="updateSelectedGymTab" />
+
+      <!-- Invite user from same gym -->
+      <InviteUserSameGym :selected-gym-tab="selectedGymTab" @show-invite-modal="showInviteModal" />
+
+      <!-- Invite user from other gym -->
+      <section v-if="selectedGymTab === 1" class="mt-4">
+        <SearchUsers
+          @clicked-user="showInviteModal"
+          label-text="Invite a friend"
+          :show-only-friends-in-different-gym="true"
+        />
+      </section>
+    </div>
+    <DataSharingInfo v-else class="mt-4" />
   </section>
 
   <!-- Invite user modal -->
@@ -126,10 +129,13 @@ import MeetupInvitedByMe from "@/components/partials/meetup/MeetupInvitedByMe.vu
 import MeetupInviteTabs from "@/components/partials/meetup/MeetupInviteTabs.vue";
 import InviteUserSameGym from "@/components/partials/meetup/InviteUserSameGym.vue";
 import InviteUserModal from "@/components/partials/meetup/InviteUserModal.vue";
+import DataSharingInfo from "@/components/partials/account/DataSharingInfo.vue";
 
 const store = useStore();
 
 const myGym = computed(() => store.getUserProfile?.settings?.currentGym?.name);
+const userProfile = computed(() => store.getUserProfile);
+const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
 
 const now = new Date();
 const currentYear = now.getFullYear();

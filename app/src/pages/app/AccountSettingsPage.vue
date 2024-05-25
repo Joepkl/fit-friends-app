@@ -156,7 +156,7 @@ import { fetchUserAccount } from "@/api/app/fetchUser";
 const store = useStore();
 const router = useRouter();
 
-const isDataValid = ref(false);
+const isDataValid = ref(true);
 const currentGym = ref<null | Gym>(null);
 const isEditActive = ref(false);
 const isLogOutModalActive = ref(false);
@@ -173,6 +173,17 @@ const username = computed(() => userProfile.value?.username);
 
 // Update account settings on page load with store data
 updateAccountSettings();
+
+// Open settings if enabled byu query params
+checkIfSettingsOpen();
+
+function checkIfSettingsOpen() {
+  if(router.currentRoute.value.query.settingsOpen) {
+    isEditActive.value = true;
+    // Remove query param
+    router.replace(router.currentRoute.value.path);
+  }
+}
 
 scrollToTop();
 function scrollToTop() {

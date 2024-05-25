@@ -2,7 +2,7 @@
   <CHeader />
   <section class="page-wrapper-header">
     <h1 class="mb-8">Home</h1>
-    <ul class="flex flex-col gap-4">
+    <ul v-if="isDataSharingEnabled" class="flex flex-col gap-4">
       <li v-for="(post, index) in postsCopy" :key="index">
         <PostCard
           @like-post="handleLikePost"
@@ -14,6 +14,7 @@
         />
       </li>
     </ul>
+    <DataSharingInfo v-else />
   </section>
 </template>
 
@@ -28,6 +29,7 @@ import { useStore } from "@/stores/store.ts";
 /** Components */
 import CHeader from "@/components/partials/layout/CHeader.vue";
 import PostCard from "@/components/partials/home/PostCard.vue";
+import DataSharingInfo from "@/components/partials/account/DataSharingInfo.vue";
 
 /** Placeholder data */
 import Posts from "@/constants/placeholders/Posts";
@@ -37,6 +39,7 @@ const store = useStore();
 const postsCopy = ref(Posts);
 
 const userProfile = computed(() => store.getUserProfile);
+const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
 
 function handleLikePost(index: number) {
   postsCopy.value[index].isLikedByMe = true;

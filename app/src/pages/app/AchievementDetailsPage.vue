@@ -69,7 +69,7 @@
       </p>
       <div class="mt-8 flex justify-end">
         <CButton @click="goToProfilePage" button-class="outline" text="Set as goal" class="mr-6" />
-        <CButton @click="goToCreatePost" button-class="primary" text="Claim" />
+        <CButton @click="handleClaimAchievement" button-class="primary" text="Claim" />
       </div>
     </CModal>
     <!-- Already claimed achievement -->
@@ -103,6 +103,10 @@ import { ClaimAchievementContent, AlreadyClaimedAchievementContent } from "@/con
 /** Routes */
 import { ACHIEVEMENTS_ROUTE, CREATE_POST_ROUTE, ACCOUNT_ROUTE } from "@/router/appRoutes";
 
+/** Store */
+// @ts-ignore
+import { useStore } from "@/stores/store.ts";
+
 /** Images */
 import BackIcon from "@/assets/icons/ic_back.svg";
 
@@ -119,11 +123,16 @@ import {
 } from "@/helpers/achievementHelpers";
 
 const router = useRouter();
+const store = useStore();
+
 const isClaimAchievementModalActive = ref(false);
 const isAlreadyClaimedAchievementModalActive = ref(false);
 const showClaimInfo = ref(false);
 const showSetGoalInfo = ref(false);
 const achievementSelectedLevel = ref("");
+
+const userProfile = computed(() => store.getUserProfile);
+const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
 
 const currentAchievementId = computed(() => parseInt(router.currentRoute.value.params.id as string));
 const maxLevel = computed(() => achievementInfo?.maxLevel);
@@ -151,6 +160,14 @@ function toggleSetGoalInfo() {
 
 function closeClaimAchievementModal() {
   isClaimAchievementModalActive.value = false;
+}
+
+function handleClaimAchievement() {
+  if (!isDataSharingEnabled.value) {
+    closeClaimAchievementModal();
+  } else {
+    goToCreatePost();
+  }
 }
 
 function goToCreatePost() {
