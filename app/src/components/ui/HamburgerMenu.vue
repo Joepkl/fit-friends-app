@@ -8,7 +8,7 @@
   </button>
   <!-- Menu items -->
   <ul
-    class="menu-items fixed right-0 w-0 bg-light-grey top-0 pt-[85px] z-50 h-[100dvh] flex flex-col gap-8 overflow-hidden"
+    class="menu-items fixed right-0 w-0 bg-light-grey top-0 pt-[85px] z-40 h-[100dvh] flex flex-col gap-8 overflow-hidden"
     :class="{ 'open w-60': isMenuOpen }"
   >
     <li
@@ -29,7 +29,7 @@
   <!-- Overlay -->
   <div
     @touchstart.passive="toggleMenu"
-    class="fixed h-[100dvh] inset-0 z-40"
+    class="fixed h-[100dvh] inset-0 z-30"
     :class="{ block: isMenuOpen, hidden: !isMenuOpen }"
   />
 </template>

@@ -120,7 +120,8 @@ p {
   @apply font-semibold;
 }
 
-input {
+input,
+textarea {
   appearance: none;
   border-radius: var(--border-radius-default);
   -webkit-appearance: none;

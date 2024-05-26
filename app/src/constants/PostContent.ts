@@ -6,7 +6,7 @@ export default interface PostContent {
   date: string;
   time: string;
   description: string | null;
-  proudOf: Array<string> | null;
+  proudOf: Array<string | null>;
   achievements: Array<SingleAchievement> | null;
   likes: number;
   comments: Array<Comment> | null;

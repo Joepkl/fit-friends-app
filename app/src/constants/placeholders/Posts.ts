@@ -121,11 +121,15 @@ const Posts: Array<PostContent> = [
 ]
 
 function getDate(dayOffset: number, monthOffset: number, yearOffset: number) {
+  const month = today.getMonth() + 1 - monthOffset
+  const formattedMonth = (month.toString().padStart(2, '0'));
+
   if (today.getDate() - dayOffset < 1) {
-    return `${30 + today.getDate() - dayOffset}-${today.getMonth() + 1 - monthOffset}-${today.getFullYear() -
+    return `${30 + today.getDate() - dayOffset}-${formattedMonth}-${today.getFullYear() -
       yearOffset}`;
   }
-  return `${today.getDate() - dayOffset}-${today.getMonth() + 1 - monthOffset}-${today.getFullYear() - yearOffset}`;
+  return `${today.getDate() - dayOffset}-${formattedMonth}-${today.getFullYear() - yearOffset}`;
+  
 }
 
 function getTime(hourOffset: number, minuteOffset: number) {

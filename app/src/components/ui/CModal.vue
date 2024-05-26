@@ -4,7 +4,12 @@
     class="z-50 bg-light-grey border-[2px] border-solid border-green w-10/12 max-w-96 fixed top-1/4 left-1/2 transform -translate-x-1/2 px-9 pt-5 pb-7 rounded-default"
   >
     <!-- Close button -->
-    <CButton v-if="!hideCloseButton" @click="closeModal" :image="CloseIcon" class="button absolute right-5 top-5" />
+    <CButton
+      v-if="!hideCloseButton"
+      @click="closeModal"
+      :image="CloseIcon"
+      class="button absolute right-2 top-3 w-7 h-7"
+    />
     <!-- Modal content -->
     <h2 class="text-green mt-5 mb-2">{{ content.title }}</h2>
     <p v-if="content.text" v-html="content.text" />

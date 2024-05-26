@@ -149,6 +149,9 @@ import ConsistencyCard from "@/components/partials/account/ConsistencyCard.vue";
 import PersonalGoalsCard from "@/components/partials/account/PersonalGoalsCard.vue";
 import SearchGym from "@/components/partials/account/SearchGym.vue";
 
+/** Placeholder data */
+import Posts from "@/constants/placeholders/Posts";
+
 /** API calls */
 import { saveAccountSettings } from "@/api/auth/postAuth";
 import { fetchUserAccount } from "@/api/app/fetchUser";
@@ -229,6 +232,10 @@ function logOut() {
   store.setAccessToken("");
   store.setIsAuthenticated(false);
   router.push(AUTHENTICATION_ROUTE);
+  // Reset selected achievements and posts from local storage
+  // This exists as placeholder for sample usage of the app. Eventually this will be handled by the API.
+  store.setSelectedAchievements([]);
+  store.setPosts(Posts);
 }
 
 async function handleDeleteAccount() {

@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia';
 import type UserProfile from '@/constants/UserProfile';
+import type SingleAchievement from "@/constants/SingleAchievement";
+import type PostContent from "@/constants/PostContent";
+import Posts from "@/constants/placeholders/Posts";
 
 export const useStore = defineStore('store', {
   state: () => {
@@ -9,7 +12,9 @@ export const useStore = defineStore('store', {
       isAuthenticated: null as null | boolean,
       userProfile: null as null | UserProfile,
       accessToken: null as null | string,
-      isSearchExpanded: false as false | boolean
+      isSearchExpanded: false as false | boolean,
+      selectedAchievements: [] as SingleAchievement[],
+      posts:  Posts as PostContent[],
     };
   },
   persist: true,
@@ -32,6 +37,12 @@ export const useStore = defineStore('store', {
     getIsSearchExpanded():boolean {
       return this.isSearchExpanded;
     },
+    getSelectedAchievements(): SingleAchievement[] {
+      return this.selectedAchievements;
+    },
+    getPosts(): PostContent[] {
+      return this.posts;
+    }
   },
   actions: {
     increaseActiveApiCalls() {
@@ -54,7 +65,13 @@ export const useStore = defineStore('store', {
     },
     setIsSearchExpanded(value: boolean) {
       this.isSearchExpanded = value;
-    }
+    },
+    setSelectedAchievements(value: SingleAchievement[]) {
+      this.selectedAchievements = value;
+    },
+    setPosts(value: PostContent[]) {
+      this.posts = value;
+    },
   },
 });
 

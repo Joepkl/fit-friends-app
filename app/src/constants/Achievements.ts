@@ -265,7 +265,7 @@ export const ChestAchievements = Object.freeze({
   },
   4: {
     title: "Bench press",
-    description: "The bench press, or chest press, is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench. The bench press is a compound movement, with the primary muscles involved being the pectoralis major, the anterior deltoids, and the triceps brachii.",
+    description: "The bench press, or chest press, is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.",
     maxLevel: 6,
     levels: {
       0: {

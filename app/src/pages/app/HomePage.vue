@@ -31,24 +31,25 @@ import CHeader from "@/components/partials/layout/CHeader.vue";
 import PostCard from "@/components/partials/home/PostCard.vue";
 import DataSharingInfo from "@/components/partials/account/DataSharingInfo.vue";
 
-/** Placeholder data */
-import Posts from "@/constants/placeholders/Posts";
-
 const store = useStore();
 
-const postsCopy = ref(Posts);
+const posts = computed(() => store.getPosts);
 
 const userProfile = computed(() => store.getUserProfile);
 const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
 
+const postsCopy = ref(posts.value);
+
 function handleLikePost(index: number) {
   postsCopy.value[index].isLikedByMe = true;
   postsCopy.value[index].likes++;
+  updatePostsStore();
 }
 
 function handleUnLikePost(index: number) {
   postsCopy.value[index].isLikedByMe = false;
   postsCopy.value[index].likes--;
+  updatePostsStore();
 }
 
 function handleCommentPost(index: number, comment: string) {
@@ -59,10 +60,16 @@ function handleCommentPost(index: number, comment: string) {
       status: userProfile.value.status,
     });
   }
+  updatePostsStore();
 }
 
 function handleRemoveComment(postIndex: number, commentIndex: number) {
   postsCopy.value[postIndex].comments?.splice(commentIndex, 1);
+  updatePostsStore();
+}
+
+function updatePostsStore() {
+  store.setPosts(postsCopy.value);
 }
 
 scrollToTop();

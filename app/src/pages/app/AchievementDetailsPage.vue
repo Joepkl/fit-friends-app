@@ -41,7 +41,7 @@
       <ul class="mt-8 flex justify-between gap-x-2 gap-y-3 flex-wrap">
         <li v-for="(item, index) in achievementInfo.levels" :key="index" class="w-[30%] min-w-[90px]">
           <button
-            @click="handleAchievementClick(userLevel >= Number(index) + 1, getAchievementLevel(Number(index) + 1) as string)"
+            @click="handleAchievementClick(userLevel >= Number(index) + 1, Number(index) + 1)"
             class="flex flex-col w-full items-center text-center"
           >
             <img
@@ -133,6 +133,7 @@ const achievementSelectedLevel = ref("");
 
 const userProfile = computed(() => store.getUserProfile);
 const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
+const selectedAchievments = computed(() => store.getSelectedAchievements);
 
 const currentAchievementId = computed(() => parseInt(router.currentRoute.value.params.id as string));
 const maxLevel = computed(() => achievementInfo?.maxLevel);
@@ -140,9 +141,12 @@ const category = computed(() => achievementInfo?.category);
 const userLevel = computed(() => getAchievementUserLevel(currentAchievementId.value));
 
 const achievementInfo = getAchievementInfo(currentAchievementId.value);
+const achievementSelectedLevelIndex = ref<number | null>(null);
 
-function handleAchievementClick(isAchievementClaimed: boolean, achievementLevel: string) {
-  achievementSelectedLevel.value = achievementLevel;
+function handleAchievementClick(isAchievementClaimed: boolean, achievementLevel: number) {
+  achievementSelectedLevel.value = getAchievementLevel(achievementLevel) as string;
+  achievementSelectedLevelIndex.value = achievementLevel;
+
   if (isAchievementClaimed) {
     isAlreadyClaimedAchievementModalActive.value = true;
   } else {
@@ -166,12 +170,35 @@ function handleClaimAchievement() {
   if (!isDataSharingEnabled.value) {
     closeClaimAchievementModal();
   } else {
+    handleSetAchievements();
     goToCreatePost();
   }
 }
 
+function handleSetAchievements() {
+  const currentSetAchievements = selectedAchievments.value;
+
+  const achievement = {
+    title: achievementInfo?.title as string,
+    id: achievementInfo?.id as number,
+    category: achievementInfo?.category as number,
+    maxLevel: achievementInfo?.maxLevel as number,
+    level: achievementSelectedLevelIndex.value as number,
+  };
+
+  // Find the index of the existing achievement in the array
+  const existingIndex = currentSetAchievements.findIndex((item) => item.id === achievement.id);
+
+  if (existingIndex !== -1) {
+    // If the achievement already exists, replace it with the new one
+    currentSetAchievements[existingIndex] = achievement;
+  } else {
+    // If the achievement is not already in the array, push it
+    currentSetAchievements.push(achievement);
+  }
+}
+
 function goToCreatePost() {
-  //TO DO  prefilled selected achievement
   router.push(CREATE_POST_ROUTE);
 }
 

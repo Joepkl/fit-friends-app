@@ -136,7 +136,7 @@ import type PostContent from "@/constants/PostContent";
 import { RemoveCommentContent } from "@/constants/ModalContent";
 
 /** Routes */
-import { USER_PROFILE_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoutes";
+import { USER_PROFILE_ROUTE, ACHIEVEMENT_DETAILS_ROUTE, ACCOUNT_ROUTE } from "@/router/appRoutes";
 
 /** Store */
 // @ts-ignore
@@ -178,7 +178,11 @@ watch(
 );
 
 function goToProfile(username: string) {
-  router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });
+  if(username === userProfile.value?.username) {
+    router.push(ACCOUNT_ROUTE);
+  } else {
+    router.push({ name: USER_PROFILE_ROUTE.name, params: { username: username } });
+  }
 }
 
 function likePost() {
