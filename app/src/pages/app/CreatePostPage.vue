@@ -2,7 +2,7 @@
   <CHeader />
   <section class="page-wrapper-header">
     <h1 class="mb-4">Create post</h1>
-    <form v-if="isDataSharingEnabled" @input="saveInputInLocalStorage">
+    <form v-if="isDataSharingEnabled" @input="saveInputInLocalStorage" class="mt-6">
       <ul class="flex flex-col gap-4">
         <!-- Date -->
         <li class="flex flex-col">
