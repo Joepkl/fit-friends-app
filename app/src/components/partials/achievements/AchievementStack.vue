@@ -18,6 +18,10 @@ import { ref, computed } from "vue";
 /** Placeholders */
 import { AchievementLevels } from "@/constants/placeholders/AchievementLevels";
 
+/** Store */
+// @ts-ignore
+import { useStore } from "@/stores/store.ts";
+
 /** Constants */
 import type SingleAchievement from "@/constants/SingleAchievement";
 
@@ -34,14 +38,17 @@ import TimeStackSilverIcon from "@/assets/icons/ic_stack_time_silver.svg";
 import TimeStackBronzeIcon from "@/assets/icons/ic_stack_time_bronze.svg";
 import TimeStackDisabledIcon from "@/assets/icons/ic_stack_time_disabled.svg";
 
+
 const props = defineProps<{
   achievement: SingleAchievement;
 }>();
 
-const emits = defineEmits(["updateSelectedMeetupTab"]);
-
 const router = useRouter();
+const store = useStore();
+
+const userAchievementLevels = computed(() => store.getUserAchievementLevels);
 const achievementLevel = getAchievementUserLevel(props.achievement.id);
+
 
 function getStackIcon(level: number, maxLevel: number, category: number) {
   const levelPercentage = (level / maxLevel) * 100;
@@ -73,8 +80,8 @@ function getStackIcon(level: number, maxLevel: number, category: number) {
 }
 
 function getAchievementUserLevel(id: number) {
-  const achievement = AchievementLevels.find((achievement) => achievement.id === id);
-  return achievement ? achievement.level : 1;
+  const level = userAchievementLevels.value.find((achievement) => achievement.id === id);
+  return level ? level.level : 0;
 }
 
 function goToAchievement(id: number) {

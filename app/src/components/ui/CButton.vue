@@ -10,7 +10,7 @@
       v-else
       @click="handleClick"
       class="h-full w-full"
-      :class="{ [`button button-${buttonClass}`]: buttonClass, disabled: isDisabled }"
+      :class="{ [`button button-${buttonClass} whitespace-nowrap`]: buttonClass, disabled: isDisabled }"
       :disabled="isDisabled ?? false"
     >
       <img v-if="image" :src="image" :alt="`${name} icon`" />

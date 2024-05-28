@@ -97,7 +97,6 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
 /** Constants */
-import { AchievementLevels } from "@/constants/placeholders/AchievementLevels";
 import { ClaimAchievementContent, AlreadyClaimedAchievementContent } from "@/constants/ModalContent";
 
 /** Routes */
@@ -139,6 +138,7 @@ const currentAchievementId = computed(() => parseInt(router.currentRoute.value.p
 const maxLevel = computed(() => achievementInfo?.maxLevel);
 const category = computed(() => achievementInfo?.category);
 const userLevel = computed(() => getAchievementUserLevel(currentAchievementId.value));
+const userAchievementLevels = computed(() => store.getUserAchievementLevels);
 
 const achievementInfo = getAchievementInfo(currentAchievementId.value);
 const achievementSelectedLevelIndex = ref<number | null>(null);
@@ -213,8 +213,8 @@ function closeAlreadyClaimedAchievementModal() {
 }
 
 function getAchievementUserLevel(id: number) {
-  const achievement = AchievementLevels.find((achievement) => achievement.id === id);
-  return achievement ? achievement.level : 1;
+  const level = userAchievementLevels.value.find((achievement) => achievement.id === id);
+  return level ? level.level : 0;
 }
 
 function goBack() {

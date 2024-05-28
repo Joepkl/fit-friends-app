@@ -9,6 +9,7 @@
           @unlike-post="handleUnLikePost"
           @posted-comment="handleCommentPost"
           @remove-comment="handleRemoveComment"
+          @delete-post="handlePostDelete(index)"
           :content="post"
           :post-index="index"
         />
@@ -60,6 +61,11 @@ function handleCommentPost(index: number, comment: string) {
       status: userProfile.value.status,
     });
   }
+  updatePostsStore();
+}
+
+function handlePostDelete(index: number) {
+  postsCopy.value.splice(index, 1);
   updatePostsStore();
 }
 

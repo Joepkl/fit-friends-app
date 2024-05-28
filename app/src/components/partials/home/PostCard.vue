@@ -32,7 +32,11 @@
       <ul>
         <li v-for="(item, index) in content.achievements" :key="index">
           <button @click="goToAchievement(item.id)" class="flex items-center mt-2">
-            <img :src="getAchievementIcon(item.level as number, item.category)" class="w-12" alt="Achievement icon" />
+            <img
+              :src="getAchievementIconFromPercentage(item.level as number, item.maxLevel as number, item.category)"
+              class="w-12"
+              alt="Achievement icon"
+            />
             <p class="ml-2">
               {{ getAchievementInfo(item.id)?.title }}
               {{ getAchievementLevel(item.level as number) }}
@@ -41,6 +45,10 @@
         </li>
       </ul>
     </div>
+    <!-- Remove post button -->
+    <button v-if="isMyPost()" @click="toggleDeletePostModal" class="block ml-auto">
+      <img :src="GarbageOutlineIcon" alt="Remove Icon" />
+    </button>
   </section>
   <div class="flex justify-between mt-2">
     <!-- Comments -->
@@ -105,7 +113,19 @@
   >
     <div class="mt-8 flex flex-wrap justify-end">
       <CButton @click="toggleRemoveCommentModal" button-class="outline" text="Cancel" class="mr-6" />
-      <CButton @click="removeComment" button-class="primary" text="Remove" />
+      <CButton @click="removeComment" button-class="warning" text="Remove" />
+    </div>
+  </CModal>
+  <!-- Remove post modal -->
+  <CModal
+    @close-modal="toggleDeletePostModal"
+    :isActive="isDeletePostModalActive"
+    :content="DeletePostContent"
+    :hide-close-button="true"
+  >
+    <div class="mt-8 flex flex-wrap justify-end">
+      <CButton @click="toggleDeletePostModal" button-class="outline" text="Cancel" class="mr-6" />
+      <CButton @click="deletePost" button-class="warning" text="Delete" />
     </div>
   </CModal>
 
@@ -133,7 +153,7 @@ import CModal from "@/components/ui/CModal.vue";
 
 /** Constants */
 import type PostContent from "@/constants/PostContent";
-import { RemoveCommentContent } from "@/constants/ModalContent";
+import { RemoveCommentContent, DeletePostContent } from "@/constants/ModalContent";
 
 /** Routes */
 import { USER_PROFILE_ROUTE, ACHIEVEMENT_DETAILS_ROUTE, ACCOUNT_ROUTE } from "@/router/appRoutes";
@@ -143,10 +163,10 @@ import { USER_PROFILE_ROUTE, ACHIEVEMENT_DETAILS_ROUTE, ACCOUNT_ROUTE } from "@/
 import { useStore } from "@/stores/store.ts";
 
 /** Helpers */
-import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
+import { getAchievementIconFromPercentage, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 import { getColorClass } from "@/helpers/userHelpers";
 
-const emits = defineEmits(["likePost", "unlikePost", "postedComment", "removeComment"]);
+const emits = defineEmits(["likePost", "unlikePost", "postedComment", "removeComment", "deletePost"]);
 
 const props = defineProps<{
   content: PostContent;
@@ -161,6 +181,7 @@ const isCommentsToggled = ref(false);
 const allCommentsEl = ref<HTMLElement | null>(null);
 const isWritingComment = ref(false);
 const isRemoveCommentModalActive = ref(false);
+const isDeletePostModalActive = ref(false);
 const selectedCommentIndex = ref<number | null>(null);
 
 const userProfile = computed(() => store.getUserProfile);
@@ -203,6 +224,15 @@ function toggleCommenting() {
   }
 }
 
+function toggleDeletePostModal() {
+  isDeletePostModalActive.value = !isDeletePostModalActive.value;
+}
+
+function deletePost() {
+  emits("deletePost");
+  toggleDeletePostModal();
+}
+
 function toggleRemoveCommentModal(commentIndex?: number) {
   if(commentIndex) {
     selectedCommentIndex.value = commentIndex;
@@ -231,6 +261,10 @@ function isMyComment(index: number) {
     const author = props.content.comments[index].author;
     return author === userProfile.value?.username;
   }
+}
+
+function isMyPost() {
+  return props.content.author === userProfile.value?.username;
 }
 
 function toggleComments() {

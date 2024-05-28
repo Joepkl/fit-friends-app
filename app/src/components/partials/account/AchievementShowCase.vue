@@ -22,7 +22,7 @@
       <li v-else v-for="(achievement, index) in achievements" :key="'else-' + index" class="flex w-[68px]">
         <a v-if="achievement" @click="goToAchievement(achievement.id as number)" class="block rounded-default">
           <img
-            :src="getAchievementIcon(achievement.level as number, achievement.category)"
+            :src="getAchievementIconFromPercentage(achievement.level as number, achievement.maxLevel as number, achievement.category)"
             class="w-[56px] h-[56px] mx-auto"
             alt="Achievement icon"
           />
@@ -49,7 +49,7 @@ import { ACHIEVEMENTS_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoute
 import type SingleAchievement from "@/constants/SingleAchievement";
 
 /** Helpers */
-import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
+import { getAchievementIconFromPercentage, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 
 const props = defineProps<{
   achievements: Array<SingleAchievement | null>;

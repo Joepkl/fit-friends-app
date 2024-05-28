@@ -162,7 +162,7 @@ function handleUsernameChange() {
 }
 
 function validateUsername() {
-  const errorMessage = "Username cannot contain spaces.";
+  const errorMessage = "Username can't contain spaces.";
   if (username.value && (username.value as string).includes(" ")) {
     setError(true, errorMessage);
     isUsernameValid.value = false;

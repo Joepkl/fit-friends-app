@@ -1,8 +1,13 @@
+/** Vue */
 import { defineStore } from 'pinia';
+
+/** Constants */
 import type UserProfile from '@/constants/UserProfile';
 import type SingleAchievement from "@/constants/SingleAchievement";
 import type PostContent from "@/constants/PostContent";
 import Posts from "@/constants/placeholders/Posts";
+import { getAchievementLevels } from "@/constants/placeholders/AchievementLevels";
+import type { AchievementLevel } from "@/constants/placeholders/AchievementLevels";
 
 export const useStore = defineStore('store', {
   state: () => {
@@ -14,7 +19,8 @@ export const useStore = defineStore('store', {
       accessToken: null as null | string,
       isSearchExpanded: false as false | boolean,
       selectedAchievements: [] as SingleAchievement[],
-      posts:  Posts as PostContent[],
+      posts: Posts as PostContent[],
+      userAchievementLevels: getAchievementLevels() as AchievementLevel[],
       createPostInput : {
         author: '',
         date: '',
@@ -46,7 +52,7 @@ export const useStore = defineStore('store', {
     getUserProfile(): null | UserProfile {
       return this.userProfile;
     },
-    getIsSearchExpanded():boolean {
+    getIsSearchExpanded(): boolean {
       return this.isSearchExpanded;
     },
     getPosts(): PostContent[] {
@@ -55,13 +61,16 @@ export const useStore = defineStore('store', {
     getCreatePostInput(): PostContent {
       return this.createPostInput;
     },
+    getUserAchievementLevels(): AchievementLevel[] {
+      return this.userAchievementLevels;
+    }
   },
   actions: {
     increaseActiveApiCalls() {
-      this.activeApiCalls ++;
+      this.activeApiCalls++;
     },
     decreaseActiveApiCalls() {
-      this.activeApiCalls --;
+      this.activeApiCalls--;
     },
     setIsLoading(value: boolean) {
       this.isLoading = value;
@@ -87,6 +96,8 @@ export const useStore = defineStore('store', {
     setSelectedAchievements(value: SingleAchievement[]) {
       this.createPostInput.achievements = value;
     },
+    setUserAchievementLevels(value: AchievementLevel[]) {
+      this.userAchievementLevels = value;
+    }
   },
 });
-

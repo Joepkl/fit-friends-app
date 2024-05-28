@@ -197,7 +197,7 @@ function validatePassword() {
 
 function validateUsername() {
   // Check for spaces
-  const errorMessage = "Username cannot contain spaces.";
+  const errorMessage = "Username can't contain spaces.";
   const usernameString = username.value !== null ? (username.value as string) : null;
   if (username.value && usernameString && usernameString.includes(" ")) {
     setError(true, errorMessage);

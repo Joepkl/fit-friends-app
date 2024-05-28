@@ -19,7 +19,7 @@
         <div v-if="goal" class="flex items-center">
           <a @click="goToGoal(goal.id)" class="block rounded-default">
             <img
-              :src="getAchievementIcon(goal.level as number, goal.category)"
+              :src="getAchievementIconFromPercentage(goal.level as number, goal.maxLevel as number, goal.category)"
               class="w-[56px] h-[56px]"
               alt="Achievement icon"
             />
@@ -50,7 +50,7 @@ import { ACHIEVEMENTS_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoute
 import type SingleAchievement from "@/constants/SingleAchievement"
 
 /** Helpers */
-import { getAchievementIcon, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
+import { getAchievementIconFromPercentage, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
 
 const props = defineProps<{
   personalGoals: Array<SingleAchievement | null>;

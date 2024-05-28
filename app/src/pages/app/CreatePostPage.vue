@@ -148,6 +148,7 @@ const userProfile = computed(() => store.getUserProfile);
 const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
 const postInput = computed(() => store.getCreatePostInput);
 const posts = computed(() => store.getPosts);
+const userAchievementLevels = computed(() => store.getUserAchievementLevels);
 
 const proudOfItems = computed(() => [proudOfFirst.value, proudOfSecond.value].filter((item) => item !== ""));
 
@@ -176,27 +177,53 @@ function checkDateValid() {
   isDateValid.value = inputDate <= currentDate && inputDate >= pastWeekDate;
 
   if (inputDate < pastWeekDate) {
-    dateError.value = "Date cannot be more than 7 days ago.";
+    dateError.value = "Date can't be more than 7 days ago.";
   } else if (inputDate > currentDate) {
-    dateError.value = "Date cannot be in the future.";
+    dateError.value = "Date can't be in the future.";
   } else {
     dateError.value = "";
   }
 }
 
 function createPost() {
+  // Format date
+  date.value = formatDateDDYYMM(date.value);
   // Add to posts
   const postsCopy = posts.value;
   postsCopy.unshift(currentPostInput.value);
-
+  // Update user levels in local storage
+  updateAchievementLevels();
+  // Reset saved inputs in local storage
   removeInputFromLocalStorage();
-
   // Navigate to home
   router.push(HOME_ROUTE);
 }
 
+function updateAchievementLevels() {
+  const userLevelsCopy = userAchievementLevels.value;
+  const achievementsToUpdate = currentPostInput.value.achievements;
+
+  // Update user achievement levels
+  if(achievementsToUpdate) {
+    achievementsToUpdate.forEach((achievement) => {
+      const achievementToUpdate = userLevelsCopy.find((item) => item.id === achievement.id);
+      if(achievementToUpdate) {
+        const index = userLevelsCopy.indexOf(achievementToUpdate);
+        userLevelsCopy[index].level = achievement.level as number;
+      }
+    })
+  }
+  // Save new achievement levels in local storage
+  store.setUserAchievementLevels(userLevelsCopy);
+}
+
 function saveInputInLocalStorage() {
-  store.setCreatePostInput(currentPostInput.value)
+  store.setCreatePostInput(currentPostInput.value);
+}
+
+function formatDateDDYYMM(date: string) {
+  const splittedDate = date.split("-");
+  return `${splittedDate[2]}-${splittedDate[1]}-${splittedDate[0]}`;
 }
 
 function getCurrentFormattedDate() {

@@ -1,6 +1,10 @@
-interface AchievementLevel {
+export interface AchievementLevel {
   id: number;
   level: number;
+}
+
+export function getAchievementLevels(): Array<AchievementLevel> {
+  return AchievementLevels;
 }
 
 export const AchievementLevels: Array<AchievementLevel> = [
