@@ -11,11 +11,13 @@
         :is-friend="false"
       />
       <AchievementShowCase
+        v-if="isDataSharingEnabled"
         :achievements="userProfile?.showcaseAchievements || []"
         :is-logged-in-account="true"
         class="mt-6"
       />
       <ConsistencyCard
+        v-if="isDataSharingEnabled"
         :weekly-goal="userProfile?.settings?.weeklyGoal || 1"
         :consistency-streak="userProfile?.weeklyConsistencyStreak || 0"
         :weekly-frequency="userProfile?.weeklyFrequency || 0"
@@ -23,7 +25,10 @@
       />
       <PersonalGoalsCard :personal-goals="userProfile?.personalGoals || []" :is-logged-in-account="true" />
       <!-- Log out and delete account buttons -->
-      <ul class="flex gap-4 items-center mt-8 justify-end">
+      <ul
+        class="flex gap-4 items-center justify-end"
+        :class="{ 'mt-24': !isDataSharingEnabled, 'mt-8': isDataSharingEnabled }"
+      >
         <li>
           <CButton @click="toggleLogOutModal" text="Log out" button-class="outline" />
         </li>
@@ -173,6 +178,7 @@ const isDataModalShown = ref(false);
 
 const userProfile = computed(() => store.getUserProfile);
 const username = computed(() => userProfile.value?.username);
+const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
 
 // Update account settings on page load with store data
 updateAccountSettings();
