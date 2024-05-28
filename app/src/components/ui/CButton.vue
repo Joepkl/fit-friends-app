@@ -14,7 +14,7 @@
       :disabled="isDisabled ?? false"
     >
       <img v-if="image" :src="image" :alt="`${name} icon`" />
-      <p v-if="text" class="whitespace-nowrap">{{ text }}</p>
+      {{ text }}
     </button>
   </div>
 </template>

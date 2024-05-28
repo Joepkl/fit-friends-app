@@ -63,7 +63,7 @@
     <div class="flex gap-2">
       <p class="text-green">{{ content.likes }}</p>
       <CButton @click="likePost" :image="content.isLikedByMe ? LikeFillIcon : LikeOutlineIcon" class="w-5 h-5" />
-      <CButton @click="startCommenting" :image="CommentOutlineIcon" class="w-5 h-5" />
+      <CButton @click="toggleCommenting" :image="CommentOutlineIcon" class="w-5 h-5" />
     </div>
   </div>
   <!-- All comments -->
@@ -193,11 +193,14 @@ function likePost() {
   }
 }
 
-function startCommenting() {
+function toggleCommenting() {
   if(!isCommentsToggled.value) {
     toggleComments();
   }
-  isWritingComment.value = true;
+  isWritingComment.value = !isWritingComment.value;
+  if(!isWritingComment.value) {
+    toggleComments();
+  }
 }
 
 function toggleRemoveCommentModal(commentIndex?: number) {

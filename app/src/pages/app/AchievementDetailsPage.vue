@@ -133,7 +133,7 @@ const achievementSelectedLevel = ref("");
 
 const userProfile = computed(() => store.getUserProfile);
 const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
-const selectedAchievments = computed(() => store.getSelectedAchievements);
+const postInput = computed(() => store.getCreatePostInput);
 
 const currentAchievementId = computed(() => parseInt(router.currentRoute.value.params.id as string));
 const maxLevel = computed(() => achievementInfo?.maxLevel);
@@ -176,7 +176,7 @@ function handleClaimAchievement() {
 }
 
 function handleSetAchievements() {
-  const currentSetAchievements = selectedAchievments.value;
+  const currentSetAchievements = postInput.value.achievements;
 
   const achievement = {
     title: achievementInfo?.title as string,
@@ -186,15 +186,17 @@ function handleSetAchievements() {
     level: achievementSelectedLevelIndex.value as number,
   };
 
-  // Find the index of the existing achievement in the array
-  const existingIndex = currentSetAchievements.findIndex((item) => item.id === achievement.id);
+  if (currentSetAchievements) {
+    // Find the index of the existing achievement in the array
+    const existingIndex = currentSetAchievements.findIndex((item) => item.id === achievement.id);
 
-  if (existingIndex !== -1) {
-    // If the achievement already exists, replace it with the new one
-    currentSetAchievements[existingIndex] = achievement;
-  } else {
-    // If the achievement is not already in the array, push it
-    currentSetAchievements.push(achievement);
+    if (existingIndex !== -1) {
+      // If the achievement already exists, replace it with the new one
+      currentSetAchievements[existingIndex] = achievement;
+    } else {
+      // If the achievement is not already in the array, push it
+      currentSetAchievements.push(achievement);
+    }
   }
 }
 

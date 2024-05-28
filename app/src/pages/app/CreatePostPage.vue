@@ -2,7 +2,7 @@
   <CHeader />
   <section class="page-wrapper-header">
     <h1 class="mb-4">Create post</h1>
-    <form v-if="isDataSharingEnabled">
+    <form v-if="isDataSharingEnabled" @input="saveInputInLocalStorage">
       <ul class="flex flex-col gap-4">
         <!-- Date -->
         <li class="flex flex-col">
@@ -45,7 +45,7 @@
           <label for="accomplished-achievements">Accomplished achievements</label>
           <ul id="accomplished-achievements" class="flex flex-col gap-4 mt-2">
             <!-- Selected achievements -->
-            <li v-for="(achievement, index) in selectedAchievements" :key="index" class="flex gap-5">
+            <li v-for="(achievement, index) in postInput.achievements" :key="index" class="flex gap-5">
               <a class="flex items-center gap-2">
                 <img
                   :src="getAchievementIconFromPercentage(achievement.level as number, achievement.maxLevel as number, achievement.category)"
@@ -76,7 +76,17 @@
       </ul>
       <!-- Errors -->
       <p v-if="dateError" class="error mt-4">{{ dateError }}</p>
-      <div class="flex justify-end mt-8">
+      <div class="flex gap-4 justify-end mt-8">
+        <!-- Cancel button -->
+        <button
+          @click.prevent="handleCancelPost"
+          :disabled="!isDateValid"
+          :class="{ disabled: !isDateValid }"
+          class="button button-outline"
+        >
+          Cancel
+        </button>
+        <!-- Create post button -->
         <button
           @click.prevent="createPost"
           :disabled="!isDateValid"
@@ -93,7 +103,7 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 /** Store */
@@ -120,18 +130,14 @@ import DataSharingInfo from "@/components/partials/account/DataSharingInfo.vue";
 /** Constants */
 import type SingleAchievement from "@/constants/SingleAchievement";
 
+/** Helpers */
+import { removeInputFromLocalStorage } from "@/helpers/createPostHelpers";
+
 
 const store = useStore();
 const router = useRouter();
 
-const now = new Date();
-const currentYear = now.getFullYear();
-const currentMonth = (now.getMonth() + 1).toString().padStart(2, "0");
-const currentDay = now
-  .getDate()
-  .toString()
-  .padStart(2, "0");
-const date = ref(`${currentYear}-${currentMonth}-${currentDay}`);
+const date = ref("");
 const dateError = ref("");
 const isDateValid = ref(true);
 const description = ref("");
@@ -140,9 +146,25 @@ const proudOfSecond = ref("");
 
 const userProfile = computed(() => store.getUserProfile);
 const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
-const selectedAchievements = computed(() => store.getSelectedAchievements);
+const postInput = computed(() => store.getCreatePostInput);
 const posts = computed(() => store.getPosts);
 
+const proudOfItems = computed(() => [proudOfFirst.value, proudOfSecond.value].filter((item) => item !== ""));
+
+const currentPostInput = computed(() => {
+  return {
+    author: userProfile.value?.username as string,
+    date: date.value,
+    time: getCurrentTimeStamp(),
+    description: description.value,
+    proudOf: proudOfItems.value,
+    achievements: postInput.value.achievements,
+    likes: 0,
+    comments: [],
+    status: userProfile.value?.status as number,
+    isLikedByMe: false,
+  };
+});
 
 function checkDateValid() {
   const inputDate = new Date(date.value);
@@ -163,36 +185,26 @@ function checkDateValid() {
 }
 
 function createPost() {
-  let proudOfItems = [proudOfFirst.value, proudOfSecond.value];
-  proudOfItems = proudOfItems.filter((item) => item !== '');
-
-  const post = {
-    author: userProfile.value?.username as string,
-    date: formatDate(date.value),
-    time: getCurrentTimeStamp(),
-    description: description.value,
-    proudOf: proudOfItems,
-    achievements: selectedAchievements.value,
-    likes: 0,
-    comments: [],
-    status: userProfile.value?.status as number,
-    isLikedByMe: false,
-  }
-
   // Add to posts
   const postsCopy = posts.value;
-  postsCopy.unshift(post);
+  postsCopy.unshift(currentPostInput.value);
 
-  // Reset selected achievements from local storage
-  store.setSelectedAchievements([]);
+  removeInputFromLocalStorage();
 
+  // Navigate to home
   router.push(HOME_ROUTE);
 }
 
-function formatDate(date: string) {
-  const splitDate = date.split("-");
-  console.log(date)
-  return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
+function saveInputInLocalStorage() {
+  store.setCreatePostInput(currentPostInput.value)
+}
+
+function getCurrentFormattedDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const day = now.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function getCurrentTimeStamp() {
@@ -200,13 +212,18 @@ function getCurrentTimeStamp() {
   const hours = now.getHours().toString().padStart(2, '0');
   const minutes = now.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
+}
 
+function handleCancelPost() {
+  removeInputFromLocalStorage();
+  router.push(HOME_ROUTE);
 }
 
 function removeAchievement(achievement:SingleAchievement ) {
-  // selectedAchievements.value
-  const achievements = selectedAchievements.value.filter((item) => item.id !== achievement.id);
-  store.setSelectedAchievements(achievements);
+  if(postInput.value.achievements) {
+    const achievements = postInput.value.achievements.filter((item) => item.id !== achievement.id);
+    store.setSelectedAchievements(achievements);
+  }
 }
 
 scrollToTop();
@@ -217,4 +234,13 @@ function scrollToTop() {
 function goToAchievements() {
   router.push(ACHIEVEMENTS_ROUTE);
 }
+
+
+onMounted(() => {
+  // Initialize inputs with defaults from the store
+  date.value = postInput.value.date || getCurrentFormattedDate();
+  description.value = postInput.value.description || "";
+  proudOfFirst.value = postInput.value.proudOf[0] || "";
+  proudOfSecond.value = postInput.value.proudOf[1] || "";
+});
 </script>

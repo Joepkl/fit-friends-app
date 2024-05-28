@@ -15,6 +15,18 @@ export const useStore = defineStore('store', {
       isSearchExpanded: false as false | boolean,
       selectedAchievements: [] as SingleAchievement[],
       posts:  Posts as PostContent[],
+      createPostInput : {
+        author: '',
+        date: '',
+        time: '',
+        description: '',
+        proudOf: [],
+        achievements: [],
+        likes: 0,
+        comments: [],
+        status: 0,
+        isLikedByMe: false,
+      } as PostContent,
     };
   },
   persist: true,
@@ -37,12 +49,12 @@ export const useStore = defineStore('store', {
     getIsSearchExpanded():boolean {
       return this.isSearchExpanded;
     },
-    getSelectedAchievements(): SingleAchievement[] {
-      return this.selectedAchievements;
-    },
     getPosts(): PostContent[] {
       return this.posts;
-    }
+    },
+    getCreatePostInput(): PostContent {
+      return this.createPostInput;
+    },
   },
   actions: {
     increaseActiveApiCalls() {
@@ -66,11 +78,14 @@ export const useStore = defineStore('store', {
     setIsSearchExpanded(value: boolean) {
       this.isSearchExpanded = value;
     },
-    setSelectedAchievements(value: SingleAchievement[]) {
-      this.selectedAchievements = value;
-    },
     setPosts(value: PostContent[]) {
       this.posts = value;
+    },
+    setCreatePostInput(value: PostContent) {
+      this.createPostInput = value;
+    },
+    setSelectedAchievements(value: SingleAchievement[]) {
+      this.createPostInput.achievements = value;
     },
   },
 });
