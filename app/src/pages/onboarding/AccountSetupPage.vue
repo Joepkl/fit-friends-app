@@ -59,7 +59,13 @@
     <!-- Modal -->
     <CModal @close-modal="closeDataModal" :isActive="isDataModalActive" :content="ShareDataContent" />
     <!-- CTA -->
-    <CButton text="Save" button-class="primary" :is-disabled="!isDataValid" @click="saveAccount" class="ml-auto mt-8" />
+    <CButton
+      text="Save"
+      button-class="primary"
+      :is-disabled="!isDataValid"
+      @click="saveAccount"
+      class="block ml-auto mt-8 w-fit"
+    />
   </div>
 </template>
 

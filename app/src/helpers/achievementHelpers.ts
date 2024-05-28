@@ -11,29 +11,6 @@ import TimeDisabledIcon from "../assets/icons/ic_time_disabled.svg";
 /** Constants */
 import { AllAchievements } from "@/constants/Achievements";
 
-export function getAchievementIcon(level: number, category: number) {
-  // Monthly achievements
-  if (category === 0) {
-    if (level === 1) {
-      return TimeBronzeIcon;
-    } else if (level === 2) {
-      return TimeSilverIcon;
-    } else {
-      return TimeGoldIcon;
-    }
-  }
-  // Regular achievements
-  else {
-    if (level === 1) {
-      return DumbbellBronzeIcon;
-    } else if (level === 2) {
-      return DumbbellSilverIcon;
-    } else {
-      return DumbbellGoldIcon;
-    }
-  }
-}
-
 export function getAchievementIconFromPercentage(level: number, maxLevel: number, category: number) {
   const levelPercentage = (level / maxLevel) * 100;
 

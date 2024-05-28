@@ -74,6 +74,7 @@
     @apply underline;
     @apply font-normal;
     @apply rounded-none;
+    @apply p-0;
     text-underline-offset: var(--underline-offset);
   }
 

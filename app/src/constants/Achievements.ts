@@ -133,7 +133,7 @@ export const MonthlyAchievements = Object.freeze({
 export const ChestAchievements = Object.freeze({
   0: {
     title: "Cable flies",
-    description: "Flyes are exercises to strengthen the muscles of your upper body. The hand and arm move through an arc against resistance with the elbow at a fixed angle. Flyes are strength training exercises, and you can do them with dumbbells at home lying on a bench. Standing cable flyes work your core as well as your upper body. Standing cable flyes build strength in your arm, shoulder, and chest muscles. ",
+    description: "Flyes are exercises to strengthen the muscles of your upper body. The hand and arm move through an arc against resistance with the elbow at a fixed angle.",
     maxLevel: 6,
     levels: {
       0: {
@@ -166,7 +166,7 @@ export const ChestAchievements = Object.freeze({
   },
   1: {
     title: "Machine flies",
-    description: "The machine fly is a popular and widely used chest exercise. You sit upright and move the weight by bringing your extended arms together in front of your torso.",
+    description: "In order to do machine flies you sit upright and move the weight by bringing your extended arms together in front of your torso.",
     maxLevel: 6,
     levels: {
       0: {

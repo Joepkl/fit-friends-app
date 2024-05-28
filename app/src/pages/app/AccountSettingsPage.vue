@@ -116,7 +116,7 @@
     >
       <div class="flex gap-4 justify-end flex-wrap mt-6">
         <CButton @click="toggleDeleteAccountModal" text="Cancel" button-class="outline" />
-        <CButton @click="handleDeleteAccount" text="Delete account" button-class="warning" />
+        <CButton @click="handleDeleteAccount" text="Delete" button-class="warning" />
       </div>
     </CModal>
     <button class="button-warning hidden"></button>
@@ -183,12 +183,27 @@ const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareDa
 // Update account settings on page load with store data
 updateAccountSettings();
 
-// Open settings if enabled byu query params
+// Open settings if enabled by query params
 checkIfSettingsOpen();
+
+// Fetch account settings if query param is enabled
+checkIfFetchAccount();
 
 function checkIfSettingsOpen() {
   if(router.currentRoute.value.query.settingsOpen) {
     isEditActive.value = true;
+    // Remove query param
+    router.replace(router.currentRoute.value.path);
+  }
+}
+
+function checkIfFetchAccount() {
+  if(router.currentRoute.value.query.fetchAccount) {
+    try {
+      fetchAccountSettings();
+    } catch (err) {
+      console.log(err);
+    }
     // Remove query param
     router.replace(router.currentRoute.value.path);
   }

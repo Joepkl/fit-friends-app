@@ -46,7 +46,7 @@
       </ul>
     </div>
     <!-- Remove post button -->
-    <button v-if="isMyPost()" @click="toggleDeletePostModal" class="block ml-auto">
+    <button v-if="isMyPost()" @click="toggleDeletePostModal" class="w-5 h-6 block ml-auto">
       <img :src="GarbageOutlineIcon" alt="Remove Icon" />
     </button>
   </section>
@@ -93,7 +93,7 @@
           <p class="mt-1">{{ comment.comment }}</p>
         </div>
         <!-- Remove comment -->
-        <button v-if="isMyComment(index)" @click="toggleRemoveCommentModal(index)">
+        <button v-if="isMyComment(index)" @click="toggleRemoveCommentModal(index)" class="w-5 h-6">
           <img :src="GarbageOutlineIcon" alt="Remove Icon" />
         </button>
       </li>

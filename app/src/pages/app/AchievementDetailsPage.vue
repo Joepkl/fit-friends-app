@@ -68,7 +68,7 @@
         as a goal to work towards.
       </p>
       <div class="mt-8 flex justify-end">
-        <CButton @click="goToProfilePage" button-class="outline" text="Set as goal" class="mr-6" />
+        <CButton @click="handleSetPersonalGoal" button-class="outline" text="Set as goal" class="mr-6" />
         <CButton @click="handleClaimAchievement" button-class="primary" text="Claim" />
       </div>
     </CModal>
@@ -85,7 +85,7 @@
       </p>
       <div class="mt-8 flex justify-end">
         <CButton @click="closeAlreadyClaimedAchievementModal" button-class="outline" text="Cancel" class="mr-6" />
-        <CButton @click="goToProfilePage" button-class="primary" text="Set showcase" />
+        <CButton @click="handleSetShowcaseAchievement" button-class="primary" text="Set showcase" />
       </div>
     </CModal>
   </section>
@@ -98,6 +98,7 @@ import { useRouter } from "vue-router";
 
 /** Constants */
 import { ClaimAchievementContent, AlreadyClaimedAchievementContent } from "@/constants/ModalContent";
+import type ShowCaseAchievement from "@/constants/ShowCaseAchievement";
 
 /** Routes */
 import { ACHIEVEMENTS_ROUTE, CREATE_POST_ROUTE, ACCOUNT_ROUTE } from "@/router/appRoutes";
@@ -121,6 +122,9 @@ import {
   getAchievementInfo,
 } from "@/helpers/achievementHelpers";
 
+/** API requests */
+import { setShowcaseAchievement, setPersonalGoal } from "@/api/settings/postAchievementShowcase";
+
 const router = useRouter();
 const store = useStore();
 
@@ -139,6 +143,16 @@ const maxLevel = computed(() => achievementInfo?.maxLevel);
 const category = computed(() => achievementInfo?.category);
 const userLevel = computed(() => getAchievementUserLevel(currentAchievementId.value));
 const userAchievementLevels = computed(() => store.getUserAchievementLevels);
+
+const achievement = computed(() => {
+  return {
+    title: achievementInfo?.title as string,
+    id: achievementInfo?.id as number,
+    category: achievementInfo?.category as number,
+    maxLevel: achievementInfo?.maxLevel as number,
+    level: achievementSelectedLevelIndex.value as number,
+  }
+})
 
 const achievementInfo = getAchievementInfo(currentAchievementId.value);
 const achievementSelectedLevelIndex = ref<number | null>(null);
@@ -178,34 +192,48 @@ function handleClaimAchievement() {
 function handleSetAchievements() {
   const currentSetAchievements = postInput.value.achievements;
 
-  const achievement = {
-    title: achievementInfo?.title as string,
-    id: achievementInfo?.id as number,
-    category: achievementInfo?.category as number,
-    maxLevel: achievementInfo?.maxLevel as number,
-    level: achievementSelectedLevelIndex.value as number,
-  };
-
   if (currentSetAchievements) {
     // Find the index of the existing achievement in the array
-    const existingIndex = currentSetAchievements.findIndex((item) => item.id === achievement.id);
+    const existingIndex = currentSetAchievements.findIndex((item) => item.id === achievement.value.id);
 
     if (existingIndex !== -1) {
       // If the achievement already exists, replace it with the new one
-      currentSetAchievements[existingIndex] = achievement;
+      currentSetAchievements[existingIndex] = achievement.value;
     } else {
       // If the achievement is not already in the array, push it
-      currentSetAchievements.push(achievement);
+      currentSetAchievements.push(achievement.value);
     }
   }
 }
 
-function goToCreatePost() {
-  router.push(CREATE_POST_ROUTE);
+async function handleSetShowcaseAchievement() {
+  try {
+    await setShowcaseAchievement(achievement.value, userProfile.value?.username as string);
+  }
+  catch (error) {
+    console.log(error);
+  }
+  /** Navigate to account */
+  const queryParams = new URLSearchParams({ fetchAccount: "true" }).toString();
+  const path = ACCOUNT_ROUTE.path;
+  router.push(`${path}?${queryParams}`);
 }
 
-function goToProfilePage() {
-  router.push(ACCOUNT_ROUTE);
+async function handleSetPersonalGoal() {
+  try {
+    await setPersonalGoal(achievement.value, userProfile.value?.username as string);
+  }
+  catch (error) {
+    console.log(error);
+  }
+  /** Navigate to account */
+  const queryParams = new URLSearchParams({ fetchAccount: "true" }).toString();
+  const path = ACCOUNT_ROUTE.path;
+  router.push(`${path}?${queryParams}`);
+}
+
+function goToCreatePost() {
+  router.push(CREATE_POST_ROUTE);
 }
 
 function closeAlreadyClaimedAchievementModal() {

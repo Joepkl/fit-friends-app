@@ -53,7 +53,7 @@
     </form>
     <!-- CTA -->
     <button @click="login" class="button button-primary mt-6" :class="{ disabled: !isDataValid }">Login</button>
-    <p class="mt-4">Don't have an account? <a class="button-link" @click="goToRegister">Register</a></p>
+    <p class="mt-6">Don't have an account? <a class="button button-link" @click="goToRegister">Register</a></p>
     <div class="mt-2 flex gap-1 items-center">
       <p>Forgot password?</p>
       <CButton @click="openPasswordModal" button-class="link" text="Reset password" />
