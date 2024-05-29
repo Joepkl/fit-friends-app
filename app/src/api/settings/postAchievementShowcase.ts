@@ -22,7 +22,7 @@ export async function setShowcaseAchievement(showcaseAchievement: ShowCaseAchiev
 
 /** Set personal goal */
 export async function setPersonalGoal(personalGoal: ShowCaseAchievement, username: string) {
-  const endpoint = "settings/goal";
+  const endpoint = "settings/goals";
   const bodyData = {
     username: username,
     achievement: personalGoal,

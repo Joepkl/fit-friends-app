@@ -1,20 +1,30 @@
 <template>
-  <section class="bg-light-grey p-4 rounded-default">
+  <section class="bg-light-grey p-4 rounded-default relative">
     <h2 class="text-green mb-4">Showcase</h2>
+    <CButton v-if="isLoggedInAccount" @click="toggleEdit" :image="EditIcon" class="absolute right-4 top-4 w-6 h-6" />
     <ul class="flex justify-between text-center">
       <!-- Showcase achievements -->
       <li v-for="(achievement, index) in achievements" :key="'else-' + index" class="flex w-[68px]">
-        <a v-if="achievement" @click="goToAchievement(achievement.id as number)" class="block rounded-default">
-          <img
-            :src="getAchievementIconFromPercentage(achievement.level as number, achievement.maxLevel as number, achievement.category)"
-            class="w-[56px] h-[56px] mx-auto"
-            alt="Achievement icon"
+        <div v-if="achievement" class="relative">
+          <a @click="goToAchievement(achievement.id as number)" class="block rounded-default">
+            <img
+              :src="getAchievementIconFromPercentage(achievement.level as number, achievement.maxLevel as number, achievement.category)"
+              class="w-[56px] h-[56px] mx-auto"
+              alt="Achievement icon"
+            />
+            <p class="mt-2">
+              {{ getAchievementInfo(achievement.id as number)?.title }}
+              {{ getAchievementLevel(achievement.level as number) }}
+            </p>
+          </a>
+          <!-- Remove achievement button -->
+          <CButton
+            v-if="isEditActive"
+            @click="removeAchievement(achievement)"
+            :image="CloseIconGreen"
+            class="w-5 h-5 absolute top-[-10px] right-[-2px]"
           />
-          <p class="mt-2">
-            {{ getAchievementInfo(achievement.id as number)?.title }}
-            {{ getAchievementLevel(achievement.level as number) }}
-          </p>
-        </a>
+        </div>
         <!-- No achievement selected -->
         <a
           v-else
@@ -30,6 +40,7 @@
 
 <script setup lang="ts">
 /** Vue */
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 /** Routes */
@@ -37,6 +48,13 @@ import { ACHIEVEMENTS_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoute
 
 /** Constants */
 import type SingleAchievement from "@/constants/SingleAchievement";
+
+/** Images */
+import CloseIconGreen from "@/assets/icons/ic_close_green.svg";
+import EditIcon from "@/assets/icons/ic_edit.svg";
+
+/** Components */
+import CButton from "@/components/ui/CButton.vue";
 
 /** Helpers */
 import { getAchievementIconFromPercentage, getAchievementLevel, getAchievementInfo } from "@/helpers/achievementHelpers";
@@ -46,22 +64,23 @@ const props = defineProps<{
   isLoggedInAccount: boolean;
 }>();
 
-const router = useRouter();
-const hasAchievements = hasUserAchievements();
+const emits = defineEmits(["showcaseAchievementRemoved"]);
 
-function hasUserAchievements() {
-  for (const achievement of props.achievements) {
-    if (achievement) {
-      return true;
-    }
-  }
-  return false;
+const router = useRouter();
+const isEditActive = ref(false);
+
+function toggleEdit() {
+  isEditActive.value = !isEditActive.value;
 }
 
 function handleAchievementClick() {
   if (props.isLoggedInAccount) {
     goToAchievements();
   }
+}
+
+function removeAchievement(achievement: SingleAchievement) {
+  emits("showcaseAchievementRemoved", achievement);
 }
 
 function goToAchievements() {

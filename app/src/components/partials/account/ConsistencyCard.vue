@@ -1,6 +1,7 @@
 <template>
-  <section class="bg-light-grey mt-6 p-4 rounded-default">
+  <section class="bg-light-grey mt-6 p-4 rounded-default relative">
     <h2 class="text-green">Consistency</h2>
+    <CButton v-if="isLoggedInAccount" @click="toggleEdit" :image="EditIcon" class="absolute right-4 top-4 w-6 h-6" />
     <p class="mt-2">{{ formattedDate }}</p>
     <ul class="flex gap-4 mt-4">
       <li
@@ -21,12 +22,21 @@
 /** Helpers */
 import { getColorClass } from "@/helpers/userHelpers";
 
+/** Images */
+import EditIcon from "@/assets/icons/ic_edit.svg";
+
+/** Components */
+import CButton from "@/components/ui/CButton.vue";
+
 const props = defineProps<{
   weeklyGoal: number;
   weeklyFrequency: number;
   consistencyStreak: number;
   status: number;
+  isLoggedInAccount: boolean;
 }>();
+
+const emits = defineEmits(["toggleEdit"]);
 
 const months = [
   "January",
@@ -56,6 +66,10 @@ function getWeekNumber(date: Date) {
   // Calculate full weeks to nearest Thursday
   const weekNumber = Math.ceil(((Number(date) - Number(yearStart)) / 86400000 + 1) / 7);
   return weekNumber;
+}
+
+function toggleEdit() {
+  emits("toggleEdit");
 }
 
 function getWeeklyGoalClass(index: number) {

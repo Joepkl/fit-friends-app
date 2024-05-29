@@ -12,18 +12,25 @@
       />
       <AchievementShowCase
         v-if="isDataSharingEnabled"
+        @showcase-achievement-removed="handleRemoveAchievement"
         :achievements="userProfile?.showcaseAchievements || []"
         :is-logged-in-account="true"
         class="mt-6"
       />
       <ConsistencyCard
         v-if="isDataSharingEnabled"
+        @toggle-edit="handleToggleEdit"
         :weekly-goal="userProfile?.settings?.weeklyGoal || 1"
         :consistency-streak="userProfile?.weeklyConsistencyStreak || 0"
         :weekly-frequency="userProfile?.weeklyFrequency || 0"
         :status="userProfile?.status || 0"
+        :is-logged-in-account="true"
       />
-      <PersonalGoalsCard :personal-goals="userProfile?.personalGoals || []" :is-logged-in-account="true" />
+      <PersonalGoalsCard
+        @personal-goal-removed="handleRemovePersonalGoal"
+        :personal-goals="userProfile?.personalGoals || []"
+        :is-logged-in-account="true"
+      />
       <!-- Log out and delete account buttons -->
       <ul
         class="flex gap-4 items-center justify-end"
@@ -135,6 +142,7 @@ import CModal from "@/components/ui/CModal.vue";
 /** Constants */
 import { ShareDataContent, LogOutContent, DeleteAccountContent } from "@/constants/ModalContent";
 import type { Gym } from "@/constants/placeholders/Gyms";
+import type ShowCaseAchievement from "@/constants/ShowCaseAchievement";
 
 /** Store */
 // @ts-ignore
@@ -145,6 +153,7 @@ import { AUTHENTICATION_ROUTE } from "@/router/authRoutes";
 
 /** API requests */
 import { deleteAccount } from "@/api/auth/deleteAccount";
+import { removeShowcaseAchievement, removePersonalGoal }  from "@/api/settings/deleteAchievement"
 
 /** Components */
 import CHeader from "@/components/partials/layout/CHeader.vue";
@@ -197,10 +206,32 @@ function checkIfSettingsOpen() {
   }
 }
 
-function checkIfFetchAccount() {
+function handleToggleEdit() {
+  isEditActive.value = !isEditActive.value;
+}
+
+async function handleRemoveAchievement(achievement: ShowCaseAchievement) {
+  try {
+    await removeShowcaseAchievement(achievement, userProfile.value?.username as string);
+    await fetchAccountSettings();
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+async function handleRemovePersonalGoal(achievement: ShowCaseAchievement) {
+  try {
+    await removePersonalGoal(achievement, userProfile.value?.username as string);
+    await fetchAccountSettings();
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+async function checkIfFetchAccount() {
   if(router.currentRoute.value.query.fetchAccount) {
     try {
-      fetchAccountSettings();
+      await fetchAccountSettings();
     } catch (err) {
       console.log(err);
     }

@@ -10,7 +10,7 @@ const store = useStore();
 const accessToken = computed(() => store.getAccessToken);
 
 /** Base POST data function */
-export async function deleteData(url: string): Promise<ApiResponse> {
+export async function deleteData(url: string, bodyData?: any): Promise<ApiResponse> {
   store.setIsLoading(true);
   store.increaseActiveApiCalls();
   let responseStatus = 0;
@@ -28,6 +28,7 @@ export async function deleteData(url: string): Promise<ApiResponse> {
     const response = await fetch(url, {
       method: "DELETE",
       headers,
+      body: JSON.stringify(bodyData),
     });
 
     responseStatus = response.status;

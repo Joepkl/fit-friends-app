@@ -12,6 +12,7 @@
       :consistency-streak="currentUser?.weeklyConsistencyStreak || 0"
       :status="currentUser?.status || 0"
       :weekly-frequency="currentUser?.weeklyFrequency || 0"
+      :is-logged-in-account="false"
     />
     <PersonalGoalsCard :personal-goals="currentUser?.personalGoals || []" :is-logged-in-account="false" />
   </section>

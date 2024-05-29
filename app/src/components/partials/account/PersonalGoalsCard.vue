@@ -1,6 +1,7 @@
 <template>
-  <section class="bg-light-grey mt-6 p-4 rounded-default">
+  <section class="bg-light-grey mt-6 p-4 rounded-default relative">
     <h2 class="text-green">Personal goals</h2>
+    <CButton v-if="isLoggedInAccount" @click="toggleEdit" :image="EditIcon" class="absolute right-4 top-4 w-6 h-6" />
     <ul class="flex flex-col gap-4 mt-4">
       <!-- No goals and not logged in account -->
       <li v-if="!hasGoals && !isLoggedInAccount" class="flex items-center">
@@ -8,7 +9,7 @@
         <p class="ml-4">This user has set no goals yet.</p>
       </li>
       <!-- Showcase selected goals -->
-      <li v-else v-for="(goal, index) in personalGoals" :key="index" class="flex items-center">
+      <li v-else v-for="(goal, index) in personalGoals" :key="index" class="flex items-center relative">
         <div v-if="goal" class="flex items-center">
           <a @click="goToGoal(goal.id)" class="block rounded-default">
             <img
@@ -21,6 +22,8 @@
             {{ getAchievementInfo(goal.id as number)?.title }}
             {{ getAchievementLevel(goal.level as number) }}
           </p>
+          <!-- Remove achievement button -->
+          <CButton v-if="isEditActive" @click="removePersonalGoal(goal)" :image="CloseIconGreen" class="w-5 h-5 ml-5" />
         </div>
         <!-- No goal selected -->
         <a
@@ -37,10 +40,18 @@
 
 <script setup lang="ts">
 /** Vue */
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 /** Routes */
 import { ACHIEVEMENTS_ROUTE, ACHIEVEMENT_DETAILS_ROUTE } from "@/router/appRoutes";
+
+/** Images */
+import CloseIconGreen from "@/assets/icons/ic_close_green.svg";
+import EditIcon from "@/assets/icons/ic_edit.svg";
+
+/** Components */
+import CButton from "@/components/ui/CButton.vue";
 
 /** Constants */
 import type SingleAchievement from "@/constants/SingleAchievement"
@@ -53,7 +64,14 @@ const props = defineProps<{
   isLoggedInAccount: boolean;
 }>();
 
+const emits = defineEmits(["personalGoalRemoved"]);
+
 const hasGoals = hasUserGoals();
+const isEditActive = ref(false);
+
+function toggleEdit() {
+  isEditActive.value = !isEditActive.value;
+}
 
 function hasUserGoals() {
   for (const goal of props.personalGoals) {
@@ -62,6 +80,10 @@ function hasUserGoals() {
     }
   }
   return false;
+}
+
+function removePersonalGoal(achievement: SingleAchievement) {
+  emits("personalGoalRemoved", achievement);
 }
 
 const router = useRouter();
