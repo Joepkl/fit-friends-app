@@ -88,6 +88,28 @@
         <CButton @click="handleSetShowcaseAchievement" button-class="primary" text="Set showcase" />
       </div>
     </CModal>
+    <!-- Slots full showcase modal -->
+    <CModal
+      @close-modal="toggleSlotsFullShowcaseModal"
+      :isActive="isSlotsFullShowcaseModalActive"
+      :content="ShowcaseSlotsFullContent"
+    >
+      <div class="mt-8 flex justify-end">
+        <CButton @click="toggleSlotsFullShowcaseModal" button-class="outline" text="Cancel" class="mr-6" />
+        <CButton @click="goToAccount" button-class="primary" text="Remove items" />
+      </div>
+    </CModal>
+    <!-- Slots full personal goals modal -->
+    <CModal
+      @close-modal="toggleSlotsFullGoalsModal"
+      :isActive="isSlotsFullGoalsModalActive"
+      :content="GoalsSlotsFullContent"
+    >
+      <div class="mt-8 flex justify-end">
+        <CButton @click="toggleSlotsFullGoalsModal" button-class="outline" text="Cancel" class="mr-6" />
+        <CButton @click="goToAccount" button-class="primary" text="Remove items" />
+      </div>
+    </CModal>
   </section>
 </template>
 
@@ -97,8 +119,12 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
 /** Constants */
-import { ClaimAchievementContent, AlreadyClaimedAchievementContent } from "@/constants/ModalContent";
-import type ShowCaseAchievement from "@/constants/ShowCaseAchievement";
+import {
+  ClaimAchievementContent,
+  AlreadyClaimedAchievementContent,
+  ShowcaseSlotsFullContent,
+  GoalsSlotsFullContent,
+} from "@/constants/ModalContent";
 
 /** Routes */
 import { ACHIEVEMENTS_ROUTE, CREATE_POST_ROUTE, ACCOUNT_ROUTE } from "@/router/appRoutes";
@@ -133,6 +159,8 @@ const isAlreadyClaimedAchievementModalActive = ref(false);
 const showClaimInfo = ref(false);
 const showSetGoalInfo = ref(false);
 const achievementSelectedLevel = ref("");
+const isSlotsFullShowcaseModalActive = ref(false);
+const isSlotsFullGoalsModalActive = ref(false);
 
 const userProfile = computed(() => store.getUserProfile);
 const isDataSharingEnabled = computed(() => userProfile.value?.settings?.shareData);
@@ -151,8 +179,8 @@ const achievement = computed(() => {
     category: achievementInfo?.category as number,
     maxLevel: achievementInfo?.maxLevel as number,
     level: achievementSelectedLevelIndex.value as number,
-  }
-})
+  };
+});
 
 const achievementInfo = getAchievementInfo(currentAchievementId.value);
 const achievementSelectedLevelIndex = ref<number | null>(null);
@@ -178,6 +206,14 @@ function toggleSetGoalInfo() {
 
 function closeClaimAchievementModal() {
   isClaimAchievementModalActive.value = false;
+}
+
+function toggleSlotsFullShowcaseModal() {
+  isSlotsFullShowcaseModalActive.value = !isSlotsFullShowcaseModalActive.value;
+}
+
+function toggleSlotsFullGoalsModal() {
+  isSlotsFullGoalsModalActive.value = !isSlotsFullGoalsModalActive.value;
 }
 
 function handleClaimAchievement() {
@@ -209,24 +245,24 @@ function handleSetAchievements() {
 async function handleSetShowcaseAchievement() {
   try {
     await setShowcaseAchievement(achievement.value, userProfile.value?.username as string);
+    goToAccount();
+  } catch (error) {
+    closeAlreadyClaimedAchievementModal();
+    toggleSlotsFullShowcaseModal();
   }
-  catch (error) {
-    console.log(error);
-  }
-  /** Navigate to account */
-  const queryParams = new URLSearchParams({ fetchAccount: "true" }).toString();
-  const path = ACCOUNT_ROUTE.path;
-  router.push(`${path}?${queryParams}`);
 }
 
 async function handleSetPersonalGoal() {
   try {
     await setPersonalGoal(achievement.value, userProfile.value?.username as string);
+    goToAccount();
+  } catch (error) {
+    closeClaimAchievementModal();
+    toggleSlotsFullGoalsModal();
   }
-  catch (error) {
-    console.log(error);
-  }
-  /** Navigate to account */
+}
+
+function goToAccount() {
   const queryParams = new URLSearchParams({ fetchAccount: "true" }).toString();
   const path = ACCOUNT_ROUTE.path;
   router.push(`${path}?${queryParams}`);

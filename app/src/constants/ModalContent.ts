@@ -63,3 +63,13 @@ export const DeletePostContent = {
   title: "Delete post",
   text: "Are you sure you want to delete this post? This action can't be undone.",
 };
+
+export const ShowcaseSlotsFullContent = {
+  title: "Showcase full",
+  text: "All showcase slots are currently full. Please remove an existing item before adding a new one.",
+};
+
+export const GoalsSlotsFullContent = {
+  title: "Personal goals full",
+  text: "All personal goals slots are currently full. Please remove an existing item before adding a new one.",
+};
