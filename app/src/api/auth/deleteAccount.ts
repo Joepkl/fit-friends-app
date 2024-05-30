@@ -8,7 +8,6 @@ export async function deleteAccount(username: string) {
   if (response.isSuccess) {
     return true;
   } else {
-    console.log(response.status);
     throw new Error(response.error);
   }
 }

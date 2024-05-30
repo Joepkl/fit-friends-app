@@ -295,7 +295,13 @@ async function handleDeleteAccount() {
     await deleteAccount(userProfile.value?.username as string);
     logOut();
   } catch(error) {
-    console.log(error)
+    handleExpiredTokenError(error as Error);
+  }
+}
+
+function handleExpiredTokenError(error: Error) {
+  if ((error).message === "Error while verifying token") {
+    logOut();
   }
 }
 
@@ -327,10 +333,7 @@ async function saveAccount() {
       await fetchAccountSettings();
       isEditActive.value = false;
     } catch (error) {
-      // Access token expired
-      if ((error as Error).message === "Error while verifying token") {
-        logOut();
-      }
+      handleExpiredTokenError(error as Error);
     }
   }
 }

@@ -14,15 +14,15 @@ export const AchievementLevels: Array<AchievementLevel> = [
   },
   {
     id: 2,
-    level: 1,
+    level: 0,
   },
   {
     id: 3,
-    level: 1,
+    level: 0,
   },
   {
     id: 4,
-    level: 2,
+    level: 0,
   },
   {
     id: 5,
@@ -30,7 +30,7 @@ export const AchievementLevels: Array<AchievementLevel> = [
   },
   {
     id: 6,
-    level: 3,
+    level: 0,
   },
   {
     id: 7,

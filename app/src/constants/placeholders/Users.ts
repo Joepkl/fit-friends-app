@@ -5,6 +5,7 @@ const Users: Array<UserProfile> = [
     username: "Mike_330",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 145,
     settings: {
         username: "Mike_330",
         age: 32,
@@ -59,6 +60,7 @@ const Users: Array<UserProfile> = [
     username: "WilliamPT",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 65,
     settings: {
         username: "WilliamPT",
         age: 28,
@@ -118,6 +120,7 @@ const Users: Array<UserProfile> = [
     username: "Sarah.B",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 85,
     settings: {
         username: "Sarah.B",
         age: 32,
@@ -161,6 +164,7 @@ const Users: Array<UserProfile> = [
     username: "BillyJones",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 90,
     settings: {
         username: "BillyJones",
         age: 23,
@@ -215,6 +219,7 @@ const Users: Array<UserProfile> = [
     username: "sammy_02",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 105,
     settings: {
         username: "sammy_02",
         age: 24,
@@ -255,6 +260,7 @@ const Users: Array<UserProfile> = [
     username: "GregBlake",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 25,
     settings: {
         username: "GregBlake",
         age: 31,
@@ -285,6 +291,7 @@ const Users: Array<UserProfile> = [
     username: "jayJo.K",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 80,
     settings: {
         username: "jayJo.K",
         age: 21,
@@ -339,6 +346,7 @@ const Users: Array<UserProfile> = [
     username: "mikeyB",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 115,
     settings: {
         username: "mikeyB",
         age: 24,
@@ -398,6 +406,7 @@ const Users: Array<UserProfile> = [
     username: "lianne_22",
     password: "password",
     email: "john.doe@gmail.com",
+    points: 45,
     settings: {
         username: "lianne_22",
         age: 24,

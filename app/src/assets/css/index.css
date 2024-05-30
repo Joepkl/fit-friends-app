@@ -53,6 +53,8 @@
     @apply rounded-xl;
     @apply font-semibold;
     @apply w-fit;
+    @apply flex;
+    @apply items-center;
   }
 
   .button-primary {
@@ -79,10 +81,10 @@
   }
 
   .button-warning {
-    @apply bg-transparent;
-    @apply text-red;
+    @apply text-dark-grey;
     @apply border-2;
     @apply border-red;
+    @apply bg-red;
   }
 }
 

@@ -12,5 +12,6 @@ export default interface UserProfile {
   weeklyFrequency: number;
   weeklyConsistencyStreak: number;
   status: number;
+  points?: number;
   __v?: number;
 }
