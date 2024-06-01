@@ -79,7 +79,7 @@ const onboardingContent = {
       image: OnboardingImage2,
     },
     {
-      title: "Compete with, and against friends.",
+      title: "Compete with your friends.",
       text: "Monthly competition with your friends in achieving fitness goals. Earn points by completing achievements.",
       image: OnboardingImage3,
     },
