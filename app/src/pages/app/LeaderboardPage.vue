@@ -16,7 +16,13 @@
       <section class="mt-6">
         <ul class="flex flex-col gap-3">
           <li v-for="(user, index) in sortedUsers" :key="index" class="bg-light-grey rounded-default p-4">
-            <div v-if="user" @click="goToProfile(user.username)" class="flex items-center flex-wrap">
+            <a
+              v-if="user"
+              @click="goToProfile(user.username)"
+              @keydown.enter="goToProfile(user.username)"
+              class="flex items-center flex-wrap"
+              tabindex="0"
+            >
               <p class="text-green font-semibold mr-3">{{ index + 1 }}.</p>
               <!-- Profile picture -->
               <div
@@ -29,7 +35,7 @@
               <p class="ml-[6px]" :class="getColorClass(user.status, true)">{{ user.username }}</p>
               <!-- Points -->
               <p class="ml-auto font-semibold text-green whitespace-nowrap">{{ user.points }} pts.</p>
-            </div>
+            </a>
           </li>
         </ul>
       </section>

@@ -2,7 +2,7 @@
   <section class="bg-light-grey rounded-default p-4">
     <div class="flex">
       <!-- Username and profile picture -->
-      <a @click="goToProfile(content.author)" class="flex items-center gap-2">
+      <a @click="goToProfile(content.author)" class="flex items-center gap-2" tabindex="0">
         <div
           class="block w-8 h-auto rounded-full border-2 overflow-hidden"
           :class="getColorClass(content.status, null, true)"

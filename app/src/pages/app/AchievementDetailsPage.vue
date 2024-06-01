@@ -133,6 +133,9 @@ import { ACHIEVEMENTS_ROUTE, CREATE_POST_ROUTE, ACCOUNT_ROUTE } from "@/router/a
 // @ts-ignore
 import { useStore } from "@/stores/store.ts";
 
+/** Placeholder data */
+import Posts from "@/constants/placeholders/Posts";
+
 /** Images */
 import BackIcon from "@/assets/icons/ic_back.svg";
 
@@ -140,6 +143,9 @@ import BackIcon from "@/assets/icons/ic_back.svg";
 import CHeader from "@/components/partials/layout/CHeader.vue";
 import CButton from "@/components/ui/CButton.vue";
 import CModal from "@/components/ui/CModal.vue";
+
+/** Routes */
+import { AUTHENTICATION_ROUTE } from "@/router/authRoutes";
 
 /** Helpers */
 import {
@@ -242,11 +248,28 @@ function handleSetAchievements() {
   }
 }
 
+function handleExpiredTokenError(error: Error) {
+  if (error.message === "Error while verifying token") {
+    logOut();
+  }
+}
+
+function logOut() {
+  store.setAccessToken("");
+  store.setIsAuthenticated(false);
+  router.push(AUTHENTICATION_ROUTE);
+  // Reset selected achievements and posts from local storage
+  // This exists as placeholder for sample usage of the app. Eventually this will be handled by the API.
+  store.setSelectedAchievements([]);
+  store.setPosts(Posts);
+}
+
 async function handleSetShowcaseAchievement() {
   try {
     await setShowcaseAchievement(achievement.value, userProfile.value?.username as string);
     goToAccount();
   } catch (error) {
+    handleExpiredTokenError(error as Error);
     closeAlreadyClaimedAchievementModal();
     toggleSlotsFullShowcaseModal();
   }
@@ -257,6 +280,7 @@ async function handleSetPersonalGoal() {
     await setPersonalGoal(achievement.value, userProfile.value?.username as string);
     goToAccount();
   } catch (error) {
+    handleExpiredTokenError(error as Error);
     closeClaimAchievementModal();
     toggleSlotsFullGoalsModal();
   }

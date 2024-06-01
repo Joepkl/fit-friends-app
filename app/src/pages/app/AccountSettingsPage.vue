@@ -215,7 +215,7 @@ async function handleRemoveAchievement(achievement: ShowCaseAchievement) {
     await removeShowcaseAchievement(achievement, userProfile.value?.username as string);
     await fetchAccountSettings();
   } catch(error) {
-    console.log(error);
+    handleExpiredTokenError(error as Error);
   }
 }
 
@@ -224,7 +224,7 @@ async function handleRemovePersonalGoal(achievement: ShowCaseAchievement) {
     await removePersonalGoal(achievement, userProfile.value?.username as string);
     await fetchAccountSettings();
   } catch(error) {
-    console.log(error);
+    handleExpiredTokenError(error as Error);
   }
 }
 
@@ -232,8 +232,8 @@ async function checkIfFetchAccount() {
   if(router.currentRoute.value.query.fetchAccount) {
     try {
       await fetchAccountSettings();
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      handleExpiredTokenError(error as Error);
     }
     // Remove query param
     router.replace(router.currentRoute.value.path);
@@ -246,11 +246,12 @@ function scrollToTop() {
 }
 
 async function fetchAccountSettings() {
+  console.log('FIRES')
   try {
     await fetchUserAccount(username.value as string);
     updateAccountSettings();
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    handleExpiredTokenError(error as Error);
   }
 }
 

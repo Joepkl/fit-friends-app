@@ -1,6 +1,14 @@
 <template>
   <!-- Hamburger menu -->
-  <button @click="toggleMenu" class="hamburger-menu w-[30px] h-[20px] relative z-50" :class="{ open: isMenuOpen }">
+  <button
+    @click="toggleMenu"
+    aria-label="Menu button"
+    :aria-expanded="isMenuOpen"
+    aria-controls="menu"
+    class="hamburger-menu w-[30px] h-[20px] relative z-50"
+    :class="{ open: isMenuOpen }"
+    ref="menuButtonEl"
+  >
     <span class="block absolute h-[4px] w-full bg-green rounded-[9px] opacity-100 left-0 top-0" />
     <span class="block absolute h-[4px] w-full bg-green rounded-[9px] opacity-100 left-0 top-2" />
     <span class="block absolute h-[4px] w-full bg-green rounded-[9px] opacity-100 left-0 top-2" />
@@ -8,8 +16,11 @@
   </button>
   <!-- Menu items -->
   <ul
+    id="menu"
     class="menu-items fixed right-0 w-0 bg-light-grey top-0 pt-[85px] z-40 h-[100dvh] flex flex-col gap-8 overflow-hidden"
     :class="{ 'open w-60': isMenuOpen }"
+    role="menu"
+    :aria-hidden="!isMenuOpen"
   >
     <li
       v-for="(item, index) in menuItems"
@@ -20,7 +31,12 @@
           currentRoute === item.name || parentRouteWithActiveChild === item.name,
       }"
     >
-      <a @click="goTo(item.link)" class="flex items-center gap-4 pl-8 pr-default py-2">
+      <a
+        @click="goTo(item.link)"
+        @keydown.enter="goTo(item.link)"
+        class="flex items-center gap-4 pl-8 pr-default py-2"
+        tabindex="0"
+      >
         <img :src="getIcon(item)" class="h-5 w-5" alt="Icon" />
         {{ item.name }}
       </a>
@@ -36,7 +52,7 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref, computed } from "vue";
+import { ref, computed, nextTick } from "vue";
 import { useRouter } from "vue-router";
 
 /** Images */
@@ -66,6 +82,8 @@ import {
   LEADERBOARD_ROUTE,
   CREATE_POST_ROUTE,
 } from "@/router/appRoutes";
+
+const menuButtonEl = ref(null);
 
 const isMenuOpen = ref(false);
 const parentRouteWithActiveChild = ref("");
@@ -99,12 +117,23 @@ function getIcon(item: MenuItem) {
   }
 }
 
-function showLogOutModal() {
-  // Show log out modal
-}
-
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value;
+  if (isMenuOpen.value) {
+    nextTick(() => {
+      const firstMenuItem = document.querySelector('#menu a');
+      if (firstMenuItem) {
+        const firstMenuItem = document.querySelector('#menu a') as HTMLAnchorElement;
+        firstMenuItem.focus();
+      }
+    });
+  } else {
+    nextTick(() => {
+      if (menuButtonEl.value) {
+        (menuButtonEl.value as HTMLButtonElement).focus();
+      }
+    });
+  }
 }
 
 function goTo(route: Route) {

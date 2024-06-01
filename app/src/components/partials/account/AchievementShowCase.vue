@@ -6,7 +6,12 @@
       <!-- Showcase achievements -->
       <li v-for="(achievement, index) in achievements" :key="'else-' + index" class="flex w-[68px]">
         <div v-if="achievement" class="relative">
-          <a @click="goToAchievement(achievement.id as number)" class="block rounded-default">
+          <a
+            @click="goToAchievement(achievement.id as number)"
+            @keydown.enter="goToAchievement(achievement.id as number)"
+            class="block rounded-default"
+            tabindex="0"
+          >
             <img
               :src="getAchievementIconFromPercentage(achievement.level as number, achievement.maxLevel as number, achievement.category)"
               class="w-[56px] h-[56px] mx-auto"

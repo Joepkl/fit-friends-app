@@ -11,7 +11,7 @@
       <!-- Showcase selected goals -->
       <li v-else v-for="(goal, index) in personalGoals" :key="index" class="flex items-center relative">
         <div v-if="goal" class="flex items-center">
-          <a @click="goToGoal(goal.id)" class="block rounded-default">
+          <a @click="goToGoal(goal.id)" @keydown.enter="goToGoal(goal.id)" class="block rounded-default" tabindex="0">
             <img
               :src="getAchievementIconFromPercentage(goal.level as number, goal.maxLevel as number, goal.category)"
               class="w-[56px] h-[56px]"
