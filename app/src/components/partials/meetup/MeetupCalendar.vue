@@ -1,5 +1,12 @@
 <template>
-  <section>
+  <section class="relative">
+    <CButton
+      v-if="selectedWeek !== currentWeek"
+      @click="selectedWeek = currentWeek"
+      class="absolute right-0 top-[-25px]"
+      text="This week"
+      button-class="link"
+    />
     <div class="flex items-center mb-2 justify-between">
       <h2 class="text-green">Calendar</h2>
       <!-- Week navigation -->
