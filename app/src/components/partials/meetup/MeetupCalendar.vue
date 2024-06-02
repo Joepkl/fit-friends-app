@@ -11,23 +11,20 @@
     </div>
     <!-- Week days -->
     <ul class="flex justify-between bg-light-grey rounded-default p-4 gap-2 flex-wrap">
-      <li
-        v-for="(day, index) in days"
-        :key="index"
-        :class="{
-          'text-green underline underline-offset-4': currentDay === day && currentWeek === selectedWeek,
-        }"
-        class="flex flex-col items-center gap-1"
-      >
-        {{ day }}
+      <li v-for="(day, index) in days" :key="index" class="flex flex-col items-center gap-1">
+        <p
+          :class="{
+            'text-green underline underline-offset-4': currentDay === day && currentWeek === selectedWeek,
+          }"
+        >
+          {{ day }}
+        </p>
         <!-- Render bullets for meetups this day -->
         <div
           v-for="(meetup, position) in getMeetups(index)"
           :key="position"
           class="bg-green w-[10px] h-[10px] rounded-full mt-1"
-        >
-          {{ meetup.id }}
-        </div>
+        ></div>
       </li>
     </ul>
   </section>
