@@ -5,9 +5,18 @@
 
     <div v-if="isDataSharingEnabled">
       <p class="mb-10">
-        Invite your friends to join you on your gym adventures! Working together helps in staying motivated and reaching
-        your goals.
+        <span class="mb-2 block">
+          Invite your friends to join you on your gym adventures! Working together helps in staying motivated and
+          reaching your goals.
+        </span>
+        <span>
+          See when your friends are going in the calendar below and join them, or invite them to join you.
+        </span>
       </p>
+
+      <!-- Calendar -->
+      <MeetupCalendar :meetups="meetups" class="mb-10" />
+
       <!-- Meetups tabs -->
       <MeetupTabs :selectedMeetupTab="selectedMeetupTab" @update-selected-meetup-tab="updateSelectedMeetupTab" />
 
@@ -129,6 +138,7 @@ import MeetupInvitedByMe from "@/components/partials/meetup/MeetupInvitedByMe.vu
 import MeetupInviteTabs from "@/components/partials/meetup/MeetupInviteTabs.vue";
 import InviteUserSameGym from "@/components/partials/meetup/InviteUserSameGym.vue";
 import InviteUserModal from "@/components/partials/meetup/InviteUserModal.vue";
+import MeetupCalendar from "@/components/partials/meetup/MeetupCalendar.vue";
 import DataSharingInfo from "@/components/partials/account/DataSharingInfo.vue";
 
 const store = useStore();
@@ -158,14 +168,31 @@ const isCancelInviteModalActive = ref(false);
 const selectedMeetupId = ref<number | null>(null);
 const selectedInviteId = ref<number | null>(null);
 
+// Placeholder value for API response
 const meetups = ref<Array<Meetup>>([
-  {
+    {
     id: 1,
+    username: "Sarah.B",
+    gym: "Fit for Free Amstelveen",
+    date: `${(now.getDate() - 1).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    time: "09:15",
+    userStatus: 0,
+  },
+  {
+    id: 2,
     username: "sammy_02",
     gym: myGym.value as string,
-    date: "2024-05-09",
+    date: `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
     time: "12:00",
-    userStatus: getUserStatus("sammy_02") || 1,
+    userStatus: 1,
+  },
+    {
+    id: 3,
+    username: "GregBlake",
+    gym: "Basic-Fit Aalsmeer",
+    date: `${(now.getDate() + 2).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    time: "18:30",
+    userStatus: 1,
   },
 ]);
 

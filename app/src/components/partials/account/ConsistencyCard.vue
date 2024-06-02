@@ -28,6 +28,9 @@ import EditIcon from "@/assets/icons/ic_edit.svg";
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
 
+/** Helpers */
+import { getWeekNumber } from "@/helpers/dateHelpers";
+
 const props = defineProps<{
   weeklyGoal: number;
   weeklyFrequency: number;
@@ -54,19 +57,6 @@ const months = [
 ];
 const date = new Date();
 const formattedDate = `${months[date.getMonth()]} ${date.getFullYear()} - week ${getWeekNumber(date)}`;
-
-function getWeekNumber(date: Date) {
-  date = new Date(date);
-  date.setHours(0, 0, 0, 0);
-  // Set to nearest Thursday: current date + 4 - current day number
-  // Make Sunday's day number 7
-  date.setDate(date.getDate() + 4 - (date.getDay() || 7));
-  // Get first day of year
-  const yearStart = new Date(date.getFullYear(), 0, 1);
-  // Calculate full weeks to nearest Thursday
-  const weekNumber = Math.ceil(((Number(date) - Number(yearStart)) / 86400000 + 1) / 7);
-  return weekNumber;
-}
 
 function toggleEdit() {
   emits("toggleEdit");

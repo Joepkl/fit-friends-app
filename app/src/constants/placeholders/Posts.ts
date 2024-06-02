@@ -125,10 +125,10 @@ function getDate(dayOffset: number, monthOffset: number, yearOffset: number) {
   const formattedMonth = (month.toString().padStart(2, '0'));
 
   if (today.getDate() - dayOffset < 1) {
-    return `${30 + today.getDate() - dayOffset}-${formattedMonth}-${today.getFullYear() -
+    return `${(30 + today.getDate() - dayOffset).toString().padStart(2, '0')}-${formattedMonth}-${today.getFullYear() -
       yearOffset}`;
   }
-  return `${today.getDate() - dayOffset}-${formattedMonth}-${today.getFullYear() - yearOffset}`;
+  return `${(today.getDate() - dayOffset).toString().padStart(2, '0')}-${formattedMonth}-${today.getFullYear() - yearOffset}`;
   
 }
 

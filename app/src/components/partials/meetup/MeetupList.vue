@@ -1,6 +1,9 @@
 <template>
-  <section v-if="selectedMeetupTab === 0">
-    <ul v-if="meetups.length">
+  <section v-if="selectedMeetupTab === 0" class="relative">
+    <!-- Overlay -->
+    <div class="absolute z-30 bottom-0 w-full h-5 bg-gradient-to-t from-dark-grey-transparent" />
+    <ul v-if="meetups.length" class="flex flex-col gap-2 max-h-[300px] overflow-scroll pb-2">
+      <!-- Days -->
       <li v-for="(item, index) in meetups" :key="index" class="bg-light-grey rounded-default p-3 relative">
         <button @click="goToProfile(item.username)" class="flex items-center gap-[6px]">
           <div

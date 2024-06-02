@@ -31,9 +31,10 @@
         Are you sure you want to remove <span class="text-green">{{ selectedFriend }}</span> from your friends?
       </p>
       <p class="mt-2">This action can't be undone.</p>
+      ``
       <div class="mt-8 flex justify-end">
         <CButton @click="closeRemoveFriendModal" button-class="outline" text="Cancel" />
-        <CButton @click="removeFriend" button-class="primary" text="Remove" class="ml-6" />
+        <CButton @click="removeFriend" button-class="warning" text="Remove" class="ml-6" />
       </div>
     </CModal>
   </section>
