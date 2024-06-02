@@ -39,7 +39,7 @@
     <CModal :isActive="isMeetupModalActive" @close-modal="toggleMeetupModal" :content="MeetupInformation">
       <!-- Users -->
       <ul class="mt-4">
-        <li v-for="(user, index) in nonNullSelectedMeetup.users" :key="index" class="mt-1">
+        <li v-for="(user, index) in nonNullSelectedMeetup.users" :key="index" class="mt-2">
           <button @click="goToProfile(user.username)" class="flex items-center gap-[6px]">
             <div
               class="block w-6 h-auto rounded-full border-2 overflow-hidden"

@@ -1,6 +1,11 @@
 <template>
-  <section v-if="selectedMeetupTab === 2">
-    <ul v-if="myInvites.length" class="flex flex-col gap-2">
+  <section v-if="selectedMeetupTab === 2" class="relative">
+    <!-- Overlay -->
+    <div
+      v-if="myInvites.length"
+      class="absolute z-30 bottom-0 w-full h-5 bg-gradient-to-t from-dark-grey-transparent"
+    />
+    <ul v-if="myInvites.length" class="flex flex-col gap-2 max-h-[330px] overflow-y-scroll pb-2">
       <li v-for="(item, index) in myInvites" :key="index" class="bg-light-grey rounded-default p-3 relative">
         <div v-for="(user, i) in item.users" :key="i">
           <button v-if="user.username !== userProfile?.username" class="flex items-center gap-[6px]">

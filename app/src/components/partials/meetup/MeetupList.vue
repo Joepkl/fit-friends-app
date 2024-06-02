@@ -2,11 +2,11 @@
   <section v-if="selectedMeetupTab === 0" class="relative">
     <!-- Overlay -->
     <div v-if="meetups.length" class="absolute z-30 bottom-0 w-full h-5 bg-gradient-to-t from-dark-grey-transparent" />
-    <ul v-if="meetups.length" class="flex flex-col gap-2 max-h-[300px] overflow-y-scroll pb-2">
+    <ul v-if="meetups.length" class="flex flex-col gap-2 max-h-[320px] overflow-y-scroll pb-2">
       <!-- Meetups -->
       <li v-for="(item, index) in meetups" :key="index" class="bg-light-grey rounded-default p-3 relative">
         <!-- Users -->
-        <div v-for="(user, i) in item.users" :key="i" class="mb-1">
+        <div v-for="(user, i) in item.users" :key="i" class="mb-2">
           <button
             v-if="user.username !== userProfile?.username"
             @click="goToProfile(user.username)"
@@ -22,7 +22,7 @@
           </button>
         </div>
         <!-- Details meetup -->
-        <div class="mt-2 flex flex-col gap-1">
+        <div class="mt-3 flex flex-col gap-1">
           <p><span class="text-green">Date: </span>{{ item.date }}</p>
           <p><span class="text-green">Time: </span>{{ item.time }}</p>
           <p><span class="text-green">Location: </span>{{ item.gym }}</p>
