@@ -222,6 +222,10 @@ const meetups = ref<Array<Meetup>>([
         username: "Sophia_01",
         status: 2,
       },
+      {
+        username: "lianne_22",
+        status: 1,
+      },
     ],
     gym: "Basic-Fit Aalsmeer",
     date: `${(now.getDate() + 3).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
