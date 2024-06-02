@@ -44,8 +44,6 @@ const props = defineProps<{
   meetups: Array<Meetup>;
 }>();
 
-console.log(props.meetups);
-
 const days = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"];
 const now = new Date();
 const currentDayIndex = getDayIndexStartMonday(now);
@@ -63,7 +61,8 @@ function getMeetups(dayIndex: number) {
   // Loop through meetups and check if they are this day
   for(const meetup of props.meetups) {
     const splitDate = meetup.date.split("-");
-    const dateObject = new Date(`${splitDate[1]}-${splitDate[0]}-${splitDate[2]}`);
+    // Need this format for Safari
+    const dateObject = new Date(`${splitDate[1]}/${splitDate[0]}/${splitDate[2]}`);
     const meetupWeek = getWeekNumber(dateObject);
 
     if(meetupWeek === selectedWeek.value && getDayIndexStartMonday(dateObject) === dayIndex) {

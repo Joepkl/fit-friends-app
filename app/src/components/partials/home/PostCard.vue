@@ -77,7 +77,7 @@
   <!-- All comments -->
   <div v-if="isCommentsToggled" class="relative mt-2">
     <div class="absolute z-30 top-0 w-full h-5 bg-gradient-to-b from-dark-grey-transparent" />
-    <ul ref="allCommentsEl" class="relative z-10 flex flex-col gap-3 max-h-[210px] overflow-scroll pt-2">
+    <ul ref="allCommentsEl" class="relative z-10 flex flex-col gap-3 max-h-[210px] overflow-y-scroll pt-2">
       <li v-for="(comment, index) in content.comments" :key="index" class="flex">
         <!-- Comment -->
         <div class="w-full">
