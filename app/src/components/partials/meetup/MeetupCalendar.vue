@@ -25,7 +25,9 @@
           v-for="(meetup, position) in getMeetups(index)"
           :key="position"
           class="bg-green w-[10px] h-[10px] rounded-full mt-1"
-        />
+        >
+          {{ meetup.id }}
+        </div>
       </li>
     </ul>
   </section>
