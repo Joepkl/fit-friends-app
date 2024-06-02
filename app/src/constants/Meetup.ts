@@ -5,6 +5,7 @@ export default interface Comment {
   date: string;
   time: string;
   isJoining: boolean;
+  isPrivate: boolean;
 }
 
 interface user {

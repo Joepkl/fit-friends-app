@@ -22,10 +22,11 @@
           </button>
         </div>
         <!-- Details meetup -->
-        <div class="mt-2">
+        <div class="mt-2 flex flex-col gap-1">
           <p><span class="text-green">Date: </span>{{ item.date }}</p>
-          <p class="mt-1"><span class="text-green">Time: </span>{{ item.time }}</p>
-          <p class="mt-1"><span class="text-green">Location: </span>{{ item.gym }}</p>
+          <p><span class="text-green">Time: </span>{{ item.time }}</p>
+          <p><span class="text-green">Location: </span>{{ item.gym }}</p>
+          <p><span class="text-green">Private meetup: </span>{{ item.isPrivate ? "Yes" : "No" }}</p>
         </div>
         <!-- Remove meetup button -->
         <CButton

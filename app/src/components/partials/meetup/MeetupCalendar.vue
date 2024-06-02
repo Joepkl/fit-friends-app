@@ -52,10 +52,11 @@
         </li>
       </ul>
       <!-- Meetup info -->
-      <div class="mt-4">
+      <div class="mt-4 flex flex-col gap-1">
         <p><span class="text-green">Date: </span>{{ nonNullSelectedMeetup.date }}</p>
-        <p class="mt-1"><span class="text-green">Time: </span>{{ nonNullSelectedMeetup.time }}</p>
-        <p class="mt-1"><span class="text-green">Location: </span>{{ nonNullSelectedMeetup.gym }}</p>
+        <p><span class="text-green">Time: </span>{{ nonNullSelectedMeetup.time }}</p>
+        <p><span class="text-green">Location: </span>{{ nonNullSelectedMeetup.gym }}</p>
+        <p><span class="text-green">Private meetup: </span>{{ nonNullSelectedMeetup.isPrivate ? "Yes" : "No" }}</p>
       </div>
       <div class="mt-6 flex flex-wrap gap-4 ml-auto w-fit">
         <!-- Cancel meetup -->

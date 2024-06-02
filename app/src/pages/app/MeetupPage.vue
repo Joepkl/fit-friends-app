@@ -191,6 +191,7 @@ const meetups = ref<Array<Meetup>>([
     date: `${(now.getDate()).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
     time: "09:15",
     isJoining: true,
+    isPrivate: false,
   },
   {
     id: 2,
@@ -208,6 +209,7 @@ const meetups = ref<Array<Meetup>>([
     date: `${(now.getDate() + 2).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
     time: "12:00",
     isJoining: true,
+    isPrivate: true,
   },
   {
     id: 3,
@@ -225,6 +227,7 @@ const meetups = ref<Array<Meetup>>([
     date: `${(now.getDate() + 3).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
     time: "18:30",
     isJoining: false,
+    isPrivate: false,
   },
   {
     id: 4,
@@ -242,6 +245,7 @@ const meetups = ref<Array<Meetup>>([
     date: `${(now.getDate() + 5).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
     time: "18:30",
     isJoining: false,
+    isPrivate: false,
   },
 ]);
 
@@ -335,7 +339,7 @@ function getUserStatus(username: string) {
   return user?.status;
 }
 
-function sendInvite(selectedGym: string, date:string, time: string) {
+function sendInvite(selectedGym: string, date:string, time: string, isPrivate: boolean) {
   // Make API request here
   isInviteModalActive.value = false;
 
@@ -355,6 +359,7 @@ function sendInvite(selectedGym: string, date:string, time: string) {
     date: date,
     time: time,
     isJoining: true,
+    isPrivate: isPrivate,
   });
   myInvites.value.sort(compareMeetups);
   resetValues();

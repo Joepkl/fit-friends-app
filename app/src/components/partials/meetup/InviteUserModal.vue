@@ -33,24 +33,35 @@
       </li>
     </ul>
   </div>
-  <!-- Select day -->
-  <div class="flex flex-col">
-    <label for="time">Select date</label>
-    <input v-model="date" @change="checkInviteValid" :class="{ error: dateError }" type="date" id="time" />
-  </div>
-  <!-- Select time -->
-  <div class="flex flex-col mt-4">
-    <label for="time">Select time</label>
-    <input v-model="time" @change="checkInviteValid" :class="{ error: timeError }" type="time" id="time" />
-  </div>
-  <!-- Error -->
-  <p v-if="dateError" class="error mt-2">{{ dateError }}</p>
-  <p v-if="timeError" class="error mt-2">{{ timeError }}</p>
-  <!-- Buttons -->
-  <div class="mt-8 flex justify-end">
-    <CButton @click="closeInviteModal" button-class="outline" text="Cancel" class="mr-6" />
-    <CButton @click="sendInvite" button-class="primary" text="Send invite" :is-disabled="!isInviteValid" />
-  </div>
+  <ul>
+    <!--  -->
+    <!-- Select day -->
+    <li class="flex flex-col">
+      <label for="time">Select date</label>
+      <input v-model="date" @change="checkInviteValid" :class="{ error: dateError }" type="date" id="time" />
+    </li>
+    <!-- Select time -->
+    <li class="flex flex-col mt-4">
+      <label for="time">Select time</label>
+      <input v-model="time" @change="checkInviteValid" :class="{ error: timeError }" type="time" id="time" />
+    </li>
+    <!-- Private invite -->
+    <li>
+      <label class="container mt-4"
+        >Private invite
+        <input type="checkbox" @click="toggleIsPrivateInvite" id="private-invite" />
+        <span class="checkmark"></span>
+      </label>
+    </li>
+    <!-- Error -->
+    <p v-if="dateError" class="error mt-2">{{ dateError }}</p>
+    <p v-if="timeError" class="error mt-2">{{ timeError }}</p>
+    <!-- Buttons -->
+    <li class="mt-8 flex justify-end">
+      <CButton @click="closeInviteModal" button-class="outline" text="Cancel" class="mr-6" />
+      <CButton @click="sendInvite" button-class="primary" text="Send invite" :is-disabled="!isInviteValid" />
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
@@ -102,6 +113,7 @@ const dateError = ref("");
 const timeError = ref("");
 const isDateValid = ref(true);
 const isTimeValid = ref(true);
+const isPrivateInvite = ref(false);
 
 function findUserGym() {
   const gym = Users.find((user) => user.username === props.selectedUser)?.settings?.currentGym;
@@ -110,12 +122,16 @@ function findUserGym() {
   }
 }
 
+function toggleIsPrivateInvite() {
+  isPrivateInvite.value = !isPrivateInvite.value;
+}
+
 function closeInviteModal() {
   emits("closeInviteModal");
 }
 
 function sendInvite() {
-  emits("sendInvite", selectedGym.value, date.value, time.value);
+  emits("sendInvite", selectedGym.value, date.value, time.value, isPrivateInvite.value);
 }
 
 function checkDateValid() {
