@@ -2,15 +2,18 @@
   <section v-if="selectedMeetupTab === 1">
     <ul v-if="invites.length" class="flex flex-col gap-2">
       <li v-for="(item, index) in invites" :key="index" class="bg-light-grey rounded-default p-3 relative">
-        <button class="flex items-center gap-[6px]">
-          <div
-            class="block w-6 h-auto rounded-full border-2 overflow-hidden"
-            :class="getColorClass(item.userStatus, null, true)"
-          >
-            <img class="p-[2px] relative top-[4px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
-          </div>
-          <p :class="getColorClass(item.userStatus, true)">{{ item.username }}</p>
-        </button>
+        <!-- Users -->
+        <div v-for="(user, i) in item.users" :key="i" class="mb-1">
+          <button class="flex items-center gap-[6px]">
+            <div
+              class="block w-6 h-auto rounded-full border-2 overflow-hidden"
+              :class="getColorClass(user.status, null, true)"
+            >
+              <img class="p-[2px] relative top-[4px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
+            </div>
+            <p :class="getColorClass(user.status, true)">{{ user.username }}</p>
+          </button>
+        </div>
         <!-- Details meetup -->
         <div class="mt-3">
           <p><span class="text-green">Date: </span>{{ item.date }}</p>
@@ -19,7 +22,7 @@
         </div>
         <!-- Remove meetup button -->
         <CButton
-          @click="openCancelInviteModal(item.username, item.id)"
+          @click="openCancelInviteModal(item.users[0].username, item.id)"
           :image="CloseIcon"
           class="w-4 h-4 absolute top-3 right-3"
         />
