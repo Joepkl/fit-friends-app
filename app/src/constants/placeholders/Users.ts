@@ -462,6 +462,66 @@ const Users: Array<UserProfile> = [
     weeklyConsistencyStreak: 7,
     status: 1,
   },
+  {
+    username: "Sophia_01",
+    password: "password",
+    email: "john.doe@gmail.com",
+    points: 120,
+    settings: {
+        username: "Sophia_01",
+        age: 25,
+        bio: "Ola, I'm Sophia and I'm a student at the HvA. I like to stay active and healthy.",
+        weeklyGoal: 4,
+        shareData: true,
+        currentGym: {
+          id: 7,
+          name: "Fit for free Aalsmeer",
+        }
+    },
+    showcaseAchievements: [
+      {
+        category: 3,
+        id: 22,
+        level: 5,
+        maxLevel: 6,
+      },
+      {
+        category: 4,
+        id: 25,
+        level: 4,
+        maxLevel: 6,
+      },
+      {
+        category: 0,
+        id: 6,
+        level: 6,
+        maxLevel: 3,
+      },
+    ],
+    personalGoals: [
+      {
+        category: 3,
+        id: 22,
+        level: 5,
+        maxLevel: 6,
+      },
+      {
+        category: 0,
+        id: 4,
+        level: 3,
+        maxLevel: 3,
+      },
+      {
+        category: 0,
+        id: 2,
+        level: 3,
+        maxLevel: 3,
+      },
+    ],
+    weeklyFrequency: 2,
+    weeklyConsistencyStreak: 19,
+    status: 2,
+  },
 ];
 
 export default Users;

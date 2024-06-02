@@ -15,7 +15,12 @@
       </p>
 
       <!-- Calendar -->
-      <MeetupCalendar :meetups="meetups" class="mb-10" />
+      <MeetupCalendar
+        @open-cancel-meetup-modal="openCancelMeetupModal"
+        @join-meetup="handleJoinMeetup"
+        :meetups="meetups"
+        class="mb-10"
+      />
 
       <!-- Meetups tabs -->
       <MeetupTabs :selectedMeetupTab="selectedMeetupTab" @update-selected-meetup-tab="updateSelectedMeetupTab" />
@@ -23,7 +28,7 @@
       <!-- Meetups -->
       <MeetupList
         :selectedMeetupTab="selectedMeetupTab"
-        :meetups="meetups"
+        :meetups="acceptedMeetups"
         @open-cancel-meetup-modal="openCancelMeetupModal"
       />
 
@@ -63,7 +68,7 @@
   <CModal
     @close-modal="closeInviteModal"
     :isActive="isInviteModalActive"
-    :content="MeetupContent"
+    :content="CreateMeetupContent"
     :hide-close-button="true"
   >
     <InviteUserModal
@@ -123,7 +128,7 @@ import { useStore } from "@/stores/store.ts";
 import Users from "@/constants/placeholders/Users";
 
 /** Constants */
-import { MeetupContent, CancelMeetupContent, CancelInviteContent } from "@/constants/ModalContent";
+import { CreateMeetupContent, CancelMeetupContent, CancelInviteContent } from "@/constants/ModalContent";
 import type Meetup from "@/constants/Meetup";
 
 /** Components */
@@ -172,29 +177,75 @@ const selectedInviteId = ref<number | null>(null);
 const meetups = ref<Array<Meetup>>([
     {
     id: 1,
-    username: "Sarah.B",
+    users: [
+      {
+        username: "Sarah.B",
+        status: 0,
+      },
+      {
+        username: userProfile.value?.username as string,
+        status: userProfile.value?.status as number,
+      },
+    ],
     gym: "Fit for Free Amstelveen",
-    date: `${(now.getDate() - 1).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    date: `${(now.getDate()).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
     time: "09:15",
-    userStatus: 0,
+    isJoining: true,
   },
   {
     id: 2,
-    username: "sammy_02",
+    users: [
+      {
+        username: "sammy_02",
+        status: 1,
+      },
+      {
+        username: userProfile.value?.username as string,
+        status: userProfile.value?.status as number,
+      },
+    ],
     gym: myGym.value as string,
-    date: `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
-    time: "12:00",
-    userStatus: 1,
-  },
-    {
-    id: 3,
-    username: "GregBlake",
-    gym: "Basic-Fit Aalsmeer",
     date: `${(now.getDate() + 2).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    time: "12:00",
+    isJoining: true,
+  },
+  {
+    id: 3,
+    users: [
+      {
+        username: "GregBlake",
+        status: 1,
+      },
+      {
+        username: "Sophia_01",
+        status: 2,
+      },
+    ],
+    gym: "Basic-Fit Aalsmeer",
+    date: `${(now.getDate() + 3).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
     time: "18:30",
-    userStatus: 1,
+    isJoining: false,
+  },
+  {
+    id: 4,
+    users: [
+      {
+        username: "jayJo.K",
+        status: 2,
+      },
+      {
+        username: "BillyJones",
+        status: 2,
+      },
+    ],
+    gym: "Basic-Fit Amstelveen",
+    date: `${(now.getDate() + 5).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    time: "18:30",
+    isJoining: false,
   },
 ]);
+
+const acceptedMeetups = computed(() => meetups.value.filter((meetup) => meetup.isJoining));
 
 const invites = ref<Array<Meetup>>([]);
 const myInvites = ref<Array<Meetup>>([]);
@@ -214,6 +265,18 @@ function updateSelectedGymTab(index: number) {
 
 function closeCancelMeetupModal() {
   isCancelMeetupModalActive.value = false;
+}
+
+function handleJoinMeetup(meetupId: number) {
+  for(const meetup of meetups.value) {
+    if(meetup.id === meetupId) {
+      meetup.isJoining = !meetup.isJoining;
+      meetup.users.push({
+        username: userProfile.value?.username as string,
+        status: userProfile.value?.status as number,
+      });
+    }
+  }
 }
 
 function openCancelMeetupModal(username: string, meetupId: number) {
@@ -278,11 +341,20 @@ function sendInvite(selectedGym: string, date:string, time: string) {
 
   myInvites.value.push({
     id: myInvites.value.length + 1,
-    username: selectedUser.value,
+    users: [
+      {
+        username: selectedUser.value,
+        status: getUserStatus(selectedUser.value) || 0,
+      },
+      {
+        username: userProfile.value?.username as string,
+        status: userProfile.value?.status as number,
+      },
+    ],
     gym: selectedGym,
     date: date,
     time: time,
-    userStatus: getUserStatus(selectedUser.value) || 0,
+    isJoining: true,
   });
   myInvites.value.sort(compareMeetups);
   resetValues();

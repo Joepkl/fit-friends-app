@@ -22,7 +22,11 @@ export const AddFriendContent = {
   title: "Add friend",
 };
 
-export const MeetupContent = {
+export const MeetupInformation = {
+  title: "Meetup information",
+};
+
+export const CreateMeetupContent = {
   title: "Meetup invite",
 };
 

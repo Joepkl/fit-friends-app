@@ -2,24 +2,26 @@
   <section v-if="selectedMeetupTab === 2">
     <ul v-if="myInvites.length" class="flex flex-col gap-2">
       <li v-for="(item, index) in myInvites" :key="index" class="bg-light-grey rounded-default p-3 relative">
-        <button class="flex items-center gap-[6px]">
-          <div
-            class="block w-6 h-auto rounded-full border-2 overflow-hidden"
-            :class="getColorClass(item.userStatus, null, true)"
-          >
-            <img class="p-[2px] relative top-[4px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
-          </div>
-          <p :class="getColorClass(item.userStatus, true)">{{ item.username }}</p>
-        </button>
+        <div v-for="(user, i) in item.users" :key="i">
+          <button v-if="user.username !== userProfile?.username" class="flex items-center gap-[6px]">
+            <div
+              class="block w-6 h-auto rounded-full border-2 overflow-hidden"
+              :class="getColorClass(user.status, null, true)"
+            >
+              <img class="p-[2px] relative top-[4px] left-[1px]" :src="AccountIcon" alt="Profile picture" />
+            </div>
+            <p :class="getColorClass(user.status, true)">{{ user.username }}</p>
+          </button>
+        </div>
         <!-- Details meetup -->
         <div class="mt-3">
-          <p><span class="text-green">Date: </span>{{ item.date }}</p>
+          <p><span class="text-green">Date: </span>{{ formatDate(item.date) }}</p>
           <p class="mt-1"><span class="text-green">Time: </span>{{ item.time }}</p>
           <p class="mt-1"><span class="text-green">Location: </span>{{ item.gym }}</p>
         </div>
         <!-- Remove meetup button -->
         <CButton
-          @click="openCancelInviteModal(item.username, item.id)"
+          @click="openCancelInviteModal(item.users[0].username, item.id)"
           :image="CloseIcon"
           class="w-4 h-4 absolute top-3 right-3"
         />
@@ -30,11 +32,18 @@
 </template>
 
 <script setup lang="ts">
+/** Vue */
+import { computed } from "vue";
+
 /** Constants */
 import type Meetup from "@/constants/Meetup";
 
 /** Components */
 import CButton from "@/components/ui/CButton.vue";
+
+/** Store */
+// @ts-ignore
+import { useStore } from "@/stores/store.ts";
 
 /** Images */
 import AccountIcon from "@/assets/icons/ic_account.svg";
@@ -50,7 +59,17 @@ defineProps<{
 
 const emits = defineEmits(["openCancelInviteModal"]);
 
+const store = useStore();
+
+
+const userProfile = computed(() => store.getUserProfile);
+
 function openCancelInviteModal(username: string, inviteId: number) {
   emits("openCancelInviteModal", username, inviteId);
+}
+
+function formatDate(date: string) {
+  const [year, month, day] = date.split("-");
+  return `${day}-${month}-${year}`;
 }
 </script>

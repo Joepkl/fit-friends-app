@@ -1,9 +1,13 @@
 export default interface Comment {
   id: number;
-  username: string;
+  users: user[];
   gym: string;
   date: string;
   time: string;
-  userStatus: number;
-  isAccepted?: boolean;
+  isJoining: boolean;
+}
+
+interface user {
+  username: string;
+  status: number;
 }
