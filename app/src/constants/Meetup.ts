@@ -7,6 +7,7 @@ export default interface Comment {
   isJoining: boolean;
   isPrivate: boolean;
   isCanceld: boolean;
+  isHidden: boolean;
 }
 
 interface user {

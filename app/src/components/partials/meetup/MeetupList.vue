@@ -11,7 +11,7 @@
           @click="hideCanceldMeetup(item.id)"
           text="Hide"
           button-class="primary"
-          class="absolute top-3 right-3 z-50 opacity-100"
+          class="absolute top-3 right-3 z-30"
         />
         <!-- Opacity wrapper for canceld meetup -->
         <div :class="{ 'opacity-60': item.isCanceld }">
@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 /** Vue */
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 
 /** Helpers */
@@ -92,13 +92,11 @@ const props = defineProps<{
   meetups: Array<Meetup>;
 }>();
 
-
 const store = useStore();
 const emits = defineEmits(["openCancelMeetupModal"]);
 const router = useRouter();
 
-const visibleMeetups = ref(props.meetups);
-
+const visibleMeetups = computed(() => props.meetups.filter((meetup) => !meetup.isHidden));
 const userProfile = computed(() => store.getUserProfile);
 
 function goToProfile(username: string) {
@@ -109,8 +107,8 @@ function openCancelMeetupModal(username: string, meetupId: number) {
   emits("openCancelMeetupModal", username, meetupId);
 }
 
-// Placholder to demonstrate functionality, should be handled by API
+// Placeholder to demonstrate functionality, should be handled by API
 function hideCanceldMeetup(meetupId: number) {
-  visibleMeetups.value = visibleMeetups.value.filter((meetup) => meetup.id !== meetupId);
+  props.meetups.find((meetup) => meetup.id === meetupId)!.isHidden = true;
 }
 </script>

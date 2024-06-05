@@ -193,6 +193,7 @@ const meetups = ref<Array<Meetup>>([
     isJoining: true,
     isPrivate: false,
     isCanceld: false,
+    isHidden: false,
   },
   {
     id: 2,
@@ -212,6 +213,7 @@ const meetups = ref<Array<Meetup>>([
     isJoining: true,
     isPrivate: true,
     isCanceld: false,
+    isHidden: false,
   },
   {
     id: 3,
@@ -235,6 +237,7 @@ const meetups = ref<Array<Meetup>>([
     isJoining: false,
     isPrivate: false,
     isCanceld: false,
+    isHidden: false,
   },
   {
     id: 4,
@@ -254,6 +257,7 @@ const meetups = ref<Array<Meetup>>([
     isJoining: false,
     isPrivate: false,
     isCanceld: false,
+    isHidden: false,
   },
     {
     id: 5,
@@ -273,6 +277,7 @@ const meetups = ref<Array<Meetup>>([
     isJoining: true,
     isPrivate: false,
     isCanceld: true,
+    isHidden: false,
   },
 ]);
 
@@ -393,6 +398,7 @@ function sendInvite(selectedGym: string, date:string, time: string, isPrivate: b
     isJoining: true,
     isPrivate: isPrivate,
     isCanceld: false,
+    isHidden: false,
   });
   myInvites.value.sort(compareMeetups);
   resetValues();
