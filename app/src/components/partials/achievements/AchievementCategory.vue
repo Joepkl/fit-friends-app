@@ -9,13 +9,13 @@
         </li>
       </ul>
     </div>
-    <CButton
+    <button
       v-if="achievementsLength > displayedAchievements.length || isAchievementsToggled"
       @click="toggleAchievements"
-      :text="buttonText"
-      button-class="link"
-      class="w-fit ml-auto mt-1"
-    />
+      class="w-fit block ml-auto mt-1 text-green"
+    >
+      {{ buttonText }}
+    </button>
   </section>
 </template>
 
@@ -29,9 +29,6 @@ import type SingleAchievement from "@/constants/SingleAchievement";
 
 /** Components */
 import AchievementStack from '@/components/partials/achievements/AchievementStack.vue';
-
-/** Components */
-import CButton from "@/components/ui/CButton.vue";
 
 const isAchievementsToggled = ref(false);
 const buttonText = ref("View all")

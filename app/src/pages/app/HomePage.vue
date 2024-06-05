@@ -2,7 +2,7 @@
   <CHeader />
   <section class="page-wrapper-header">
     <h1>Home</h1>
-    <ul v-if="isDataSharingEnabled" class="flex flex-col gap-4 mt-8">
+    <ul v-if="isDataSharingEnabled" class="flex flex-col gap-10 mt-8">
       <li v-for="(post, index) in postsCopy" :key="index">
         <PostCard
           @like-post="handleLikePost"

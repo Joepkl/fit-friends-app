@@ -98,9 +98,12 @@ const onboardingContent = {
 
 const totalSteps = onboardingContent.steps.length;
 
-function goToNextStep() {
+function goToNextStep(isFiredBySwipe: boolean) {
   if (currentStep.value < totalSteps - 1) {
     currentStep.value++;
+  } else if (isFiredBySwipe) {
+    // If the last step is reached and the event is fired by swipe, don't automatically navigate to the next page
+    return;
   } else {
     router.push(ACCOUNT_SETUP_ROUTE);
   }

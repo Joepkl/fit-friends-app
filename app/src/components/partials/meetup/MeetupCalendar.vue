@@ -31,7 +31,8 @@
           v-for="(meetup, position) in getMeetups(index)"
           @click="openMeetup(meetup)"
           :key="position"
-          class="bg-green w-[10px] h-[10px] rounded-full mt-1"
+          class="border-2 border-green w-[12px] h-[12px] rounded-full mt-1"
+          :class="{ 'bg-green': meetup.isJoining }"
         />
       </li>
     </ul>
@@ -158,7 +159,9 @@ function getMeetups(dayIndex: number) {
     const dateObject = new Date(`${splitDate[1]}/${splitDate[0]}/${splitDate[2]}`);
     const meetupWeek = getWeekNumber(dateObject);
 
-    if(meetupWeek === selectedWeek.value && getDayIndexStartMonday(dateObject) === dayIndex) {
+    const isThisDay = meetupWeek === selectedWeek.value && getDayIndexStartMonday(dateObject) === dayIndex;
+
+    if(isThisDay && !meetup.isCanceld) {
       meetupsThisDay.push(meetup);
     }
   }

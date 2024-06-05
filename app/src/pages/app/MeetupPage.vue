@@ -188,10 +188,11 @@ const meetups = ref<Array<Meetup>>([
       },
     ],
     gym: "Fit for Free Amstelveen",
-    date: `${(now.getDate()).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    date: getDateFormatted(0, 0),
     time: "09:15",
     isJoining: true,
     isPrivate: false,
+    isCanceld: false,
   },
   {
     id: 2,
@@ -206,10 +207,11 @@ const meetups = ref<Array<Meetup>>([
       },
     ],
     gym: myGym.value as string,
-    date: `${(now.getDate() + 2).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    date: getDateFormatted(2, 0),
     time: "12:00",
     isJoining: true,
     isPrivate: true,
+    isCanceld: false,
   },
   {
     id: 3,
@@ -228,10 +230,11 @@ const meetups = ref<Array<Meetup>>([
       },
     ],
     gym: "Basic-Fit Aalsmeer",
-    date: `${(now.getDate() + 3).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    date: getDateFormatted(3, 0),
     time: "18:30",
     isJoining: false,
     isPrivate: false,
+    isCanceld: false,
   },
   {
     id: 4,
@@ -246,10 +249,30 @@ const meetups = ref<Array<Meetup>>([
       },
     ],
     gym: "Basic-Fit Amstelveen",
-    date: `${(now.getDate() + 5).toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`,
+    date: getDateFormatted(5, 0),
     time: "18:30",
     isJoining: false,
     isPrivate: false,
+    isCanceld: false,
+  },
+    {
+    id: 5,
+    users: [
+      {
+        username: "jayJo.K",
+        status: 2,
+      },
+      {
+        username: userProfile.value?.username as string,
+        status: userProfile.value?.status as number,
+      },
+    ],
+    gym: myGym.value as string,
+    date: getDateFormatted(6, 0),
+    time: "18:30",
+    isJoining: true,
+    isPrivate: false,
+    isCanceld: true,
   },
 ]);
 
@@ -261,6 +284,11 @@ const myInvites = ref<Array<Meetup>>([]);
 scrollToTop();
 function scrollToTop() {
   window.scrollTo(0, 0);
+}
+
+
+function getDateFormatted(dayOffset: number, monthOffset: number) {
+  return `${(now.getDate() + dayOffset).toString().padStart(2, '0')}-${(now.getMonth() + 1 + monthOffset).toString().padStart(2, '0')}-${now.getFullYear()}`
 }
 
 function updateSelectedMeetupTab(index: number) {

@@ -6,6 +6,7 @@ export default interface Comment {
   time: string;
   isJoining: boolean;
   isPrivate: boolean;
+  isCanceld: boolean;
 }
 
 interface user {

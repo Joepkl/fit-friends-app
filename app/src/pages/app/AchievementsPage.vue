@@ -2,7 +2,7 @@
   <CHeader />
   <section class="page-wrapper-header">
     <h1 class="mb-8">Achievements</h1>
-    <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-10">
       <AchievementCategory title="Monthly" :achievements="MonthlyAchievements" />
       <AchievementCategory title="Chest" :achievements="ChestAchievements" />
       <AchievementCategory title="Legs" :achievements="LegAchievements" />
@@ -15,14 +15,6 @@
 </template>
 
 <script setup lang="ts">
-/** Vue */
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-
-/** Store */
-// @ts-ignore
-import { useStore } from "@/stores/store.ts";
-
 /** Components */
 import AchievementCategory from "@/components/partials/achievements/AchievementCategory.vue";
 
@@ -38,9 +30,6 @@ import {
 
 /** Components */
 import CHeader from "@/components/partials/layout/CHeader.vue";
-
-const store = useStore();
-const router = useRouter();
 
 scrollToTop();
 function scrollToTop() {
