@@ -392,6 +392,7 @@ function sendInvite(selectedGym: string, date:string, time: string, isPrivate: b
     time: time,
     isJoining: true,
     isPrivate: isPrivate,
+    isCanceld: false,
   });
   myInvites.value.sort(compareMeetups);
   resetValues();
