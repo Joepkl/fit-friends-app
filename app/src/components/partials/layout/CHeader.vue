@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex justify-between transition-all duration-500 z-40 px-default"
+    class="flex justify-between transition-all duration-500 z-40 px-default max-w-[768px] mx-auto"
     ref="header"
     :class="{
       'sticky top-0 bg-dark-grey-30 backdrop-blur-[30px] py-4': isHeaderSticky,
