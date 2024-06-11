@@ -51,7 +51,7 @@ export const ClaimAchievementContentMonthly = {
 };
 
 export const AlreadyClaimedAchievementContent = {
-  title: "Already claimed achievement",
+  title: "Claimed achievement",
   text: "You have already claimed this achievement in the past. ",
 };
 
