@@ -19,9 +19,13 @@
             &lt;
           </span>
         </button>
-        <p v-if="showClaimInfo">
+        <p v-if="showClaimInfo && !isMonthlyAchievement">
           Claim an achievement by clicking on the icon. When claiming an achievement multiple levels ahead, all the
           achievements between will also be claimed.
+        </p>
+        <p v-else-if="showClaimInfo">
+          Monthly achievements can't be claimed manually. When you reach the requirements for an achievement, it will be
+          claimed automatically.
         </p>
         <!-- How to set goal -->
         <button @click="toggleSetGoalInfo" class="button-link mt-2 mb-2">
@@ -60,16 +64,21 @@
     <CModal
       @close-modal="closeClaimAchievementModal"
       :isActive="isClaimAchievementModalActive"
-      :content="ClaimAchievementContent"
+      :content="!isMonthlyAchievement ? ClaimAchievementContent : ClaimAchievementContentMonthly"
     >
       <p class="mt-2">
         Or you can set
         <span class="text-green">{{ achievementInfo?.title }} {{ achievementSelectedLevel }}</span>
         as a goal to work towards.
       </p>
-      <div class="mt-8 flex justify-end">
-        <CButton @click="handleSetPersonalGoal" button-class="outline" text="Set as goal" class="mr-6" />
-        <CButton @click="handleClaimAchievement" button-class="primary" text="Claim" />
+      <div class="mt-8 flex justify-end gap-x-6">
+        <CButton v-if="isMonthlyAchievement" @click="closeClaimAchievementModal" button-class="outline" text="Cancel" />
+        <CButton
+          @click="handleSetPersonalGoal"
+          :button-class="!isMonthlyAchievement ? 'outline' : 'primary'"
+          text="Set as goal"
+        />
+        <CButton v-if="!isMonthlyAchievement" click="handleClaimAchievement" button-class="primary" text="Claim" />
       </div>
     </CModal>
     <!-- Already claimed achievement -->
@@ -122,6 +131,7 @@ import { useRouter } from "vue-router";
 import {
   ClaimAchievementContent,
   AlreadyClaimedAchievementContent,
+  ClaimAchievementContentMonthly,
   ShowcaseSlotsFullContent,
   GoalsSlotsFullContent,
 } from "@/constants/ModalContent";
@@ -201,6 +211,9 @@ function handleAchievementClick(isAchievementClaimed: boolean, achievementLevel:
     isClaimAchievementModalActive.value = true;
   }
 }
+
+const isMonthlyAchievement = computed(() => achievement.value.category === 0);
+console.log(isMonthlyAchievement.value);
 
 function toggleShowClaimInfo() {
   showClaimInfo.value = !showClaimInfo.value;

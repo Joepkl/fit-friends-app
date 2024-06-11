@@ -246,7 +246,6 @@ function scrollToTop() {
 }
 
 async function fetchAccountSettings() {
-  console.log('FIRES')
   try {
     await fetchUserAccount(username.value as string);
     updateAccountSettings();

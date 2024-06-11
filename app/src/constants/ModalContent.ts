@@ -37,10 +37,17 @@ export const CancelMeetupContent = {
 export const CancelInviteContent = {
   title: "Cancel invite",
 };
+
 export const ClaimAchievementContent = {
   title: "Unclaimed achievement",
   text:
     "If you have completed the requirements for this achievement, you can claim this achievement by creating a post.",
+};
+
+export const ClaimAchievementContentMonthly = {
+  title: "Unclaimed achievement",
+  text:
+    "Monthly achievements can't be claimed manually. When you reach the requirements for an achievement, it will be claimed automatically.",
 };
 
 export const AlreadyClaimedAchievementContent = {
