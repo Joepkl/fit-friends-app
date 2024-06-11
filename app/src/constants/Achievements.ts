@@ -133,7 +133,7 @@ export const MonthlyAchievements = Object.freeze({
 export const ChestAchievements = Object.freeze({
   0: {
     title: "Cable flies",
-    description: "Flyes are exercises to strengthen the muscles of your upper body. The hand and arm move through an arc against resistance with the elbow at a fixed angle.",
+    description: "In order to do cable flies sit on a bench, and move the arm through an arc against resistance with the elbow at a fixed angle.",
     maxLevel: 6,
     levels: {
       0: {
@@ -199,7 +199,7 @@ export const ChestAchievements = Object.freeze({
   },
   2: {
     title: "Dumbbell press",
-    description: "The dumbbell bench press is a version of the bench press that uses dumbbells instead of a barbell. Using two dumbbells and a bench, this exercise challenges the performer to lower both dumbbells to their chest before extending the arms to press them back up again. This bench press variation has an increased range of motion as the dumbbells can surpass the chest slightly.",
+    description: "In order to do a dumbell press lay down on a bench and press the dumbells up from your chest.",
     maxLevel: 6,
     levels: {
       0: {
@@ -232,7 +232,7 @@ export const ChestAchievements = Object.freeze({
   },
   3: {
     title: "Incline dumbbell press",
-    description: "The incline dumbbell press is the dumbbell variation of the barbell incline bench press and uses an incline or adjustable bench rather than an incline bench rack. The exercise involves pressing dumbbells from the chest by extending the arms up, while sitting at a 30 to 45 incline.",
+    description: "In order to do the incline dumbbell press you press the dumbbells up from the chest by extending the arms, while sitting at a 30 to 45 incline.",
     maxLevel: 6,
     levels: {
       0: {
@@ -265,7 +265,7 @@ export const ChestAchievements = Object.freeze({
   },
   4: {
     title: "Bench press",
-    description: "The bench press, or chest press, is a weight training exercise where a person presses a weight upwards while lying horizontally on a weight training bench.",
+    description: "In order to do a bench press, you press the barbell upwards while lying horizontally on the bench.",
     maxLevel: 6,
     levels: {
       0: {
@@ -298,7 +298,7 @@ export const ChestAchievements = Object.freeze({
   },
   5: {
     title: "Incline bench press",
-    description: "The incline bench press is a variation of the bench press and an exercise used to build the muscles of the chest. The shoulders and triceps will be indirectly involved as well. Utilizing an incline will allow you to better target the upper portion of the chest, a lagging part for a lot of lifters.",
+    description: "In order to do the incline bench press you press the barbell up from the chest by extending the arms, while sitting at a 30 to 45 incline.",
     maxLevel: 6,
     levels: {
       0: {
@@ -334,7 +334,7 @@ export const ChestAchievements = Object.freeze({
 export const LegAchievements = Object.freeze({
   0: {
     title: "Squats",
-    description: "To do a squat, stand with your feet slightly greater than shoulder-width apart and your toes pointing ahead. Slowly descend, bending through the hips, knees and ankles. Stop when your knees reach a 90-degree angle.",
+    description: "To do a squat, stand with your at shoulder-width apart and your toes pointing ahead. Slowly descend, bending through the hips, knees and ankles. Stop when your knees reach a 90-degree angle.",
     maxLevel: 6,
     levels: {
       0: {
@@ -367,7 +367,7 @@ export const LegAchievements = Object.freeze({
   },
   1: {
     title: "Deadlift",
-    description: "The deadlift is a weight training exercise in which a loaded barbell or bar is lifted off the ground to the level of the hips, torso perpendicular to the floor, before being placed back on the ground.",
+    description: "In order to do a deadlift a loaded barbell is lifted off the floor to the level of the hips by keeping the arms and back extended.",
     maxLevel: 6,
     levels: {
       0: {
@@ -400,7 +400,7 @@ export const LegAchievements = Object.freeze({
   },
   2: {
     title: "Lunges",
-    description: "To perform a lunge stand in a split stance with the right foot roughly 2 to 3 feet in front of the left foot. Bend the knees and lower your body until the back knee is a few inches from the floor. Push back up to the starting position, keeping your weight on the heel of the front foot.",
+    description: "To perform a lunge stand in a split stance with the right foot in front of the left foot. Bend the knees and lower your body until the back knee is a few inches from the floor. Push back up to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -433,7 +433,7 @@ export const LegAchievements = Object.freeze({
   },
   3: {
     title: "Hack squat",
-    description: "The hack squat involves standing on the plate, leaning back onto the pads at an angle, with the weight placed on top of you by positioning yourself under the shoulder pads. The weight is then pushed in the concentric phase of the squat.",
+    description: "In order to do a hack squat lean back onto the pads at an angle, with the weight placed on top of you by positioning yourself under the shoulder pads. Bend your knees, and push back to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -466,7 +466,7 @@ export const LegAchievements = Object.freeze({
   },
   4: {
     title: "Leg extension",
-    description: "Leg extensions are done on a leg extension machine. You sit on the machine with a weighted pad on top of your lower legs. Then you use your quads to repeatedly extend your knees and lift your lower legs.",
+    description: "In order to do a leg extension sit on the machine with a weighted pad on top of your lower legs. Extend your knees to lift the weight, and then slowly lower the weight back to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -499,7 +499,7 @@ export const LegAchievements = Object.freeze({
   },
   5: {
     title: "Calf raises",
-    description: "For calf raises stand with your torso upright, your feet hip-width apart, and your toes pointing forward. 2. Raise your heels off the floor and squeeze your calves. 3. Return to the starting position, by slowly lowering your heels, and repeat.",
+    description: "To do calf raises stand with your feet hip-width apart, and your toes pointing forward. Raise your heels off the floor and squeeze your calves. Slowly move back to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -535,7 +535,7 @@ export const LegAchievements = Object.freeze({
 export const BackAchievements = Object.freeze({
   0: {
     title: "Barbell row",
-    description: "The barbell row is a two-step move. You lift the barbell from the ground and then angle your chest parallel to the ground so you're slightly bent over. Then, you lift and lower the barbell in a series of reps.",
+    description: "In order to do the barbell row lift the barbell from the ground with your chest slightly bent over. Then lift and lower the barbell.",
     maxLevel: 6,
     levels: {
       0: {
@@ -568,7 +568,7 @@ export const BackAchievements = Object.freeze({
   },
   1: {
     title: "Dumbbell row",
-    description: "The dumbbell row is a variation of the barbell row. Stand next to a weight bench and place a dumbbell next to it on the side you plan to row. Place your non-rowing hand and your same-side knee on the bench, with your other foot firmly planted on the ground. Perform the dumbbell row by pulling your elbow up and back while keeping your upper arm tucked tightly to your side.",
+    description: "In order to do the dumbell row place one knee and hand on a bench, and lift the dumbell up with the other hand. Slowlly lower the dumbell back to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -601,7 +601,7 @@ export const BackAchievements = Object.freeze({
   },
   2: {
     title: "Lat pulldown",
-    description: "The pulldown exercise works the back muscles and is performed at a workstation with adjustable resistance, usually plates. While seated, you pull a hanging bar toward you to reach chin level, then release it back up with control.",
+    description: "In order to do the lat pulldown pull the hanging bar towards you to reach chin level, then slowly release it back to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -634,7 +634,7 @@ export const BackAchievements = Object.freeze({
   },
   3: {
     title: "Low row cable",
-    description: "The low row cable can be performed by sitting down at the station and keeping the knees slightly bend. Lean forward, keeping your back straight and grip the bar handles with both hand. While keeping your torso stationary, pull the handles back for repetitions.",
+    description: "In order to do the low row cable pull the cable towards you while sitting on the bench, then slowly release it back to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -667,7 +667,7 @@ export const BackAchievements = Object.freeze({
   },
   4: {
     title: "Face pulls",
-    description: "The face pull is often performed standing using a cable machine and rope attachment, with the subject rowing the rope attachment towards the face, with the elbows flared outwards. The exercise can, however, also be performed seated or with resistance bands.",
+    description: "In order to do face pulls pull the rope towards your face while standing, then slowly release it back to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -700,7 +700,7 @@ export const BackAchievements = Object.freeze({
   },
   5: {
     title: "Reverse cable flies",
-    description: "To perform the reverse cable flies grip the handle, across your body with both hands. Keeping only a slight bend at your elbow, pull the cable back across your body using the muscles in your back. Hold the flexed position for a full second before allowing the cable to pull you slowly back to the starting position.",
+    description: "To perform reverse cable flies stand with your feet shoulder-width apart and your knees slightly bent. Hold the cable handles with your palms facing each other. Pull the handles out to the sides, keeping your arms straight. Slowly return to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -736,7 +736,7 @@ export const BackAchievements = Object.freeze({
 export const ShoulderAchievements = Object.freeze({
   0: {
     title: "Seated shoulder press",
-    description: "Sit on the bench holding two dumbbells at shoulder height with an overhand grip. Press the weights up above your head until your arms are fully extended. Return slowly to the start position.",
+    description: "To perform the seated shoulder press sit on a bench with a back support and hold the barbell at shoulder height. Press the barbell up until your arms are fully extended. Slowly return to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -802,7 +802,7 @@ export const ShoulderAchievements = Object.freeze({
   },
   2: {
     title: "Lateral raises",
-    description: "For lateral raises stand or sit with a dumbbell in each hand at your sides. Keep your back straight and then slowly lift the weights out to the sides until your arms are parallel with the floor. Lower the dumbbells slowly and keep them under control.",
+    description: "In order to do lateral raises stand with your feet shoulder-width apart and your knees slightly bent. Hold the dumbbells at your sides with your palms facing your body. Raise the dumbbells out to the sides until your arms are parallel to the floor. Slowly return to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -835,7 +835,7 @@ export const ShoulderAchievements = Object.freeze({
   },
   3: {
     title: "Front raises",
-    description: "To perform front raises stand with your feet about shoulder-width apart. Let your arms hang in front of you with the dumbbells in front of the thighs (palms facing the thighs). Your back is straight, your feet are planted flat on the floor, and your abdominal muscles are engaged. Lift the weights upward and return to starting position.",
+    description: "In order to do front raises stand with your feet shoulder-width apart and your knees slightly bent. Hold the dumbbells at your sides with your palms facing your body. Raise the dumbbells out to the front until your arms are parallel to the floor. Slowly return to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
@@ -937,7 +937,7 @@ export const ShoulderAchievements = Object.freeze({
 export const BicepAchievements = Object.freeze({
   0: {
     title: "Bicep curl",
-    description: "To do a biceps curl with a dumbbell, hold a dumbbell with your palm facing upward. Slowly curl the weight up by bending your elbow, keeping your elbow close to your body. Then slowly lower the weight to the starting position.",
+    description: "To perform a biceps curl with a dumbbell, hold a dumbbell with your palm facing upward. Slowly curl the weight up by bending your elbow, keeping your elbow close to your body. Then slowly lower the weight to the starting position.",
     maxLevel: 6,
     levels: {
       0: {
